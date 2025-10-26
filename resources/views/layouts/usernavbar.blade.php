@@ -6,10 +6,9 @@
     <a href="{{ route('user.dashboard') }}" class="{{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
         <i class="fa-solid fa-house me-2"></i>Dashboard
     </a>
-    <a href="#"><i class="fa-solid fa-book me-2"></i>My Graves</a>
-    <a href="#"><i class="fa-solid fa-plus me-2"></i>Apply for Grave</a>
+    <a href="{{ route('user.register.create') }}"><i class="fa-solid fa-book me-2"></i>Register</a>
+    <a href=""><i class="bi bi-people me-2"></i>Register For Family</a>
     <a href="#"><i class="fa-solid fa-receipt me-2"></i>Payments</a>
-    <a href="#"><i class="fa-solid fa-clock-rotate-left me-2"></i>History</a>
     <a href="#"><i class="fa-solid fa-user-gear me-2"></i>Profile</a>
 
     <!-- 🌐 Back to Website -->

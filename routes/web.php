@@ -24,10 +24,10 @@ Route::get('/search', function () {
 })->name('search');
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/register-grave', [User_RegistrationController::class, 'create'])->name('registration.create');
-    Route::post('/register-grave', [User_RegistrationController::class, 'store'])->name('registration.store');
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/register-grave', [User_RegistrationController::class, 'create'])->name('registration.create');
+//     Route::post('/register-grave', [User_RegistrationController::class, 'store'])->name('registration.store');
+// });
 
 
 Route::get('/search-grave', [GraveSearchController::class, 'index'])->name('grave.search');
@@ -43,7 +43,15 @@ Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.d
 // Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/register-grave', [User_RegistrationController::class, 'create'])->name('registration.create');
+    Route::post('/register-grave', [User_RegistrationController::class, 'store'])->name('registration.store');
+
     Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+
+    Route::get('/user/register', [User_RegistrationController::class, 'ucreate'])->name('user.register.create');
+    Route::post('/user/register', [User_RegistrationController::class, 'ustore'])->name('user.register.store');
+
 });
 
 
