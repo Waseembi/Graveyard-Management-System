@@ -1,46 +1,43 @@
 @extends('layouts.userapp')
 
 @section('content')
+<div class="content" id="mainContent">
+    <div class="container-fluid">
 
-<style>
-    body {
-        background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-        font-family: 'Segoe UI', sans-serif;
-    }
+        <style>
+            body {
+                background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+                font-family: 'Segoe UI', sans-serif;
+            }
+            
 
-    .form-container {
-        background: white;
-        padding: 1.5rem 2rem; /* reduced padding */
-        border-radius: 12px;
-        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
-        max-width: 750px; /* slightly narrower */
-        margin: auto;
-    }
+            .form-container {
+                background: white;
+                padding: 1.5rem 2rem;
+                border-radius: 12px;
+                box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+                max-width: 700px;
+                margin: 60px auto;
+            }
 
-    .form-label i {
-        margin-right: 6px;
-        color: #00796b;
-    }
+            .form-label i {
+                margin-right: 6px;
+                color: #00796b;
+            }
 
-    .alert {
-        animation: fadeIn 0.5s ease-in-out;
-    }
+            .alert {
+                animation: fadeIn 0.5s ease-in-out;
+            }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-</style>
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
 
-
-<div class="d-flex justify-content-center align-items-start" 
-     style="min-height: calc(100vh - 90px); background-color:#f8f9fa; padding-top:90px; 
-     margin-left:180px; margin-top: -2%">
-     
-    <div class="container">
         {{-- success message --}}
         @if(session('success'))
-            <div id="success-alert" class="alert alert-success text-center mx-auto" style="
+            <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
                 position: absolute;
                 top: 20px;
                 left: 50%;
@@ -55,19 +52,18 @@
                 line-height: 1.3;
             ">      
                  {{ session('success') }}
-            </div>
+        </div>
         @endif
-
-        {{-- error message --}}
+        {{-- Error message --}}
         @if(session('error'))
-            <div id="success-alert" class="alert alert-danger text-center mx-auto" style="
+            <div id="success-alert" class="alert alert-danger text-center mx-auto mt-5" style="
                 position: absolute;
                 top: 20px;
                 left: 50%;
                 transform: translateX(-50%);
                 max-width: 400px;
                 z-index: 1050;
-                box-shadow: 0 0.5rem 1rem rgba(255, 0, 0, 0.2);
+                box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
                 border-radius: 6px;
                 font-weight: 500;
                 font-size: 0.95rem;
@@ -75,10 +71,10 @@
                 line-height: 1.3;
             ">      
                  {{ session('error') }}
-            </div>
+        </div>
         @endif
 
-        <div class="form-container mt-3">
+        <div class="form-container" style="margin-top: -1%; margin-left: 13%; ">
             <h2 class="mb-4 text-center text-success">🪦 Graveyard Registration Form</h2>
 
             <form action="{{ route('user.register.store') }}" method="POST">
@@ -137,9 +133,8 @@
 </div>
 
 <script>
-    // Auto-dismiss success/error alert after 4 seconds
     setTimeout(() => {
-        const alert = document.getElementById("success-alert");
+        const alert = document.querySelector(".alert");
         if (alert) {
             alert.classList.add("fade");
             setTimeout(() => alert.remove(), 500);
