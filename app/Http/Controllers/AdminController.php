@@ -15,10 +15,12 @@ class AdminController extends Controller
         // ✅ Count records
         $totalUsers = User::count();
         $totalRegistrations = UserRegistration::count();
+        $recentRegistrations = UserRegistration::latest()->take(5)->get();
        // $totalBurials = Burial::count();
         //$totalPayments = Payment::count();
 
         // Pass to view
-        return view('roles.admindashboard', compact('totalUsers', 'totalRegistrations'));
+        return view('roles.admindashboard', compact('totalUsers', 'totalRegistrations','recentRegistrations'));
     }
+
 }

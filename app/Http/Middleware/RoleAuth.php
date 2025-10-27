@@ -19,13 +19,13 @@ class RoleAuth
     public function handle(Request $request, Closure $next): mixed
     {
         if (Auth::check()) {
-            $role = Auth::user()->role;
+            $role = Auth::user()->role_id;
 
-            if ($role === 'admin') {
+            if ($role == 1) {
                 return redirect()->route('admin.dashboard');
             }
 
-            if ($role === 'user') {
+            if ($role === 2) {
                 return redirect()->route('user.dashboard');
             }
         }

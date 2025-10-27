@@ -6,8 +6,8 @@
     <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
         <i class="fa-solid fa-house me-2"></i>Dashboard
     </a>
-    <a href="#"><i class="fa-solid fa-book me-2"></i>Users</a>
-    <a href="#"><i class="bi bi-people me-2"></i>Burials</a>
+    <a href="{{ route('admin.users') }}"><i class="fa-solid fa-book me-2"></i>Users</a>
+    <a href=""><i class="bi bi-people me-2"></i>Burials</a>
     <a href="#"><i class="fa-solid fa-receipt me-2"></i>Add Burail</a>
     <a href="#"><i class="fa-solid fa-user-gear me-2"></i>Profile</a>
 

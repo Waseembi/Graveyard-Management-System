@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\User_RegistrationController;
 use App\Http\Controllers\GraveSearchController;
 use App\Http\Controllers\FamilyMemberController;
+use App\Http\Controllers\AdminUserController;
 
 
 
@@ -39,7 +40,6 @@ Route::get('/search-grave', [GraveSearchController::class, 'index'])->name('grav
 
 
 
-Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
 // Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
 
@@ -57,6 +57,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/family/register', [FamilyMemberController::class, 'store'])->name('family.store');
 
 });
+
+//admin 
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
+    Route::get('/admin/users/{id}', [AdminUserController::class, 'show'])->name('admin.users.show');
+    Route::get('/admin/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+
+
+    
+   
+
 
 
 
