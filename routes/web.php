@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\User_RegistrationController;
 use App\Http\Controllers\GraveSearchController;
+use App\Http\Controllers\FamilyMemberController;
 
 
 
@@ -51,8 +52,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/register', [User_RegistrationController::class, 'ucreate'])->name('user.register.create');
     Route::post('/user/register', [User_RegistrationController::class, 'ustore'])->name('user.register.store');
+    //Family
+    Route::get('/family/register', [FamilyMemberController::class, 'create'])->name('family.create');
+    Route::post('/family/register', [FamilyMemberController::class, 'store'])->name('family.store');
 
 });
+
+
+
 
 
 

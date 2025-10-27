@@ -20,7 +20,10 @@ return new class extends Migration
             $table->integer('age');
             $table->string('phone');
             $table->string('cnic')->nullable();
+            $table->text('address');
             $table->string('relationship');
+            $table->enum('payment_method', ['cash', 'card']);
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

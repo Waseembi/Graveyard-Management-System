@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User_Registration;
+use App\Models\UserRegistration;
 
-class Family_Member extends Model
+class FamilyMember extends Model
 {
     protected $guarded = [];
 

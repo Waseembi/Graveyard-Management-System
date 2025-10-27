@@ -1,38 +1,86 @@
 @extends('layouts.adminapp')
 
 @section('content')
-<h2 class="mb-4">Dashboard Overview</h2>
+<div class="content" id="mainContent">
+    <div class="container-fluid">
 
-<div class="row g-4 mb-4">
-    @foreach([
-        ['title' => 'Total Registered Persons', 'value' => $totalRegistrations, 'color' => 'primary'],
-        ['title' => 'Total Accounts Created', 'value' => $totalUsers, 'color' => 'success']
-    ] as $kpi)
-    <div class="col-md-3">
-        <div class="card bg-{{ $kpi['color'] }} text-center p-3">
-            <h5>{{ $kpi['title'] }}</h5>
-            <h3>{{ $kpi['value'] }}</h3>
+        <!-- Welcome -->
+        <div class="mb-4">
+            <h4>Welcome, {{ Auth::user()->name ?? 'User' }} 👋</h4>
+            <p class="text-muted">Here’s an overview of your account.</p>
         </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card text-center shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $totalUsers }}</h5>
+                        <p class="text-muted mb-0">Total Users</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $totalRegistrations }}</h5>
+                        <p class="text-muted mb-0">Total Registration</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">0</h5>
+                        <p class="text-muted mb-0">Payments Due</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">5</h5>
+                        <p class="text-muted mb-0">Total Applications</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">
+                <h6 class="mb-0">Recent Activity</h6>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-10-22</td>
+                            <td>Grave Request #124</td>
+                            <td><span class="badge bg-success">Approved</span></td>
+                        </tr>
+                        <tr>
+                            <td>2025-10-20</td>
+                            <td>Payment Submitted</td>
+                            <td><span class="badge bg-info text-dark">Verified</span></td>
+                        </tr>
+                        <tr>
+                            <td>2025-10-18</td>
+                            <td>Grave Request #125</td>
+                            <td><span class="badge bg-warning text-dark">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-    @endforeach
 </div>
-
-
-{{-- <div class="row g-4">
-    @foreach([
-        ['title' => 'Burial Bookings', 'icon' => 'fa-calendar-check', 'color' => 'primary'],
-        ['title' => 'Payments', 'icon' => 'fa-money-bill-wave', 'color' => 'success'],
-        ['title' => 'Inventory', 'icon' => 'fa-boxes', 'color' => 'warning text-dark'],
-        ['title' => 'Staff Management', 'icon' => 'fa-users', 'color' => 'info'],
-    ] as $module)
-    <div class="col-md-4">
-        <div class="card bg-{{ $module['color'] }} text-white h-100 text-center p-4">
-            <i class="fas {{ $module['icon'] }} fa-2x mb-3"></i>
-            <h5>{{ $module['title'] }}</h5>
-        </div>
-    </div>
-    @endforeach
-</div> --}}
-
-
 @endsection

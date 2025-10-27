@@ -12,11 +12,13 @@ class AdminController extends Controller
     // AdminController
      public function index()
     {
-        $totalRegistrations = UserRegistration::count();
+        // ✅ Count records
         $totalUsers = User::count();
+        $totalRegistrations = UserRegistration::count();
+       // $totalBurials = Burial::count();
+        //$totalPayments = Payment::count();
 
-        return view('roles.admindashboard' , compact('totalRegistrations', 'totalUsers'));
+        // Pass to view
+        return view('roles.admindashboard', compact('totalUsers', 'totalRegistrations'));
     }
-
-
 }

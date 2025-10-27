@@ -35,7 +35,6 @@ class User_RegistrationController extends Controller
         // Otherwise, check by name + father_name + phone
         $alreadyRegistered = UserRegistration::where('name', $request->name)
             ->where('father_name', $request->father_name)
-            ->where('phone', $request->phone)
             ->where('age', $request->age)
             ->exists();
 
@@ -76,6 +75,8 @@ class User_RegistrationController extends Controller
 
 
 
+
+
 // <---- this is from use dashboard register   ---> 
 public function ucreate()
     {
@@ -104,7 +105,6 @@ public function ustore(Request $request)
         // Otherwise, check by name + father_name + phone
         $alreadyRegistered = UserRegistration::where('name', $request->name)
             ->where('father_name', $request->father_name)
-            ->where('phone', $request->phone)
             ->where('age', $request->age)
             ->exists();
     }

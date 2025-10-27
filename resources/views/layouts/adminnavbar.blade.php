@@ -1,54 +1,61 @@
-<div class="bg-light border-end vh-100 d-flex flex-column py-4 px-3 shadow-sm" style="width: 250px;">
-    <!-- 🏷️ Branding + Avatar -->
-    <div class="d-flex align-items-center mb-4">
-        <img src="{{ asset('images/cbanner.png') }}" alt="Admin Avatar" class="rounded-circle me-3 border" width="55" height="55" style="object-fit: cover;">
-        <h5 class="mb-0 fw-bold text-primary">Attock GMS</h5>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="text-center mb-4">
+        <h5>⚰️ Attock GMS</h5>
     </div>
+    <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+        <i class="fa-solid fa-house me-2"></i>Dashboard
+    </a>
+    <a href="#"><i class="fa-solid fa-book me-2"></i>Users</a>
+    <a href="#"><i class="bi bi-people me-2"></i>Burials</a>
+    <a href="#"><i class="fa-solid fa-receipt me-2"></i>Add Burail</a>
+    <a href="#"><i class="fa-solid fa-user-gear me-2"></i>Profile</a>
 
-    <!-- 📋 Navigation -->
-    <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <i class="fas fa-home me-2"></i> Dashboard
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <i class="fas fa-map-marker-alt me-2"></i> Graveyards
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <i class="fas fa-calendar-check me-2"></i> Bookings
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <i class="fas fa-users me-2"></i> Users
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-            <i class="fas fa-chart-line me-2"></i> Reports
-        </a>
-    </div>
+    <!-- 🌐 Back to Website -->
+    {{-- <a href="{{ route('home') }}">
+        <i class="fa-solid fa-globe me-2 text-info"></i> Back to Website
+    </a> --}}
+
+    <form method="POST" action="{{ route('logout') }}" class="mt-3 px-3">
+        @csrf
+        <button class="btn btn-danger w-100">
+            <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+        </button>
+    </form>
 </div>
 
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-3" id="topNavbar">
+    <div class="container-fluid">
+        <!-- Toggle Button -->
+        <button class="btn btn-outline-secondary me-3" id="toggleSidebarBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <h5 class="mb-0">Admin Dashboard</h5>
+
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item me-3">
+                <a class="nav-link" href="#"><i class="fa-solid fa-bell"></i></a>
+            </li>
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="fa-solid fa-user me-2"></i> {{ Auth::user()->name ?? 'User' }}
+            </a>
 
 
-
-
-
-
-
-
-
-
-
-
-{{-- <div class="bg-light border-end vh-100 d-flex flex-column align-items-center py-4 ms-2" style="width: 250px;">
-     
-    <div class="d-flex align-items-center mb-4 w-100">
-        <img src="{{ asset('images/cbanner.png') }}" alt="Admin Avatar" class="rounded-circle me-3" width="60" height="60">
-        <h5 class="mb-0">Attock GMS</h5>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="dropdown-item text-danger">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
-    
-    <div class="list-group list-group-flush w-100 px-3">
-        <a href="" class="list-group-item list-group-item-action">Dashboard</a>
-        <a href="" class="list-group-item list-group-item-action">Graveyards</a>
-        <a href="" class="list-group-item list-group-item-action">Bookings</a>
-        <a href="" class="list-group-item list-group-item-action">Users</a>
-        <a href="" class="list-group-item list-group-item-action">Reports</a>
-    </div>
-</div> --}}
+</nav>
