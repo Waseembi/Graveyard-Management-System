@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserRegistration;
+use App\Models\FamilyMember;
 
 class AdminUserController extends Controller
 {
@@ -49,13 +50,15 @@ class AdminUserController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('roles.admin.user')->with('success', 'Registration updated successfully.');
+        return redirect()->route('admin.users')->with('success', 'Registration updated successfully.');
     }
 
     // Delete a registration
     public function destroy($id)
     {
         UserRegistration::findOrFail($id)->delete();
-        return redirect()->route('roles.admin.user')->with('success', 'Registration deleted successfully.');
+        FamilyMember::where('registration_id', $id)->delete();
+
+        return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
     }
 }

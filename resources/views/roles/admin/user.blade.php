@@ -1,6 +1,46 @@
 @extends('layouts.adminapp')
 
 @section('content')
+
+{{-- success message --}}
+        @if(session('success'))
+            <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 400px;
+                z-index: 1050;
+                box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+                border-radius: 6px;
+                font-weight: 500;
+                font-size: 0.95rem;
+                padding: 0.5rem 1rem;
+                line-height: 1.3;
+            ">      
+                 {{ session('success') }}
+        </div>
+        @endif
+        {{-- Error message --}}
+        @if(session('error'))
+            <div id="success-alert" class="alert alert-danger text-center mx-auto mt-5" style="
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 400px;
+                z-index: 1050;
+                box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+                border-radius: 6px;
+                font-weight: 500;
+                font-size: 0.95rem;
+                padding: 0.5rem 1rem;
+                line-height: 1.3;
+            ">      
+                 {{ session('error') }}
+        </div>
+        @endif
+
 <div class="content" id="mainContent">
     <div class="container-fluid">
 
@@ -55,8 +95,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Father Name</th>
                             <th>Status</th>
                             <th>Joined</th>
                             <th>Actions</th>
@@ -67,8 +106,7 @@
                         <tr>
                             <td>{{ $index + $registrations->firstItem() }}</td>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td><span class="badge bg-primary">{{ ucfirst($user->role->role_name ?? 'User') }}</span></td>
+                            <td>{{ $user->father_name }}</td>
                             <td>
                                 <span class="badge bg-{{ $user->status == 'active' ? 'success' : 'secondary' }}">
                                     {{ ucfirst($user->status ?? 'inactive') }}
@@ -76,11 +114,18 @@
                             </td>
                             <td>{{ $user->created_at->format('d M Y') }}</td>
                             <td>
-                                <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
-                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
-                                    @csrf @method('DELETE')
-                                    <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-sm btn-info">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+
+                                <!-- Delete Button -->
+                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-sm btn-danger delete-user">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
@@ -99,4 +144,37 @@
 
     </div>
 </div>
+
+
+
+<script>
+$(function () {
+    
+    // SweetAlert2 delete confirmation
+    $(".delete-user").on('click', function (e) {
+        e.preventDefault();
+        const form = $(this).closest('form');
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This record will be permanently deleted!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+});
+</script>
+
+
+
+
 @endsection

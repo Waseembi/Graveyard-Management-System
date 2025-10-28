@@ -3,7 +3,7 @@
 @section('content')
 {{-- success message --}}
         @if(session('success'))
-            <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+            <div id="success-alert" class="alert alert-success text-center mx-auto mt-3" style="
                 position: absolute;
                 top: 20px;
                 left: 50%;
@@ -18,13 +18,27 @@
                 line-height: 1.3;
             ">      
                  {{ session('success') }}
+            </div>
+        @endif
+        {{-- Error message --}}
+        @if(session('error'))
+            <div id="success-alert" class="alert alert-danger text-center mx-auto mt-3" style="
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 400px;
+                z-index: 1050;
+                box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+                border-radius: 6px;
+                font-weight: 500;
+                font-size: 0.95rem;
+                padding: 0.5rem 1rem;
+                line-height: 1.3;
+            ">      
+                 {{ session('error') }}
         </div>
         @endif
-@if($errors->any())
-    <div id="success-alert" class="alert alert-danger text-center rounded-3 position-fixed top-0 start-50 translate-middle-x  shadow p-2" style="z-index: 1050; width: 90%; max-width: 450px; margin-top: 90px;">
-       {{ $errors->first() }}
-    </div>
-@endif
 
 
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
