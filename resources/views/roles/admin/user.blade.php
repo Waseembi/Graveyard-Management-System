@@ -107,12 +107,15 @@
                             <td>{{ $index + $registrations->firstItem() }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->father_name }}</td>
+
                             <td>
-                                <span class="badge bg-{{ $user->status == 'active' ? 'success' : 'secondary' }}">
+                                <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'secondary' }}">
                                     {{ ucfirst($user->status ?? 'inactive') }}
                                 </span>
                             </td>
+
                             <td>{{ $user->created_at->format('d M Y') }}</td>
+
                             <td>
                                 <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-sm btn-info">
                                     <i class="fa-solid fa-eye"></i>
@@ -172,6 +175,15 @@ $(function () {
         });
     });
 });
+
+// Auto-dismiss success alert after 4 seconds
+setTimeout(() => {
+    const alert = document.getElementById("success-alert");
+    if (alert) {
+        alert.classList.add("fade");
+        setTimeout(() => alert.remove(), 500);
+    }
+}, 4000);
 </script>
 
 

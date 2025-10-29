@@ -31,28 +31,6 @@ class AdminUserController extends Controller
         return view('roles.admin.user', compact('registration'));
     }
 
-    // Edit form (optional)
-    public function edit($id)
-    {
-        $registration = UserRegistration::findOrFail($id);
-        return view('roles.admin.user', compact('registration'));
-    }
-
-    // Update registration info (optional)
-    public function update(Request $request, $id)
-    {
-        $registration = UserRegistration::findOrFail($id);
-
-        $registration->update([
-            'name' => $request->name,
-            'father_name' => $request->father_name,
-            'cnic' => $request->cnic,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('admin.users')->with('success', 'Registration updated successfully.');
-    }
-
     // Delete a registration
     public function destroy($id)
     {
@@ -61,4 +39,60 @@ class AdminUserController extends Controller
 
         return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
     }
+
+    // Edit user
+    public function edit($id)
+    {
+    $user = UserRegistration::findOrFail($id);
+    return view('roles.admin.user_edit', compact('user'));
+    }
+
+
+
+// Update user
+public function update(Request $request, $id)
+{
+    // Validate input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'father_name' => 'required|string|max:255',
+        'cnic' => 'nullable|string|max:15',
+        'phone' => 'required|string|max:20',
+        'age' => 'required|integer|min:1',
+        'address' => 'required|string|max:255',
+        'status' => 'required|in:approved,pending',
+    ]);
+
+    // Find the user by ID
+    $user = UserRegistration::findOrFail($id);
+
+    // Update the user record
+    $user->update([
+        'name' => $request->name,
+        'father_name' => $request->father_name,
+        'cnic' => $request->cnic,
+        'phone' => $request->phone,
+        'age' => $request->age,
+        'address' => $request->address,
+        'status' => $request->status,
+    ]);
+
+    // ✅ Update all related family members with the same registration_id
+    FamilyMember::where('registration_id', $user->id)->update([
+        'name' => $request->name,
+        'father_name' => $request->father_name,
+        'cnic' => $request->cnic,
+        'phone' => $request->phone,
+        'age' => $request->age,
+        'address' => $request->address,
+        'status' => $request->status,
+    ]);
+
+    // Redirect back with success message
+    return redirect()->route('admin.users')->with('success', 'User updated successfully!');
+}
+
+
+
+
 }
