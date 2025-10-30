@@ -67,8 +67,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 
-     Route::post('/admin/profile/image', [AdminController::class, 'updateImage'])->name('admin.update.image');
+    
     Route::post('/admin/profile/image/remove', [AdminController::class, 'removeImage'])->name('admin.remove.image');
+    Route::get('/admin/profile/edit', [AdminController::class, 'editProfile'])->name('admin.edit.profile');
+    Route::post('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.update.profile');
+    Route::post('/admin/profile/image', [AdminController::class, 'updateImage'])->name('admin.update.image');
 
 
 
