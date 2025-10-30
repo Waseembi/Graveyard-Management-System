@@ -10,6 +10,7 @@ use App\Http\Controllers\User_RegistrationController;
 use App\Http\Controllers\GraveSearchController;
 use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\BurialController;
 
 
 
@@ -58,30 +59,36 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-//admin 
+
+
+// -------------------------------------------------------------------------
+
+            //----------------  Admin  -------------------- 
+            
+//admin user management
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
     Route::get('/admin/users/{id}', [AdminUserController::class, 'show'])->name('admin.users.show');
     Route::delete('/admin/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
-    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
-
     
+
+//for admin profile
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::post('/admin/profile/image/remove', [AdminController::class, 'removeImage'])->name('admin.remove.image');
     Route::get('/admin/profile/edit', [AdminController::class, 'editProfile'])->name('admin.edit.profile');
     Route::post('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.update.profile');
     Route::post('/admin/profile/image', [AdminController::class, 'updateImage'])->name('admin.update.image');
 
-
-
-    
-   
-
-
+//for burial management
+    Route::get('/admin/burials/add', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.add');
+    Route::get('/admin/burials/search', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.search');
+    Route::post('/admin/burials/store', [BurialController::class, 'storeBurial'])->name('admin.burials.store');
 
 
 
+// -----------------------------------------------------------------------
 
 
 

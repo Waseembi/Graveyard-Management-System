@@ -3,7 +3,7 @@
 @section('content')
 
 @if(session('success'))
-<div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+    <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
     position: fixed;
     top: 20px;
     left: 50%;
@@ -17,9 +17,9 @@
     padding: 0.75rem 1.25rem;
     line-height: 1.4;
     backdrop-filter: blur(6px);
-">
+    ">
     {{ session('success') }}
-</div>
+    </div>
 @endif
 
 <div class="content" id="mainContent">
