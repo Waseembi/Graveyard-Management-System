@@ -8,7 +8,8 @@ use App\Models\FamilyMember;
 
 class AdminUserController extends Controller
 {
-    // Show all registrations
+
+//--------- Show all registrations  ----------
     public function index(Request $request)
     {
         $query = UserRegistration::query();
@@ -24,14 +25,9 @@ class AdminUserController extends Controller
         return view('roles.admin.user', compact('registrations'));
     }
 
-    // Show single registration details
-    public function show($id)
-    {
-        $registration = UserRegistration::findOrFail($id);
-        return view('roles.admin.user', compact('registration'));
-    }
+    
 
-    // Delete a registration
+//---------- Delete a registration ------------
     public function destroy($id)
     {
         UserRegistration::findOrFail($id)->delete();
@@ -40,7 +36,9 @@ class AdminUserController extends Controller
         return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
     }
 
-    // Edit user
+
+
+// -------- Edit user  -----------
     public function edit($id)
     {
     $user = UserRegistration::findOrFail($id);
@@ -48,8 +46,7 @@ class AdminUserController extends Controller
     }
 
 
-
-// Update user
+// ---------- Update user --------------
 public function update(Request $request, $id)
 {
     // Validate input
@@ -90,7 +87,17 @@ public function update(Request $request, $id)
 
     // Redirect back with success message
     return redirect()->route('admin.users')->with('success', 'User updated successfully!');
-}
+    }
+
+
+//--------- Show All Users ----------
+public function show($id)
+    {
+    $user = UserRegistration::findOrFail($id);
+    $familyMembers = FamilyMember::where('registration_id', $id)->get();
+
+    return view('roles.admin.user_show', compact('user', 'familyMembers'));
+    }
 
 
 

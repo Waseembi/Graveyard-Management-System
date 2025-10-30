@@ -65,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+
+     Route::post('/admin/profile/image', [AdminController::class, 'updateImage'])->name('admin.update.image');
+    Route::post('/admin/profile/image/remove', [AdminController::class, 'removeImage'])->name('admin.remove.image');
+
 
 
     

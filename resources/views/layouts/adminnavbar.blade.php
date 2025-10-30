@@ -9,7 +9,7 @@
     <a href="{{ route('admin.users') }}"><i class="fa-solid fa-book me-2"></i>Users</a>
     <a href=""><i class="bi bi-people me-2"></i>Burials</a>
     <a href="#"><i class="fa-solid fa-receipt me-2"></i>Add Burail</a>
-    <a href="#"><i class="fa-solid fa-user-gear me-2"></i>Profile</a>
+    <a href="{{ route('admin.profile') }}"><i class="fa-solid fa-user-gear me-2"></i>Profile</a>
 
     <!-- 🌐 Back to Website -->
     {{-- <a href="{{ route('home') }}">
