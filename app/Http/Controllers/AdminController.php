@@ -53,12 +53,12 @@ class AdminController extends Controller
 
     // Update image
     if ($request->hasFile('profile_image')) {
-        if ($admin->profile_image && File::exists(public_path('profile_images/' . $admin->profile_image))) {
-            File::delete(public_path('profile_images/' . $admin->profile_image));
+        if ($admin->profile_image && File::exists(public_path('profile_images/admin/' . $admin->profile_image))) {
+            File::delete(public_path('profile_images/admin/' . $admin->profile_image));
         }
         $image = $request->file('profile_image');
         $filename = time() . '_' . $image->getClientOriginalName();
-        $image->move(public_path('profile_images'), $filename);
+        $image->move(public_path('profile_images/admin'), $filename);
         $admin->profile_image = $filename;
     }
 

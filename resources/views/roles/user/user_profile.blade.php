@@ -1,4 +1,4 @@
-@extends('layouts.adminapp')
+@extends('layouts.userapp')
 
 @section('content')
 
@@ -28,7 +28,7 @@
         <!-- Header -->
         <div class="mb-4">
             <h4 class="fw-semibold text-dark mb-1">
-                <i class="fa-solid fa-user-circle me-2 text-secondary"></i>Admin Profile
+                <i class="fa-solid fa-user-circle me-2 text-secondary"></i>User Profile
             </h4>
             <p class="text-muted mb-0">Manage your account and profile settings.</p>
         </div>
@@ -38,8 +38,8 @@
             <div class="col-12 col-md-4 col-lg-3" style="margin-left: -25%">
                 <div class="card shadow-sm text-center h-100">
                     <div class="card-body p-4">
-                        @if($admin->profile_image)
-                            <img src="{{ asset('profile_images/admin/' . $admin->profile_image) }}" 
+                        @if($user->profile_image)
+                            <img src="{{ asset('profile_images/user/' . $user->profile_image) }}" 
                                  class="rounded-circle border shadow-sm" width="110" height="110" 
                                  style="object-fit: cover;">
                         @else
@@ -47,14 +47,14 @@
                                  class="rounded-circle border shadow-sm" width="110" height="110">
                         @endif
 
-                        <h6 class="fw-semibold text-dark mt-3">{{ $admin->name }}</h6>
-                        <small class="text-muted">{{ $admin->email }}</small>
+                        <h6 class="fw-semibold text-dark mt-3">{{ $user->name }}</h6>
+                        <small class="text-muted">{{ $user->email }}</small>
                         <span class="badge bg-secondary mt-2">
-                            {{ $admin->role_id == 1 ? 'Administrator' : 'User' }}
+                            {{ $user->role_id == 1 ? 'administrator' : 'User' }}
                         </span>
 
                         <hr>
-                        <a href="{{ route('admin.edit.profile') }}" class="btn btn-outline-success btn-sm w-100 mb-2">
+                        <a href="{{ route('user.edit.profile') }}" class="btn btn-outline-success btn-sm w-100 mb-2">
                             <i class="fa-solid fa-pen me-1"></i>Edit Profile
                         </a>
                     </div>
@@ -72,11 +72,11 @@
                     <div class="card-body p-4">
                         <div class="row mb-3">
                             <div class="col-5 text-muted">Full Name</div>
-                            <div class="col-7 text-dark">{{ $admin->name }}</div>
+                            <div class="col-7 text-dark">{{ $user->name }}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-5 text-muted">Email</div>
-                            <div class="col-7 text-dark">{{ $admin->email }}</div>
+                            <div class="col-7 text-dark">{{ $user->email }}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-5 text-muted">Password</div>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-5 text-muted">Joined On</div>
-                            <div class="col-7 text-dark">{{ $admin->created_at->format('d M Y') }}</div>
+                            <div class="col-7 text-dark">{{ $user->created_at->format('d M Y') }}</div>
                         </div>
                     </div>
                 </div>

@@ -11,8 +11,7 @@ use App\Http\Controllers\GraveSearchController;
 use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BurialController;
-
-
+use App\Models\User;
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
 Route::get('/about', function () {
@@ -56,6 +55,15 @@ Route::middleware(['auth'])->group(function () {
     //Family
     Route::get('/family/register', [FamilyMemberController::class, 'create'])->name('family.create');
     Route::post('/family/register', [FamilyMemberController::class, 'store'])->name('family.store');
+
+
+
+    // for user profile
+    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('/user/profile/image/remove', [UserController::class, 'removeImage'])->name('user.remove.image');
+    Route::get('/user/profile/edit', [UserController::class, 'editProfile'])->name('user.edit.profile');
+    Route::post('/user/profile/update', [UserController::class, 'updateProfile'])->name('user.update.profile');
+    Route::post('/user/profile/image', [UserController::class, 'updateImage'])->name('user.update.image');
 
 });
 
