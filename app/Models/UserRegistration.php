@@ -20,6 +20,7 @@ class UserRegistration extends Model
         'address',
         'payment_method',
         'status',
+         'burial_status',
     ];
 
     public function user() {
@@ -35,7 +36,7 @@ public function payments() {
 }
 
 public function familyMembers() {
-    return $this->hasMany(Family_Member::class);
+    return $this->hasMany(FamilyMember::class);
 }
 
 public function marbleBookings() {

@@ -70,7 +70,7 @@
         <div class="card text-center shadow border-0" style="background: linear-gradient(135deg, #9C27B0, #BA68C8); color: white;">
             <div class="card-body">
                 <i class="bi bi-tree-fill fs-2 mb-2"></i>
-                <h5 class="card-title">0</h5>
+                <h5 class="card-title">{{ $totalBurials }}</h5>
                 <p class="mb-0">Total Buried</p>
             </div>
         </div>

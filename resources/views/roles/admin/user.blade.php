@@ -97,6 +97,7 @@
                             <th>Name</th>
                             <th>Father Name</th>
                             <th>Status</th>
+                            <th>burial_status</th>
                             <th>Joined</th>
                             <th>Actions</th>
                         </tr>
@@ -113,6 +114,13 @@
                                     {{ ucfirst($user->status ?? 'inactive') }}
                                 </span>
                             </td>
+
+                            <td>
+                                <span class="badge {{ $user->burial_status === 'buried' ? 'bg-dark' : 'bg-secondary' }}">
+                                {{ ucfirst($user->burial_status) }}
+                                </span>
+                            </td>
+
 
                             <td>{{ $user->created_at->format('d M Y') }}</td>
 

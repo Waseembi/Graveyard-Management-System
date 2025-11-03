@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('address');
             $table->enum('payment_method', ['cash', 'card']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('burial_status')->default('not_buried');
             $table->timestamp('registration_date')->useCurrent();
             $table->timestamps();
         });

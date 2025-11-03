@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Burial;
 
 
 
@@ -20,11 +21,11 @@ class AdminController extends Controller
         $totalUsers = User::count();
         $totalRegistrations = UserRegistration::count();
         $recentRegistrations = UserRegistration::latest()->take(5)->get();
-       // $totalBurials = Burial::count();
+        $totalBurials = Burial::count();
         //$totalPayments = Payment::count();
 
         // Pass to view
-        return view('roles.admindashboard', compact('totalUsers', 'totalRegistrations','recentRegistrations'));
+        return view('roles.admindashboard', compact('totalUsers', 'totalRegistrations','recentRegistrations', 'totalBurials'));
     }
 
     public function profile()

@@ -52,7 +52,7 @@ class UserController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $user->id,
-        'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:4048',
         'password' => 'nullable|string|min:6|confirmed',
     ]);
 
