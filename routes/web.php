@@ -11,6 +11,7 @@ use App\Http\Controllers\GraveSearchController;
 use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BurialController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Models\User;
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
@@ -111,3 +112,13 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+//------------  forget password -----------------------
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showRequestForm'])->name('password.request');
+Route::post('/forgot-password/send-code', [ForgotPasswordController::class, 'sendCode'])->name('password.sendCode');
+Route::get('/verify-code', [ForgotPasswordController::class, 'showVerifyForm'])->name('password.verify');
+Route::post('/verify-code', [ForgotPasswordController::class, 'verifyCode'])->name('password.checkCode');
+Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
+

@@ -78,6 +78,10 @@
             <div class="text-center mt-3">
                 <small>Don't have an account? <a href="{{ route('register') }}">Register here</a></small>
             </div>
+            <div class="text-center mt-2">
+                <small><a href="{{ route('password.request') }}">Forgot Password?</a></small>
+            </div>
+
         </div>
     </div>
 </div>
