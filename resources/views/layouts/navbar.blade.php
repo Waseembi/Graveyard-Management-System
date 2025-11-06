@@ -1,6 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
     <div class="container justify-content-center">
-        <a class="navbar-brand fw-bold me-5" href="{{ route('home') }}">🪦 Attock GMS</a>
+        <!-- Circular Logo -->
+            <div class="text-center mb-1">
+                <img src="{{ asset('websiteimages/loginlogo.jpeg') }}" 
+                     alt="GMS Logo" 
+                     class="img-fluid shadow-sm"
+                     style="width: 30px; height: 30px; border-radius: 50%;  object-fit: cover;">
+            </div>
+            {{-- 🪦 --}}
+        <a class="navbar-brand fw-bold me-5 ms-2" href="{{ route('home') }}">  Attock GMS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
         </button>
