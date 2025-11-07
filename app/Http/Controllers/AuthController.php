@@ -21,29 +21,29 @@ class AuthController extends Controller
 
 
 
-    public function login(Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
+    // public function login(Request $request) {
+    // $request->validate([
+    //     'email' => 'required|email',
+    //     'password' => 'required',
+    // ]);
 
-    $user = User::where('email', $request->email)->first();
+    // $user = User::where('email', $request->email)->first();
 
-    if ($user && password_verify($request->password, $user->password)) {
-        Auth::login($user);
+    // if ($user && password_verify($request->password, $user->password)) {
+    //     Auth::login($user);
 
-        // ✅ Redirect based on role
-        if ($user->role_id === 1) {
-            return redirect()->route('admin.dashboard');
-        }
+    //     // ✅ Redirect based on role
+    //     if ($user->role_id === 1) {
+    //         return redirect()->route('admin.dashboard');
+    //     }
 
-        //  return redirect()->route('user.dashboard');
-        return redirect()->route('home');
+    //     //  return redirect()->route('user.dashboard');
+    //     return redirect()->route('home');
         
-        }
+    //     }
 
-     return back()->withInput()->with('error', 'Invalid credentials');
-    }
+    //  return back()->withInput()->with('error', 'Invalid credentials');
+    // }
 
 
 
@@ -78,5 +78,48 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
+
+
+
+
+
+
+
+public function login(Request $request)
+{
+    // ✅ Step 1: Validate input first
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    // ✅ Step 2: Try to find user
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user) {
+        // If email doesn’t exist → validation-style error
+        return back()
+            ->withErrors(['email' => 'No account found with this email address.'])
+            ->withInput();
+    }
+
+    if (!password_verify($request->password, $user->password)) {
+        // If password doesn’t match → validation-style error
+        return back()
+            ->withErrors(['password' => 'Incorrect password.'])
+            ->withInput();
+    }
+
+    // ✅ Step 3: Login the user
+    Auth::login($user);
+
+    // ✅ Step 4: Redirect by role
+    if ($user->role_id === 1) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('home');
 }
 
+
+}
