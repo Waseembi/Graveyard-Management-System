@@ -3,8 +3,8 @@
 @section('content')
     {{-- success message --}}
     @if(session('success'))
-        <div id="error-alert" 
-         class="alert alert-danger text-center mx-auto position-fixed top-0 start-50 translate-middle-x py-1" 
+        <div id="success-alert" 
+         class="alert alert-success text-center mx-auto position-fixed top-0 start-50 translate-middle-x py-1" 
             style="max-width: 400px; z-index: 1050; margin-top: 6%; font-size: 0.9rem; line-height: 1.7;">
             {{ session('success') }}
         </div>
