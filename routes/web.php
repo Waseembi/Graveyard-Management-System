@@ -12,6 +12,7 @@ use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BurialController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Models\User;
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
@@ -122,3 +123,11 @@ Route::post('/verify-code', [ForgotPasswordController::class, 'verifyCode'])->na
 Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 
+
+
+// --------------verify email-------------------
+Route::get('register', [RegisterController::class, 'showForm'])->name('register');
+Route::post('register', [RegisterController::class, 'submitForm'])->name('register.submit');
+
+Route::get('verify-code', [RegisterController::class, 'showVerifyForm'])->name('verify.code.form');
+Route::post('verify-code', [RegisterController::class, 'verifyCode'])->name('verify.code');

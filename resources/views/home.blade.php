@@ -19,7 +19,7 @@
     <!-- 🌼 Features Section -->
     <section class="features-section py-5 bg-light ">
         <div class="container">
-            <h2 class="text-center fw-bold mb-5 mt-5 text-success">What You Can Do</h2>
+            <h2 class="text-center fw-bold mb-5 mt-5 ">What You Can Do</h2>
             <div class="row g-4 justify-content-center">
 
                 @php
