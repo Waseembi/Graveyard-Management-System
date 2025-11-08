@@ -1,4 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg shadow-sm sticky-top" style="background: linear-gradient(90deg, #2f2f2f, #62bb96);">
+
+
+
+
+
     <div class="container justify-content-center">
         <!-- Circular Logo -->
             <div class="text-center mb-1">
@@ -8,7 +13,7 @@
                      style="width: 30px; height: 30px; border-radius: 50%;  object-fit: cover;">
             </div>
             {{-- 🪦 --}}
-        <a class="navbar-brand fw-bold me-5 ms-2" href="{{ route('home') }}">  Attock GMS</a>
+        <a class="navbar-brand text-white fw-bold me-5 ms-2 " href="{{ route('home') }}" >  Attock GMS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -146,24 +151,30 @@
 
 <style>
 
-/* Base navbar link style */
-.navbar-nav .nav-link {
-    color: #fff !important;
-    font-weight: 500;
-    transition: color 0.3s ease;
+    .navbar {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Hover effect: yellow text */
+
+/* Base navbar link style */
+.navbar-nav .nav-link {
+    color: #f8f9fa !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect: emerald green */
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
-    color: #ffc107 !important;
-    text-decoration: none;
+    color: #27c985 !important;
+    transform: translateY(-1px);
 }
 
 /* Active link styling */
 .active-link {
-    color: #ffc107 !important;
+    color: #27c985 !important;
     font-weight: bold;
+    border-bottom: 2px solid #27c985;
 }
 
 /* Remove underline animation */
@@ -179,8 +190,9 @@
 /* Dropdown menu styling */
 .dropdown-menu {
     border: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     border-radius: 0.5rem;
+    background-color: #ffffff;
 }
 
 /* Dropdown items */
@@ -195,9 +207,16 @@
 
 /* Dropdown hover effect */
 .dropdown-item:hover {
-    background-color: #f8f9fa !important;
+    background-color: #e9f7ef !important;
     color: #000 !important;
 }
+
+/* Optional: Logo border glow */
+.navbar-brand img {
+    border: 2px solid #27c985 !important;
+    box-shadow: 0 0 6px rgba(39, 201, 133, 0.4);
+}
+
 
 
 
