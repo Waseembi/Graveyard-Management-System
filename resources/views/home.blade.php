@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid p-0 " style="margin-bottom: 5%">
+<div class="container-fluid p-0 " style="margin-bottom: 5%; ">
 
     <!-- 🌿 Hero Section -->
     <section class="hero-section position-relative d-flex align-items-center justify-content-center text-center text-white ">
-        <img src="{{ asset('images/b.png') }}" class="img-fluid position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index:-2;" alt="Graveyard Hero">
+        <img src="{{ asset('images/main.png') }}" class="img-fluid position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index:-2;" alt="Graveyard Hero">
         <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom right, rgba(0,0,0,0.6), rgba(25,135,84,0.2)); z-index:-1;"></div>
 
         <div class="content px-3">
@@ -51,7 +51,7 @@
 
 
     <!-- 🌟 Call to Action Section -->
-    <section class="cta-section position-relative text-center text-white py-5 mb-4  ">
+    <section class="cta-section position-relative text-center text-white py-5 mb-4 mt-4  ">
         <img src="{{ asset('images/leave.png') }}" alt="" 
              class="position-absolute top-0 start-0 w-100 h-100" 
              style="object-fit: cover; z-index:-2; filter: brightness(0.6);">
@@ -59,9 +59,11 @@
              style="background: linear-gradient(to bottom right, rgba(25,135,84,0.7), rgba(0,0,0,0.6)); z-index:-1;"></div>
 
         <div class="container position-relative">
-            <h2 class="fw-bold mb-3">Join the Mission to Preserve Heritage</h2>
-            <p class="mb-4 fs-5">Digitally manage graveyard data and honor those who came before us.</p>
-            <a href="{{ route('register') }}" class="btn btn-light fw-bold px-4 py-2 rounded-pill shadow-lg">Create an Account</a>
+            <p class="fs-5 fst-italic text-light mt-4 mb-4">
+    "كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ" <br>
+    <small class="text-light">“Every soul shall taste death.” — Qur’an 3:185</small>
+</p>
+
         </div>
     </section>
 
@@ -70,6 +72,7 @@
 
 <!-- 🌈 Styles -->
 <style>
+
 .hero-section {
     height: 520px;
     position: relative;

@@ -64,7 +64,7 @@
                         <i class="fas fa-envelope text-danger me-3 icon-contact"></i>
                         <div>
                             <h6 class="mb-1 fw-semibold">
-                                <a href="mailto:waseemkhan16537@gamil.pk" class="text-decoration-none text-dark">waseemkhan16537@gamil.pk</a>
+                                <a href="mailto:waseemkhan16537@gamil.pk" class="text-decoration-none text-dark">waseemkhan16537@gmail.com</a>
                             </h6>
                             <p class="text-muted">Email us anytime</p>
                         </div>

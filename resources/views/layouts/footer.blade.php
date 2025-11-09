@@ -22,7 +22,7 @@
                 <ul class="list-unstyled footer-links mt-2">
                     <li><a href="{{ url('/') }}">Home</a></li>
                     <li><a href="{{ url('/contact') }}">Contact</a></li>
-                    <li><a href="{{ url('/services') }}">Services</a></li>
+                    <li><a href="{{ url('/') }}">Services</a></li>
                     <li><a href="{{ url('/about') }}">About</a></li>
                 </ul>
             </div>
@@ -31,7 +31,7 @@
             <div class="col-md-4">
                 <h5 class="footer-heading">Contact</h5>
                 <p class="footer-description mb-1">Email us anytime:</p>
-                <a href="mailto:info@attockgraveyard.pk" class="footer-email">info@attockgraveyard.pk</a>
+                <a href="mailto:waseemkhan16537@gmail.com" class="footer-email">waseemkhan16537@gmail.com</a>
             </div>
 
         </div>

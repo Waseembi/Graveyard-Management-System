@@ -10,7 +10,7 @@
 
                 <!-- Text Content -->
                 <div class="col-lg-7">
-                    <h2 class="fw-bold  mb-4">Attock Graveyard Management System</h2>
+                    <h2 class="fw-bold  mb-4" >Attock Graveyard Management System</h2>
                     <p class="text-muted fs-5 mb-3">
                         Built with a mission to bring <strong>dignity, clarity, and ease</strong> to graveyard record management. We blend thoughtful design with reliable technology to help communities preserve legacy and honor those who came before.
                     </p>
@@ -32,7 +32,7 @@
                 </div>
 
                 <!-- Image -->
-                <div class="col-lg-5 text-center">
+                <div class="col-lg-5 text-center " style="margin-top: 3%;">
                     <div class="image-frame position-relative d-inline-block">
                         <img src="{{ asset('websiteimages/loginlogo.jpeg') }}" alt="Graveyard Image"
                              class="rounded-4 shadow-lg border border-secondary hero-image">
@@ -48,7 +48,7 @@
     <!-- 🌟 Vision & Mission -->
     <section class="py-5">
         <div class="container text-center">
-            <h3 class="fw-bold  mb-5">Our Vision & Mission</h3>
+            <h3 class="fw-bold  mb-5 text-success">Our Vision & Mission</h3>
             <div class="row g-4">
                 @foreach([
                     ['title' => 'Our Vision', 'text' => 'To create a digital graveyard management system that honors every individual and simplifies administrative processes for communities.'],
@@ -68,7 +68,7 @@
     <!-- 🌈 Why Choose Us -->
 <section class="py-5">
     <div class="container text-center">
-        <h3 class="fw-bold  mb-5">Why Choose Attock GMS?</h3>
+        <h3 class="fw-bold  mb-5 text-success">Why Choose Attock GMS?</h3>
         <div class="row g-4">
             @foreach([
                 ['icon' => 'fa-lock', 'title' => 'Secure Records', 'desc' => 'All burial records are safely stored and protected digitally.', 'color' => '#e74c3c'],
@@ -122,12 +122,12 @@
 .image-frame .top-left {
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
+    transform: translate(-95%, -95%);
 }
 .image-frame .bottom-right {
     bottom: 0;
     right: 0;
-    transform: translate(50%, 50%);
+    transform: translate(95%, 95%);
 }
 
 /* Check icon animation */

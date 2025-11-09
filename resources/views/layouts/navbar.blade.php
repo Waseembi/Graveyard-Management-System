@@ -7,11 +7,11 @@
             <div class="text-center ">
                 <img src="{{ asset('images/logogms-removebg.png') }}" 
                      alt="GMS Logo" 
-                     class="img-fluid"
+                     class="img-fluid ms-2"
                      style="width: 68px; height: 68px; border-radius: 40%;  object-fit: cover; ">
             </div>
             {{-- 🪦 --}}
-        <a class="navbar-brand text-white fw-bold me-5 ms-2 " href="{{ route('home') }}" >  Attock GMS</a>
+        <a class="navbar-brand text-white fw-bold  ms-1 " href="{{ route('home') }}" style="margin-right: 6%">  Attock GMS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -152,7 +152,7 @@
 .navbar {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
     height: 40px;          /* fix the navbar height */
-    min-height: 60px;      /* ensure it doesn’t shrink */
+    min-height: 58px;      /* ensure it doesn’t shrink */
 }
 
 
@@ -161,6 +161,7 @@
     color: #f8f9fa !important;
     font-weight: 500;
     transition: all 0.3s ease;
+    font-size: 102%;
 }
 
 /* Hover effect: emerald green */

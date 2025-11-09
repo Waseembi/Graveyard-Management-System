@@ -71,7 +71,7 @@
         </div>
         @endif
 
-    <div class="form-container mt-4">
+    <div class="form-container mt-4 mb-5">
         <h2 class="mb-4 text-center text-success">🪦 Graveyard Registration Form</h2>
 
         <form action="{{ route('registration.store') }}" method="POST">
