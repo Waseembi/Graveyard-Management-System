@@ -26,11 +26,20 @@ class RegisterController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email|unique:pending_users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
         ]);
 
         $code = rand(100000, 999999);
+
+        // Check if this email already exists in pending_users
+$existing = PendingUser::where('email', $request->email)->first();
+
+if ($existing) {
+    // Delete the old record (user didn't verify)
+    $existing->delete();
+}
+
 
         PendingUser::create([
             'name' => $request->name,
@@ -54,27 +63,53 @@ class RegisterController extends Controller
     }
 
     public function verifyCode(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'code' => 'required',
-        ]);
+{
+    $request->validate([
+        'email' => 'nullable|email', // allow nullable if you rely on session
+        'code'  => 'required|string',
+    ]);
 
-        $pending = PendingUser::where('email', $request->email)->first();
+    // Get email from request OR session (you redirected with ->with('email', ...))
+    $email = $request->input('email') ?? session('email');
 
-        if (!$pending || $pending->verification_code !== $request->code || now()->gt($pending->expires_at)) {
-            return back()->withErrors(['code' => 'Invalid or expired code']);
-        }
-
-        User::create([
-            'name' => $pending->name,
-            'email' => $pending->email,
-            'password' => $pending->password,
-        ]);
-
-        $pending->delete();
-
-        return redirect()->route('login')->with('success', 'Account created successfully. You can now log in.');
+    if (!$email) {
+        return back()->withErrors(['email' => 'Email is required. Please go back to the registration page.']);
     }
+
+    // Normalize the code user submitted
+    $submittedCode = trim($request->input('code'));
+
+    // Find the pending user
+    $pending = PendingUser::where('email', $email)->first();
+
+    if (!$pending) {
+        return back()->withErrors(['code' => 'No pending verification request was found for this email.']);
+    }
+
+    // Check expiry first
+    if (now()->gt($pending->expires_at)) {
+        // optional: delete expired pending record to allow re-register
+        $pending->delete();
+        return back()->withErrors(['code' => 'Code has expired. Please register again or request a new code.']);
+    }
+
+    // Compare codes as strings (trim both sides)
+    if (trim((string)$pending->verification_code) !== $submittedCode) {
+        return back()->withErrors(['code' => 'Invalid verification code. Please check your email and try again.']);
+    }
+
+    // Code matches and not expired -> create user
+    User::create([
+        'name'     => $pending->name,
+        'email'    => $pending->email,
+        'password' => $pending->password, // already hashed
+    ]);
+
+    // Clean up pending record
+    $pending->delete();
+
+    return redirect()->route('login')->with('success', 'Account created successfully. You can now log in.');
+}
+
 }
 
