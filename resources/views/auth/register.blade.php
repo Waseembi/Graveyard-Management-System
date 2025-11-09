@@ -11,17 +11,18 @@
     </div>
 @endif
 
-<div class="d-flex justify-content-center align-items-center min-vh-100" style="background: linear-gradient(135deg, #e9f7ef, #ffffff); font-family: 'Poppins', sans-serif;">
+<div class="d-flex justify-content-center align-items-center min-vh-100 mb-5" style="background: linear-gradient(135deg, #e9f7ef, #ffffff); font-family: 'Poppins', sans-serif;">
+
     <div class="p-4 shadow-lg bg-white rounded-4" style="width: 100%; max-width: 450px; margin-top: 3%; backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.9); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);">
         
         <!-- Logo -->
-        <div class="text-center mb-2">
-            <img src="{{ asset('websiteimages/loginlogo.jpeg') }}" alt="Attock GMS Logo" class="shadow-sm"
-                 style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid #e0e0e0; background: white; object-fit: cover;">
+        <div class="text-center " style="margin-top: -4%">
+            <img src="{{ asset('images/logogms-removebg.png') }}" alt="Attock GMS Logo" class=""
+                 style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
         </div>
 
         <!-- Title -->
-        <h3 class="text-center fw-bold mb-1 text-dark">Create Your Account</h3>
+        <h3 class="text-center fw-bold mb-1 text-dark" style="margin-top: -1%">Create Your Account</h3>
         <p class="text-center text-muted mb-4">
             Join <span class="text-success fw-semibold">Attock GMS</span> and manage records effortlessly.
         </p>

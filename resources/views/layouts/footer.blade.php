@@ -1,6 +1,6 @@
 {{-- Elegant Emerald Footer --}}
-<footer class="footer-section pt-5 pb-3">
-    <div class="container">
+<footer class="footer-section pt-3 pb-2" >
+    <div class="container" >
         <div class="row g-4 text-center text-md-start">
 
             <!-- About -->
@@ -36,9 +36,9 @@
 
         </div>
 
-        <hr class="footer-divider mt-4">
+        <hr class="footer-divider mt-2 ">
 
-        <div class="text-center mt-3">
+        <div class="text-center mt-2">
             <small class="footer-copy">&copy; {{ date('Y') }} Attock Graveyard Management System. All rights reserved.</small>
         </div>
     </div>
@@ -107,7 +107,7 @@
 }
 
 .footer-divider {
-    border-color: #333;
+    border-color: #cec6c6;
 }
 
 .footer-copy {

@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="about-wrapper">
+<div class="about-wrapper" >
 
     <!-- 🌿 Hero Section -->
-    <section class="py-5 bg-gradient ">
+    <section class="py-5 bg-gradient " >
         <div class="container">
             <div class="row align-items-center g-5 flex-column-reverse flex-lg-row" style="margin-top: -2%;">
 
                 <!-- Text Content -->
                 <div class="col-lg-7">
-                    <h2 class="fw-bold text-success mb-4">Attock Graveyard Management System</h2>
+                    <h2 class="fw-bold  mb-4">Attock Graveyard Management System</h2>
                     <p class="text-muted fs-5 mb-3">
                         Built with a mission to bring <strong>dignity, clarity, and ease</strong> to graveyard record management. We blend thoughtful design with reliable technology to help communities preserve legacy and honor those who came before.
                     </p>
@@ -35,7 +35,7 @@
                 <div class="col-lg-5 text-center">
                     <div class="image-frame position-relative d-inline-block">
                         <img src="{{ asset('websiteimages/loginlogo.jpeg') }}" alt="Graveyard Image"
-                             class="rounded-4 shadow-lg border border-success hero-image">
+                             class="rounded-4 shadow-lg border border-secondary hero-image">
                         <div class="corner-dot top-left"></div>
                         <div class="corner-dot bottom-right"></div>
                     </div>
@@ -48,7 +48,7 @@
     <!-- 🌟 Vision & Mission -->
     <section class="py-5">
         <div class="container text-center">
-            <h3 class="fw-bold text-success mb-5">Our Vision & Mission</h3>
+            <h3 class="fw-bold  mb-5">Our Vision & Mission</h3>
             <div class="row g-4">
                 @foreach([
                     ['title' => 'Our Vision', 'text' => 'To create a digital graveyard management system that honors every individual and simplifies administrative processes for communities.'],
@@ -68,7 +68,7 @@
     <!-- 🌈 Why Choose Us -->
 <section class="py-5">
     <div class="container text-center">
-        <h3 class="fw-bold text-success mb-5">Why Choose Attock GMS?</h3>
+        <h3 class="fw-bold  mb-5">Why Choose Attock GMS?</h3>
         <div class="row g-4">
             @foreach([
                 ['icon' => 'fa-lock', 'title' => 'Secure Records', 'desc' => 'All burial records are safely stored and protected digitally.', 'color' => '#e74c3c'],
@@ -94,6 +94,7 @@
 /* Whole page background */
 .about-wrapper {
     background-color: #f1f3f6; /* soft light gray */
+    padding-bottom: 4%;
 }
 
 /* Gradient background for hero */

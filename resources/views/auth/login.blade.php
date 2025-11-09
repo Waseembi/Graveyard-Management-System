@@ -24,12 +24,10 @@
         <div class="card-body p-4">
 
             <!-- Circular Logo -->
-            <div class="text-center mb-2">
-                <img src="{{ asset('websiteimages/loginlogo.jpeg') }}" 
-                     alt="GMS Logo" 
-                     class="img-fluid shadow-sm"
-                     style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid #eaeaea; object-fit: cover;">
-            </div>
+            <div class="text-center ">
+            <img src="{{ asset('images/logogms-removebg.png') }}" alt="Attock GMS Logo" class=""
+                 style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
+        </div>
 
             <h4 class="text-center mb-3 fw-bold text-dark">
                 Welcome to <span class="text-success">Attock GMS</span>
@@ -73,8 +71,9 @@
                 </small>
             </div>
             <div class="text-center mt-1">
-                <small>
-                    <a href="{{ route('password.request') }}" class="text-decoration-none text-muted">Forgot Password?</a>
+                <small class="text-muted">
+                    Forgot your password?
+                    <a href="{{ route('password.request') }}" class="text-success fw-semibold">Reset it here</a>
                 </small>
             </div>
 

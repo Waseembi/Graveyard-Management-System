@@ -1,16 +1,14 @@
-<nav class="navbar navbar-expand-lg shadow-sm sticky-top" style="background: linear-gradient(90deg, #2f2f2f, #62bb96);">
 
 
-
-
+<nav class="navbar navbar-expand-lg shadow-sm sticky-top" style="background: linear-gradient(270deg,#6abd9a, #2f2f2f);">
 
     <div class="container justify-content-center">
         <!-- Circular Logo -->
-            <div class="text-center mb-1">
-                <img src="{{ asset('websiteimages/loginlogo.jpeg') }}" 
+            <div class="text-center ">
+                <img src="{{ asset('images/logogms-removebg.png') }}" 
                      alt="GMS Logo" 
-                     class="img-fluid shadow-sm"
-                     style="width: 30px; height: 30px; border-radius: 50%;  object-fit: cover;">
+                     class="img-fluid"
+                     style="width: 68px; height: 68px; border-radius: 40%;  object-fit: cover; ">
             </div>
             {{-- 🪦 --}}
         <a class="navbar-brand text-white fw-bold me-5 ms-2 " href="{{ route('home') }}" >  Attock GMS</a>
@@ -151,8 +149,10 @@
 
 <style>
 
-    .navbar {
+.navbar {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    height: 40px;          /* fix the navbar height */
+    min-height: 60px;      /* ensure it doesn’t shrink */
 }
 
 

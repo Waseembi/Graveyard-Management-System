@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 " style="margin-bottom: 5%">
 
     <!-- 🌿 Hero Section -->
-    <section class="hero-section position-relative d-flex align-items-center justify-content-center text-center text-white">
+    <section class="hero-section position-relative d-flex align-items-center justify-content-center text-center text-white ">
         <img src="{{ asset('images/b.png') }}" class="img-fluid position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index:-2;" alt="Graveyard Hero">
         <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom right, rgba(0,0,0,0.6), rgba(25,135,84,0.2)); z-index:-1;"></div>
 
