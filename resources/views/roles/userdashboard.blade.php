@@ -11,7 +11,7 @@
         </div>
 
         <!-- Stats Cards -->
-        <div class="row g-3 mb-4">
+        {{-- <div class="row g-3 mb-4">
             <div class="col-md-3">
                 <div class="card text-center shadow-sm border-0">
                     <div class="card-body">
@@ -79,7 +79,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 </div>

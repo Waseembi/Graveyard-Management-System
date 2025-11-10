@@ -63,7 +63,7 @@ class ForgotPasswordController extends Controller
 
     public function resetPassword(Request $request) {
         $request->validate([
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:4|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/  ',
         ]);
 
         $user = User::where('email', session('reset_email'))->first();
