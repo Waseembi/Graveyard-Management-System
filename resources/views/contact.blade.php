@@ -4,7 +4,7 @@
 
 {{-- Success Message --}}
 @if(session('success'))
-<div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+    <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
     position: fixed;
     top: 20px;
     left: 50%;
@@ -16,9 +16,9 @@
     font-weight: 500;
     font-size: 0.95rem;
     padding: 0.5rem 1rem;
-">      
-    {{ session('success') }}
-</div>
+    ">      
+        {{ session('success') }}
+    </div>
 @endif
 
 <!-- Hero Header -->
