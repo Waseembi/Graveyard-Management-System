@@ -36,6 +36,7 @@ class RegisterController extends Controller
         // Check if this email already exists in pending_users
 $existing = PendingUser::where('email', $request->email)->first();
 
+        
 if ($existing) {
     // Delete the old record (user didn't verify)
     $existing->delete();

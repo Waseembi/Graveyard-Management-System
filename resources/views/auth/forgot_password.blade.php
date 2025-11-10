@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('content')
+    {{-- error message --}}
+    @if($errors->any())
+        <div id="error-alert" 
+         class="alert alert-danger text-center mx-auto position-fixed top-0 start-50 translate-middle-x py-1" 
+            style="max-width: 400px; z-index: 1050; margin-top: 6%; font-size: 0.9rem; line-height: 1.7;">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
 <div class="container py-5">
     <div class="card mx-auto shadow-lg rounded-4" style="max-width: 400px; border: none; background: linear-gradient(0deg,#A3B18A, #EDE6D0 );">
         <div class="card-body p-4">

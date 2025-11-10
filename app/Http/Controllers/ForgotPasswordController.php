@@ -31,6 +31,8 @@ class ForgotPasswordController extends Controller
         });
 
         return redirect()->route('password.verify')->with('success', 'Verification code sent to your email. Code is valid for 1 minute.');
+
+
     }
 
     public function showVerifyForm() {
