@@ -32,7 +32,7 @@ class User_RegistrationController extends Controller
         // If CNIC is provided, check by CNIC
         $alreadyRegistered = UserRegistration::where('cnic', $request->cnic)->exists();
     } else {
-        // Otherwise, check by name + father_name + phone
+        // Otherwise, check by name + father_name + age
         $alreadyRegistered = UserRegistration::where('name', $request->name)
             ->where('father_name', $request->father_name)
             ->where('age', $request->age)

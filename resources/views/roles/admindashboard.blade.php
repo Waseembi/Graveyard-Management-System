@@ -44,8 +44,15 @@
                 </div>
             </div>
         </div> --}}
+
+
+
+
+
+
+
         <!-- Quick Actions -->
-<div class="row g-3 mb-4">
+{{-- <div class="row g-3 mb-4">
             <div class="col-md-3">
                 <div class="card text-center shadow border-0" style="background: linear-gradient(135deg, #4CAF50, #81C784); color: white;">
                     <div class="card-body">
@@ -85,43 +92,63 @@
             </div>
         </div>
     </div>
+</div> --}}
+
+
+
+<!-- Unified Green Stat Overview -->
+<div class="card shadow-sm border-0 text-white mb-4" style="background: linear-gradient(180deg,#1d9e7e, rgb(26, 158, 136));  border-radius: 10px;" >
+    <div class="card-body" >
+        <div class="row" >
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="bi bi-people-fill fs-3 me-2 ms-4 mt-1"  style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Total Users</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $totalUsers }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="bi bi-file-earmark-text-fill fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Total Registrations</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $totalRegistrations }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="bi bi-tree-fill fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Total Buried</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $totalBurials }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 d-flex align-items-center">
+                <i class="bi bi-wallet2 fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1 ">Payments</h6>
+                    <h3 class="fw-bold mb-0 text-center">0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-        <!-- Recent Activity -->
-        {{-- <div class="card shadow-sm border-0">
-            <div class="card-header bg-white">
-                <h6 class="mb-0">Recent Activity</h6>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Action</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2025-10-22</td>
-                            <td>Grave Request #124</td>
-                            <td><span class="badge bg-success">Approved</span></td>
-                        </tr>
-                        <tr>
-                            <td>2025-10-20</td>
-                            <td>Payment Submitted</td>
-                            <td><span class="badge bg-info text-dark">Verified</span></td>
-                        </tr>
-                        <tr>
-                            <td>2025-10-18</td>
-                            <td>Grave Request #125</td>
-                            <td><span class="badge bg-warning text-dark">Pending</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> --}}
+
+
+
+
+
+
+
+
+
+
+
+
+ 
         <!-- Recent Registrations -->
 <div class="card shadow-sm border-0 mt-4">
     <div class="card-header bg-white">
