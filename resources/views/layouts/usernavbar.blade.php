@@ -1,20 +1,27 @@
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
     <div class="text-center mb-4">
-        <h5>⚰️ Attock GMS</h5>
+        <img src="{{ asset('images/logogms-removebg.png') }}" alt="Attock GMS Logo" class=""
+                 style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin-bottom: -7%; margin-top: -12%;">
+        {{-- <h5>⚰️ Attock GMS</h5> --}}
     </div>
-    <a href="{{ route('user.dashboard') }}" class="{{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
-        <i class="fa-solid fa-house me-2"></i>Dashboard
+
+    <a href="{{ route('user.dashboard') }}" class="{{ request()->routeIs('user.dashboard') ? 'active' : '' }}" style="color: black;">
+        <i class="bi bi-house-door me-2" ></i><span>Dashboard</span>
     </a>
-    <a href="{{ route('user.register.create') }}"><i class="fa-solid fa-book me-2"></i>Register</a>
-    <a href="{{ route('family.create') }}"><i class="bi bi-people me-2"></i>Register For Family</a>
-    <a href="#"><i class="fa-solid fa-receipt me-2"></i>Payments</a>
-    <a href="{{ route('user.profile') }}"><i class="fa-solid fa-user-gear me-2"></i>Profile</a>
+
+    <a href="{{ route('user.register.create') }}" class="{{ request()->routeIs('user.register.create') ? 'active' : '' }}" style="color: black;"><i class="bi bi-journals me-2"></i><span>Register</span></a>
+
+    <a href="{{ route('family.create') }}" class="{{ request()->routeIs('family.create') ? 'active' : '' }}" style="color: black;"><i class="bi bi-people me-2"></i><span>Register For Family</span></a>
+
+    <a href="#" style="color: black;"><i class="bi bi-receipt me-2"  ></i><span>Payments</span></a>
+
+    <a href="{{ route('user.profile') }}" class="{{ request()->routeIs('user.profile') ? 'active' : '' }}" style="color: black;"><i class="bi bi-person-gear me-2"></i><span>Profile</span></a>
     
 
     <!-- 🌐 Back to Website -->
     <a href="{{ route('home') }}">
-        <i class="fa-solid fa-globe me-2 text-info"></i> Back to Website
+        <i class="fa-solid fa-globe me-2 mt-3 text-info"  ></i> <span style="color: black;">Back to Website</span>
     </a>
 
     <form method="POST" action="{{ route('logout') }}" class="mt-3 px-3">
@@ -26,7 +33,7 @@
 </div>
 
 <!-- Top Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-3" id="topNavbar">
+<nav class="navbar navbar-expand-lg  shadow-sm px-3" id="topNavbar" style="background-color: #ffffff; ">
     <div class="container-fluid">
         <!-- Toggle Button -->
         <button class="btn btn-outline-secondary me-3" id="toggleSidebarBtn">
