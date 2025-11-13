@@ -9,24 +9,96 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Burial;
-
+use Illuminate\Support\Facades\DB;
+use carbon\Carbon;
+use App\Models\Payment;
 
 
 class AdminController extends Controller
 {
-    // AdminController
-     public function index()
-    {
-        // ✅ Count records
-        $totalUsers = User::count();
-        $totalRegistrations = UserRegistration::count();
-        $recentRegistrations = UserRegistration::latest()->take(5)->get();
-        $totalBurials = Burial::count();
-        //$totalPayments = Payment::count();
 
-        // Pass to view
-        return view('roles.admindashboard', compact('totalUsers', 'totalRegistrations','recentRegistrations', 'totalBurials'));
+    // AdminController
+    public function index()
+{
+    // -------------------------------
+    // 1️⃣ Registrations per year
+    // -------------------------------
+    $registrationsPerYear = UserRegistration::select(
+        DB::raw('YEAR(registration_date) as year'),
+        DB::raw('COUNT(*) as total')
+    )
+    ->groupBy('year')
+    ->orderBy('year')
+    ->pluck('total', 'year')
+    ->toArray();
+
+    // Determine year range from data (fallback to current year)
+    if (!empty($registrationsPerYear)) {
+        $minYear = min(array_keys($registrationsPerYear));
+        $maxYear = max(array_keys($registrationsPerYear));
+    } else {
+        $minYear = $maxYear = date('Y');
+        $registrationsPerYear = [];
     }
+
+    $years = range($minYear, $maxYear);
+
+    // Fill missing years with 0
+    $registrationsData = [];
+    foreach ($years as $year) {
+        $registrationsData[] = $registrationsPerYear[$year] ?? 0;
+    }
+
+    // -------------------------------
+    // 2️⃣ Burials per year
+    // -------------------------------
+    $burialsPerYear = Burial::select(
+        DB::raw('YEAR(date_of_death) as year'),
+        DB::raw('COUNT(*) as total')
+    )
+    ->groupBy('year')
+    ->orderBy('year')
+    ->pluck('total', 'year')
+    ->toArray();
+
+    // Fill burials data for same years
+    $burialsData = [];
+    foreach ($years as $year) {
+        $burialsData[] = $burialsPerYear[$year] ?? 0;
+    }
+
+    // -------------------------------
+    // 3️⃣ Status breakdown
+    // -------------------------------
+    $statusCounts = UserRegistration::select('status', DB::raw('COUNT(*) as total'))
+        ->groupBy('status')
+        ->pluck('total', 'status')
+        ->toArray();
+
+    // -------------------------------
+    // 4️⃣ Other counts
+    // -------------------------------
+    $totalUsers = User::count();
+    $totalRegistrations = UserRegistration::count();
+    $recentRegistrations = UserRegistration::latest()->take(5)->get();
+    $totalBurials = Burial::count();
+
+    // -------------------------------
+    // 5️⃣ Pass all to view
+    // -------------------------------
+    return view('roles.admindashboard', compact(
+        'totalUsers', 
+        'totalRegistrations',
+        'recentRegistrations',
+        'totalBurials',
+        'years',
+        'registrationsData',
+        'burialsData',
+        'statusCounts'
+    ));
+}
+
+
 
     public function profile()
     {
@@ -42,15 +114,15 @@ class AdminController extends Controller
 
 
     public function updateProfile(Request $request)
-{
-    $admin = Auth::user();
+    {
+        $admin = Auth::user();
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $admin->id,
-        'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'password' => 'nullable|string|min:6|confirmed',
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $admin->id,
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
 
     // Update image
     if ($request->hasFile('profile_image')) {

@@ -4,11 +4,11 @@
 <div class="content" id="mainContent">
     <div class="container-fluid">
 
+
         <!-- Welcome -->
         <div class="mb-4">
             <h4>Welcome, {{ Auth::user()->name ?? 'User' }} 👋</h4>
         </div>
-
 
 
 
@@ -47,12 +47,6 @@
                 </div>
             </div>
         </div> --}}
-
-
-
-
-
-
 
         <!-- Quick Actions -->
 {{-- <div class="row g-3 mb-4">
@@ -100,7 +94,7 @@
 
 
 <!-- Unified Green Stat Overview -->
-<div class="card shadow-sm border-0 text-white mb-4" style="background: linear-gradient(180deg,#1d9e7e, rgb(26, 158, 136));  border-radius: 10px;" >
+<div class="card shadow-sm border-0 text-white mb-4" style="background: linear-gradient(180deg,#1d9e7e, rgb(26, 158, 136));  border-radius: 10px; padding:1%;" >
     <div class="card-body" >
         <div class="row" >
             <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
@@ -141,38 +135,47 @@
 
 
 
- <!-- Charts Section -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white border-0 fw-semibold">Email Sent</div>
-                    <div class="card-body">
-                        <canvas id="emailChart" height="150"></canvas>
-                    </div>
-                </div>
+    <!-- Charts Section -->
+<div class="row g-4 mb-4">
+    <!-- Registrations Per Year -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-3 h-70">
+            <div class="card-header bg-white border-bottom fw-semibold d-flex align-items-center">
+                <i class="bi bi-bar-chart-line-fill text-success me-2 fs-5"></i>
+                <span>Registrations Per Year</span>
             </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white border-0 fw-semibold">Revenue</div>
-                    <div class="card-body">
-                        <canvas id="revenueChart" height="150"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white border-0 fw-semibold">Monthly Earnings</div>
-                    <div class="card-body">
-                        <canvas id="earningsChart" height="150"></canvas>
-                    </div>
-                </div>
+            <div class="card-body bg-light-subtle">
+                <canvas id="registrationsChart" height="160"></canvas>
             </div>
         </div>
+    </div>
 
+    <!-- Burials Per Year -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-3 h-70">
+            <div class="card-header bg-white border-bottom fw-semibold d-flex align-items-center">
+                <i class="bi bi-graph-up-arrow text-primary me-2 fs-5"></i>
+                <span>Burials Per Year</span>
+            </div>
+            <div class="card-body bg-light-subtle">
+                <canvas id="burialsChart" height="160"></canvas>
+            </div>
+        </div>
+    </div>
 
-
-
-
+    <!-- Registration Status -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-3 h-90">
+            <div class="card-header bg-white border-bottom fw-semibold d-flex align-items-center">
+                <i class="bi bi-pie-chart-fill text-warning me-2 fs-5"></i>
+                <span>Registration Status</span>
+            </div>
+            <div class="card-body bg-light-subtle">
+                <canvas id="statusChart" height="190"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -217,65 +220,84 @@
 
 
 
-
-
-
-
-
-
-
-
     </div>
 </div>
 
 
 
 
+
+
+
+
+
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // Email Sent Chart (Line)
-    new Chart(document.getElementById('emailChart'), {
-        type: 'line',
-        data: {
-            labels: ['2010','2012','2014','2016','2018','2020'],
-            datasets: [{
-                label: 'Emails',
-                data: [30, 40, 60, 45, 80, 90],
-                backgroundColor: 'rgba(30,187,161,0.2)',
-                borderColor: '#1ebba1',
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: { plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}} }
-    });
 
-    // Revenue Chart (Bar)
-    new Chart(document.getElementById('revenueChart'), {
+<script>
+    const years = @json($years);
+    const registrationsData = @json($registrationsData);
+    const burialsData = @json($burialsData);
+    const statusData = @json(array_values($statusCounts));
+    const statusLabels = @json(array_keys($statusCounts));
+
+    // --- Registrations Chart ---
+    new Chart(document.getElementById('registrationsChart'), {
         type: 'bar',
         data: {
-            labels: ['2010','2012','2014','2016','2018','2020'],
+            labels: years,
             datasets: [{
-                label: 'Revenue',
-                data: [20, 30, 50, 40, 70, 90],
-                backgroundColor: '#43a047'
+                label: 'Registrations',
+                data: registrationsData,
+                backgroundColor: 'rgba(76, 175, 80, 0.2)'
             }]
         },
-        options: { plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}} }
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
     });
 
-    // Monthly Earnings (Doughnut)
-    new Chart(document.getElementById('earningsChart'), {
-        type: 'doughnut',
+    // --- Burials Chart ---
+    new Chart(document.getElementById('burialsChart'), {
+        type: 'line',
         data: {
-            labels: ['Marketplace','Last Week','Last Month'],
+            labels: years,
             datasets: [{
-                data: [3654, 954, 8462],
-                backgroundColor: ['#1ebba1','#81C784','#C8E6C9']
+                label: 'Burials',
+                data: burialsData,
+                borderColor: '#4caf50',
+                backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                tension: 0.3,
+                fill: true
             }]
         },
-        options: { plugins:{legend:{display:false}} }
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // --- Status Doughnut Chart ---
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: statusLabels,
+            datasets: [{
+                data: statusData,
+                backgroundColor: ['#1d9e7e', '#ffb74d', '#e57373']
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
     });
 </script>
+
+
+
+
+
+
 @endsection
