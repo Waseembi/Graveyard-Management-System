@@ -60,7 +60,7 @@
 
       
         <!-- Stats Section -->
-<div class="row g-3 mb-4">
+{{-- <div class="row g-3 mb-4">
     <div class="col-md-3">
         <div class="stat-card bg-gradient-success d-flex align-items-center">
             <div class="stat-icon me-3">
@@ -108,79 +108,123 @@
             </div>
         </div>
     </div>
+</div> --}}
+
+<!-- Unified Green Stat Overview -->
+<div class="card shadow-sm border-0 text-white mb-4" style="background: linear-gradient(180deg,#1d9e7e, rgb(26, 158, 136));  border-radius: 10px; " >
+    <div class="card-body" >
+        <div class="row" >
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="fa-solid fa-users fs-3 me-2 ms-4 mt-1"  style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Total Registrations</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $stats['total'] }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="fa-solid fa-user-check fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Approved Users</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $stats['approved'] }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="fa-solid fa-hourglass-half fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 6%; padding-right: 6%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Pending Users</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $stats['pending'] }}</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 d-flex align-items-center">
+                <i class="fa-solid fa-user-slash fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1 ">Buried Users</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $stats['buried'] }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-        <!-- User Table -->
-        <div class="card shadow-sm border-0 rounded-4">
-            <div class="card-header bg-white fw-semibold">
-                User List
-            </div>
-            <div class="card-body table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
+       <!-- User Table -->
+<div class="card shadow-lg border-0 rounded-4 mt-5">
+    <div class="card-header bg-success text-white fw-semibold d-flex justify-content-between align-items-center">
+        <span><i class="fa-solid fa-users me-2"></i> User List</span>
+        <span class="badge bg-light text-success">{{ $registrations->total() }} Users</span>
+    </div>
+
+    <div class="card-body table-responsive">
+        <table class="table table-hover align-middle table-borderless">
+            <thead class="table-success">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Father Name</th>
+                    <th>Status</th>
+                    <th>Burial Status</th>
+                    <th>Joined</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($registrations as $index => $user)
                     <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Father Name</th>
-                        <th>Status</th>
-                        <th>Burial Status</th>
-                        <th>Joined</th>
-                        <th>Actions</th>
+                        <td class="fw-semibold text-muted">{{ $index + $registrations->firstItem() }}</td>
+                        <td class="fw-bold text-dark">{{ $user->name }}</td>
+                        <td>{{ $user->father_name }}</td>
+
+                        <td>
+                            <span class="badge rounded-pill 
+                                {{ $user->status == 'approved' ? 'bg-success' : ($user->status == 'pending' ? 'bg-warning text-dark' : 'bg-secondary') }}">
+                                {{ ucfirst($user->status) }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge rounded-pill 
+                                {{ $user->burial_status == 'buried' ? 'bg-dark' : 'bg-secondary' }}">
+                                {{ ucfirst($user->burial_status) }}
+                            </span>
+                        </td>
+
+                        <td class="text-muted">{{ $user->created_at->format('d M Y') }}</td>
+
+                        <td class="text-center">
+                            <a href="{{ route('admin.users.show', $user->id) }}" 
+                               class="btn btn-sm btn-outline-success rounded-pill me-1">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                            <a href="{{ route('admin.users.edit', $user->id) }}" 
+                               class="btn btn-sm btn-outline-warning rounded-pill me-1">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <form action="{{ route('admin.users.destroy', $user->id) }}" 
+                                  method="POST" class="d-inline delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-danger rounded-pill delete-user">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
-                    </thead>
+                @endforeach
+            </tbody>
+        </table>
 
-                    <tbody>
-                    @foreach($registrations as $index => $user)
-                        <tr>
-                            <td>{{ $index + $registrations->firstItem() }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->father_name }}</td>
-
-                            <td>
-                                <span class="badge bg-{{ $user->status == 'approved' ? 'success' : ($user->status == 'pending' ? 'warning' : 'secondary') }}">
-                                    {{ ucfirst($user->status) }}
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="badge {{ $user->burial_status == 'buried' ? 'bg-dark' : 'bg-secondary' }}">
-                                    {{ ucfirst($user->burial_status) }}
-                                </span>
-                            </td>
-
-                            <td>{{ $user->created_at->format('d M Y') }}</td>
-
-                            <td>
-                                <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-sm btn-info">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning">
-                                    <i class="fa-solid fa-pen"></i>
-                                </a>
-
-                                <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                      method="POST" class="d-inline delete-form">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-sm btn-danger delete-user">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                <div class="mt-3">
-                    {{ $registrations->links() }}
-                </div>
-
-            </div>
+        <!-- Pagination -->
+        <div class="mt-3">
+            {{ $registrations->links('pagination::bootstrap-5') }}
         </div>
+    </div>
+</div>
+        
     </div>
 </div>
 
@@ -252,6 +296,46 @@ setTimeout(function() {
     .bg-gradient-info    { background: linear-gradient(135deg, #4c8bf5, #2962ff); }
     .bg-gradient-warning { background: linear-gradient(135deg, #ffb300, #ff8f00); }
     .bg-gradient-dark    { background: linear-gradient(135deg, #444, #222); }
+
+
+    /* Card header */
+    .card-header.bg-gradient-dark {
+        background: linear-gradient(135deg, #444, #222);
+        border-radius: 12px 12px 0 0;
+        font-size: 1rem;
+    }
+
+    /* Table row hover effect */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+        transform: translateY(-2px);
+        transition: 0.2s ease;
+    }
+
+    /* Badge styling */
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.65rem;
+        font-weight: 500;
+    }
+
+    /* Action buttons */
+    .btn-info, .btn-warning, .btn-danger {
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-info:hover {
+        background-color: #3bb3ff;
+    }
+
+    .btn-warning:hover {
+        background-color: #ffb84d;
+    }
+
+    .btn-danger:hover {
+        background-color: #d33;
+    }
 
 </style>
 

@@ -80,8 +80,12 @@ class AdminController extends Controller
     // -------------------------------
     $totalUsers = User::count();
     $totalRegistrations = UserRegistration::count();
-    $recentRegistrations = UserRegistration::latest()->take(5)->get();
     $totalBurials = Burial::count();
+
+    //pagination
+    $recentRegistrations = UserRegistration::latest()->paginate(2);
+
+
 
     // -------------------------------
     // 5️⃣ Pass all to view

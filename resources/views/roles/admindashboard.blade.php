@@ -213,6 +213,12 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Pagination -->
+        <div class="mt-3">
+            {{ $recentRegistrations->links('pagination::bootstrap-5') }}
+        </div>
+
 </div>
 
 
