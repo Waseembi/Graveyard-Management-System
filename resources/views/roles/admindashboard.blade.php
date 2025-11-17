@@ -132,55 +132,52 @@
     </div>
 </div>
 
-
-
-
     <!-- Charts Section -->
-<div class="row g-4 mb-4">
+<div class="row g-4 mb-4 mt-3">
+    
     <!-- Registrations Per Year -->
     <div class="col-md-4">
-        <div class="card shadow-sm border-0 rounded-3 h-70">
-            <div class="card-header bg-white border-bottom fw-semibold d-flex align-items-center">
+        <div class="dashboard-card">
+            <div class="dashboard-header">
                 <i class="bi bi-bar-chart-line-fill text-success me-2 fs-5"></i>
-                <span>Registrations Per Year</span>
+                Registrations Per Year
             </div>
-            <div class="card-body bg-light-subtle">
-                <canvas id="registrationsChart" height="160"></canvas>
+            <div class="dashboard-body">
+                <canvas id="registrationsChart" height="170"></canvas>
             </div>
         </div>
     </div>
 
     <!-- Burials Per Year -->
     <div class="col-md-4">
-        <div class="card shadow-sm border-0 rounded-3 h-70">
-            <div class="card-header bg-white border-bottom fw-semibold d-flex align-items-center">
+        <div class="dashboard-card">
+            <div class="dashboard-header">
                 <i class="bi bi-graph-up-arrow text-primary me-2 fs-5"></i>
-                <span>Burials Per Year</span>
+                Burials Per Year
             </div>
-            <div class="card-body bg-light-subtle">
-                <canvas id="burialsChart" height="160"></canvas>
+            <div class="dashboard-body">
+                <canvas id="burialsChart" height="170"></canvas>
             </div>
         </div>
     </div>
 
     <!-- Registration Status -->
     <div class="col-md-4">
-        <div class="card shadow-sm border-0 rounded-3 h-90">
-            <div class="card-header bg-white border-bottom fw-semibold d-flex align-items-center">
+        <div class="dashboard-card">
+            <div class="dashboard-header">
                 <i class="bi bi-pie-chart-fill text-warning me-2 fs-5"></i>
-                <span>Registration Status</span>
+                Registration Status
             </div>
-            <div class="card-body bg-light-subtle">
-                <canvas id="statusChart" height="190"></canvas>
+            <div class="dashboard-body">
+                <canvas id="statusChart" height="200"></canvas>
             </div>
         </div>
     </div>
+
 </div>
 
 
 
-
- 
         <!-- Recent Registrations -->
 <div class="card shadow-sm border-0 mt-4">
     <div class="card-header bg-white">
@@ -241,44 +238,56 @@
     const statusData = @json(array_values($statusCounts));
     const statusLabels = @json(array_keys($statusCounts));
 
-    // --- Registrations Chart ---
-    new Chart(document.getElementById('registrationsChart'), {
+    // Create gradient for charts
+    function createGradient(ctx, color) {
+        const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+        gradient.addColorStop(0, color + "B3"); 
+        gradient.addColorStop(1, color + "1A"); 
+        return gradient;
+    }
+
+    // Registrations Chart
+    const regCtx = document.getElementById('registrationsChart').getContext('2d');
+    new Chart(regCtx, {
         type: 'bar',
         data: {
             labels: years,
             datasets: [{
                 label: 'Registrations',
                 data: registrationsData,
-                backgroundColor: 'rgba(76, 175, 80, 0.2)'
+                backgroundColor: createGradient(regCtx, "#4caf50")
             }]
         },
         options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } },
+            animation: { duration: 900 }
         }
     });
 
-    // --- Burials Chart ---
-    new Chart(document.getElementById('burialsChart'), {
+    // Burials Chart
+    const burCtx = document.getElementById('burialsChart').getContext('2d');
+    new Chart(burCtx, {
         type: 'line',
         data: {
             labels: years,
             datasets: [{
                 label: 'Burials',
                 data: burialsData,
-                borderColor: '#4caf50',
-                backgroundColor: 'rgba(76, 175, 80, 0.2)',
-                tension: 0.3,
+                borderColor: "#1d9e7e",
+                backgroundColor: createGradient(burCtx, "#1d9e7e"),
+                tension: 0.4,
                 fill: true
             }]
         },
         options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } },
+            animation: { duration: 900 }
         }
     });
 
-    // --- Status Doughnut Chart ---
+    // Doughnut Chart
     new Chart(document.getElementById('statusChart'), {
         type: 'doughnut',
         data: {
@@ -290,7 +299,13 @@
         },
         options: {
             responsive: false,
-            plugins: { legend: { position: 'bottom' } }
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { padding: 18 }
+                }
+            },
+            cutout: '65%'
         }
     });
 </script>
@@ -298,6 +313,42 @@
 
 
 
+
+
+<style>
+    .dashboard-card {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        transition: transform .2s ease, box-shadow .2s ease;
+        background: #fff;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 26px rgba(0,0,0,0.15);
+    }
+
+    .dashboard-header {
+        background: #ffffff;
+        padding: 14px 18px;
+        font-weight: 600;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+    }
+
+    .dashboard-body {
+        padding: 20px;
+        background: linear-gradient(to bottom, #f8f9fa, #eef2f5);
+    }
+
+    canvas {
+        padding-top: 10px;
+    }
+</style>
 
 
 @endsection
