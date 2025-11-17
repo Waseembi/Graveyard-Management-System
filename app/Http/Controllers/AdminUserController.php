@@ -10,20 +10,51 @@ class AdminUserController extends Controller
 {
 
 //--------- Show all registrations  ----------
-    public function index(Request $request)
-    {
-        $query = UserRegistration::query();
+    // public function index(Request $request)
+    // {
+    //     $query = UserRegistration::query();
 
-        // Search by name or CNIC
-        if ($request->filled('search')) {
-            $query->where('name', 'like', "%{$request->search}%")
-                  ->orWhere('cnic', 'like', "%{$request->search}%");
-        }
+    //     // Search by name or CNIC
+    //     if ($request->filled('search')) {
+    //         $query->where('name', 'like', "%{$request->search}%")
+    //               ->orWhere('cnic', 'like', "%{$request->search}%");
+    //     }
 
-        $registrations = $query->latest()->paginate(10);
+    //     $registrations = $query->latest()->paginate(10);
 
-        return view('roles.admin.user', compact('registrations'));
+    //     return view('roles.admin.user', compact('registrations'));
+    // }
+
+// --------- Show all registrations ----------
+public function index(Request $request)
+{
+    $query = UserRegistration::query();
+
+    // Search by name or CNIC
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('father_name', 'like', "%{$search}%")
+              ->orWhere('cnic', 'like', "%{$search}%");
+        });
     }
+
+    // Paginated users
+    $registrations = $query->latest()->paginate(10);
+
+    // Dashboard Stats
+    $stats = [
+        'total'    => UserRegistration::count(),
+        'approved' => UserRegistration::where('status', 'approved')->count(),
+        'pending'  => UserRegistration::where('status', 'pending')->count(),
+        'buried'   => UserRegistration::where('burial_status', 'buried')->count(),
+    ];
+
+    return view('roles.admin.user', compact('registrations', 'stats'));
+}
+
 
     
 
