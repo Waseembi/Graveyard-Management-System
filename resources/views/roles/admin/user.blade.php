@@ -115,7 +115,7 @@
     <div class="card-body" >
         <div class="row" >
             <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
-                <i class="fa-solid fa-users fs-3 me-2 ms-4 mt-1"  style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <i class="fa-solid fa-users fs-4 me-2 ms-4 mt-1"  style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
                 <div class="mt-3 mb-3">
                     <h6 class="mb-1">Total Registrations</h6>
                     <h3 class="fw-bold mb-0 text-center">{{ $stats['total'] }}</h3>
@@ -123,7 +123,7 @@
             </div>
 
             <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
-                <i class="fa-solid fa-user-check fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <i class="fa-solid fa-user-check fs-4 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
                 <div class="mt-3 mb-3">
                     <h6 class="mb-1">Approved Users</h6>
                     <h3 class="fw-bold mb-0 text-center">{{ $stats['approved'] }}</h3>
@@ -131,7 +131,7 @@
             </div>
 
             <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
-                <i class="fa-solid fa-hourglass-half fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 6%; padding-right: 6%; border-radius: 60%;"></i>
+                <i class="fa-solid fa-hourglass-half fs-4 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 6%; padding-right: 6%; border-radius: 60%;"></i>
                 <div class="mt-3 mb-3">
                     <h6 class="mb-1">Pending Users</h6>
                     <h3 class="fw-bold mb-0 text-center">{{ $stats['pending'] }}</h3>
@@ -139,7 +139,7 @@
             </div>
 
             <div class="col-md-6 col-lg-3 d-flex align-items-center">
-                <i class="fa-solid fa-user-slash fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <i class="fa-solid fa-user-slash fs-4 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 5%; padding-bottom: 5%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
                 <div class="mt-3 mb-3">
                     <h6 class="mb-1 ">Buried Users</h6>
                     <h3 class="fw-bold mb-0 text-center">{{ $stats['buried'] }}</h3>
@@ -152,7 +152,7 @@
 
        <!-- User Table -->
 <div class="card shadow-lg border-0 rounded-4 mt-5">
-    <div class="card-header bg-success text-white fw-semibold d-flex justify-content-between align-items-center">
+    <div class="card-header  text-white fw-semibold d-flex justify-content-between align-items-center" style="background-color: #1d9e7e">
         <span><i class="fa-solid fa-users me-2"></i> User List</span>
         <span class="badge bg-light text-success">{{ $registrations->total() }} Users</span>
     </div>
@@ -230,7 +230,7 @@
 
 <!-- SweetAlert Delete Confirmation -->
 <script>
-$(function () {
+    $(function () {
     $(".delete-user").on("click", function () {
         const form = $(this).closest("form");
 
@@ -246,10 +246,10 @@ $(function () {
             if (result.isConfirmed) form.submit();
         });
     });
-});
+    });
 
-// Auto-remove alerts
-setTimeout(function() {
+    // Auto-remove alerts
+    setTimeout(function() {
         const alert = document.getElementById('success-alert', 'error-alert');
         if (alert) {
             alert.style.transition = 'opacity 0.5s ease';
