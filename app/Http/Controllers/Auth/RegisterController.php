@@ -97,7 +97,7 @@ if ($existing) {
 
     // Compare codes as strings (trim both sides)
     if (trim((string)$pending->verification_code) !== $submittedCode) {
-        return back()->withErrors(['code' => 'Invalid verification code. Please check your email and try again.']);
+        return back()->withErrors(['code' => 'Invalid verification code. Please check your email and try again.'])->with('email', $email);
     }
 
     // Code matches and not expired -> create user
