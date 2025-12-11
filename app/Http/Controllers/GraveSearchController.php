@@ -30,4 +30,6 @@ class GraveSearchController extends Controller
 
         return view('search', compact('results'));
     }
+    
+
 }

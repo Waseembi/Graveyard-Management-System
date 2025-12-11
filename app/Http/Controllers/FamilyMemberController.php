@@ -29,6 +29,8 @@ class FamilyMemberController extends Controller
         'address' => 'required|string|max:500',
         'relationship' => 'required|string|max:50',
         'payment_method' => 'required|in:cash,card',
+        'gender' => 'required|in:male,female',
+        
     ]);
 
     // ✅ Check if user is logged in
@@ -62,6 +64,7 @@ class FamilyMemberController extends Controller
         'phone' => $request->phone,
         'address' => $request->address,
         'payment_method' => $request->payment_method,
+        'gender' => $request->gender,
         'status' => 'pending',
     ]);
 
@@ -77,6 +80,7 @@ class FamilyMemberController extends Controller
         'address' => $request->address,
         'relationship' => $request->relationship,
         'payment_method' => $request->payment_method,
+        'gender' => $request->gender,
         'status' => 'pending',
     ]);
 

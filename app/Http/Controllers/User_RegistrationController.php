@@ -93,6 +93,7 @@ public function ustore(Request $request)
         'phone' => 'required|digits_between:7,15',
         'address' => 'required|string|max:500',
         'payment_method' => 'required|in:cash,card',
+        'gender' => 'required|in:male,female',
     ]);
 
     // Check for existing registration
@@ -128,6 +129,7 @@ public function ustore(Request $request)
             'phone' => $request->phone,
             'address' => $request->address,
             'payment_method' => $request->payment_method,
+            'gender' => $request->gender,
             'status' => 'pending', // 👈 default status
         ]);
 

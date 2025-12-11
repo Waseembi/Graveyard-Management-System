@@ -20,7 +20,8 @@ class UserRegistration extends Model
         'address',
         'payment_method',
         'status',
-         'burial_status',
+        'burial_status',
+        'gender',
     ];
 
     public function user() {

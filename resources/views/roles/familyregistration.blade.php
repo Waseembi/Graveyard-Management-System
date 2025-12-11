@@ -113,20 +113,31 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+                        <select name="gender" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-wallet2"></i> Payment Method</label>
+                        <select name="payment_method" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="cash">Cash</option>
+                            <option value="card">Card</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="row mb-4">
-    <div class="col-md-6">
-        <label class="form-label"><i class="bi bi-house-door-fill"></i> Address</label>
-        <textarea name="address" class="form-control" rows="2" required></textarea>
-    </div>
-    <div class="col-md-6">
-        <label class="form-label"><i class="bi bi-wallet2"></i> Payment Method</label>
-        <select name="payment_method" class="form-select" required>
-            <option value="">Select</option>
-            <option value="cash">Cash</option>
-            <option value="card">Card</option>
-        </select>
-    </div>
-</div>
+                    <div class="col-md-12">
+                        <label class="form-label"><i class="bi bi-house-door-fill"></i> Address</label>
+                        <textarea name="address" class="form-control" rows="3" required></textarea>
+                    </div>
+                </div>
 
 
                 <div class="text-center">

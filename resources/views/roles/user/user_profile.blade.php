@@ -27,8 +27,8 @@
 
         <!-- Header -->
         <div class="mb-4">
-            <h4 class="fw-semibold text-dark mb-1">
-                <i class="fa-solid fa-user-circle me-2 text-secondary"></i>User Profile
+            <h4 class="fw-bold text-success mb-1">
+                <i class="fa-solid fa-user-circle me-2"></i>User Profile
             </h4>
             <p class="text-muted mb-0">Manage your account and profile settings.</p>
         </div>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone');
             $table->text('address');
             $table->enum('payment_method', ['cash', 'card']);
+            $table->enum('gender', ['male', 'female']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('burial_status')->default('not_buried');
             $table->timestamp('registration_date')->useCurrent();
