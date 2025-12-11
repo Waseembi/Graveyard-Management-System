@@ -1,7 +1,14 @@
 @extends('layouts.adminapp')
 
 @section('content')
-
+{{-- Error Message --}}
+@if($errors->any())
+    <div id="error-alert" 
+         class="alert alert-danger text-center mx-auto position-fixed top-0 start-50 translate-middle-x py-1" 
+         style="max-width: 400px; z-index: 1050; margin-top: 6%; font-size: 0.9rem; line-height: 1.7;">
+        {{ $errors->first() }}
+    </div>
+@endif
 <div class="content" id="mainContent" style="margin-top: 3%;">
     <div class="container-fluid py-5">
 
@@ -24,7 +31,7 @@
                     <div class="col-12 col-md-4 text-center">
                         @if($admin->profile_image)
                             <img src="{{ asset('profile_images/admin/' . $admin->profile_image) }}" 
-                                 class="rounded-circle border shadow-sm mb-3" 
+                                 class="rounded-circle border border-3 border-success shadow-sm mb-3"
                                  width="130" height="130" style="object-fit: cover;">
                         @else
                             <img src="{{ asset('default-avatar.png') }}" 
@@ -111,4 +118,13 @@
     }
 </style>
 
+
+<script>
+setTimeout(() => {
+    document.querySelectorAll('#success-alert, #error-alert').forEach(alert => {
+        alert.classList.add('fade');
+        setTimeout(() => alert.remove(), 400);
+    });
+}, 4000);
+</script>
 @endsection
