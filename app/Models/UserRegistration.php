@@ -22,6 +22,7 @@ class UserRegistration extends Model
         'status',
         'burial_status',
         'gender',
+        'dob',
     ];
 
     public function user() {

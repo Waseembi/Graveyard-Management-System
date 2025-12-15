@@ -23,6 +23,8 @@ class User_RegistrationController extends Controller
         'phone' => 'required|digits_between:7,15',
         'address' => 'required|string|max:500',
         'payment_method' => 'required|in:cash,card',
+        'gender' => 'required|in:male,female',
+        'dob' => 'required|date',
     ]);
 
     // Check for existing registration
@@ -61,7 +63,9 @@ class User_RegistrationController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'payment_method' => $request->payment_method,
+            'gender' => $request->gender,
             'status' => 'pending', // 👈 default status
+            'dob' => $request->dob,
         ]);
 
     return redirect()->route('registration.create')
@@ -77,7 +81,9 @@ class User_RegistrationController extends Controller
 
 
 
-// <---- this is from use dashboard register   ---> 
+
+
+// <---- this is from user dashboard register   ---> 
 public function ucreate()
     {
         return view('roles.userregistration');
@@ -94,6 +100,7 @@ public function ustore(Request $request)
         'address' => 'required|string|max:500',
         'payment_method' => 'required|in:cash,card',
         'gender' => 'required|in:male,female',
+        'dob' => 'required|date',
     ]);
 
     // Check for existing registration
@@ -131,6 +138,7 @@ public function ustore(Request $request)
             'payment_method' => $request->payment_method,
             'gender' => $request->gender,
             'status' => 'pending', // 👈 default status
+            'dob' => $request->dob,
         ]);
 
     return redirect()->route('user.register.create')->with('success', 'Registration successfully done.');

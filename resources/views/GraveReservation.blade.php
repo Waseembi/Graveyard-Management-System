@@ -32,7 +32,7 @@
 </style>
 
 <div class="container mt-5">
-    {{-- success message --}}
+        {{-- success message --}}
         @if(session('success'))
             <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
                 position: absolute;
@@ -103,6 +103,21 @@
                 <div class="col-md-6">
                     <label class="form-label"><i class="bi bi-calendar-heart-fill"></i> Age</label>
                     <input type="number" name="age" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label"><i class="bi bi-calendar-date-fill"></i> Date of Birth</label>
+                    <input type="date" name="dob" class="form-control"  max="{{ date('Y-m-d') }}"required>
+                </div>        
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+                        <select name="gender" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label"><i class="bi bi-wallet-fill"></i> Payment Method</label>

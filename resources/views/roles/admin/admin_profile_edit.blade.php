@@ -1,6 +1,7 @@
 @extends('layouts.adminapp')
 
 @section('content')
+
 {{-- Error Message --}}
 @if($errors->any())
     <div id="error-alert" 
@@ -9,6 +10,7 @@
         {{ $errors->first() }}
     </div>
 @endif
+
 <div class="content" id="mainContent" style="margin-top: 3%;">
     <div class="container-fluid py-5">
 

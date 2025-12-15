@@ -9,6 +9,7 @@
                 background: linear-gradient(to right, #e0f7fa, #f1f8e9);
                 font-family: 'Segoe UI', sans-serif;
             }
+            
 
             .form-container {
                 background: white;
@@ -16,16 +17,25 @@
                 border-radius: 12px;
                 box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
                 max-width: 700px;
-                margin: 120px auto 40px auto;
+                margin: 60px auto;
             }
 
             .form-label i {
                 margin-right: 6px;
                 color: #00796b;
             }
+
+            .alert {
+                animation: fadeIn 0.5s ease-in-out;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
         </style>
 
-       {{-- success message --}}
+        {{-- success message --}}
         @if(session('success'))
             <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
                 position: absolute;
@@ -64,8 +74,7 @@
         </div>
         @endif
 
-        {{-- Family Member Registration Form --}}
-        <div class="form-container" style="margin-top: -1%;">
+        <div class="form-container" style="margin-top: 0%; margin-left: 13%; ">
             <h2 class="mb-4 text-center text-success">👨‍👩‍👧 Family Member Registration</h2>
 
             <form action="{{ route('family.store') }}" method="POST">
@@ -73,23 +82,12 @@
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label"><i class="bi bi-person-fill"></i> Name</label>
+                        <label class="form-label"><i class="bi bi-person-fill"></i> Full Name</label>
                         <input type="text" name="name" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-person-badge-fill"></i> Father Name</label>
                         <input type="text" name="father_name" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label"><i class="bi bi-calendar-heart-fill"></i> Age</label>
-                        <input type="number" name="age" class="form-control" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label"><i class="bi bi-telephone-fill"></i> Phone Number</label>
-                        <input type="text" name="phone" class="form-control" required>
                     </div>
                 </div>
 
@@ -108,12 +106,30 @@
                             <option value="sister">Sister</option>
                             <option value="son">Son</option>
                             <option value="daughter">Daughter</option>
+                            <option value="daughter">Wife</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
+                   
                 </div>
 
                 <div class="row mb-3">
+                     <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-telephone-fill"></i> Phone Number</label>
+                        <input type="text" name="phone" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-calendar-date-fill"></i> Date of Birth</label>
+                        <input type="date" name="dob" class="form-control"  max="{{ date('Y-m-d') }}"required>
+                    </div> 
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-calendar-heart-fill"></i> Age</label>
+                        <input type="number" name="age" class="form-control" required>
+                    </div>
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
                         <select name="gender" class="form-select" required>
@@ -122,34 +138,33 @@
                             <option value="female">Female</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label"><i class="bi bi-wallet2"></i> Payment Method</label>
+                        <label class="form-label"><i class="bi bi-wallet-fill"></i> Payment Method</label>
                         <select name="payment_method" class="form-select" required>
                             <option value="">Select</option>
                             <option value="cash">Cash</option>
                             <option value="card">Card</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <label class="form-label"><i class="bi bi-house-door-fill"></i> Address</label>
-                        <textarea name="address" class="form-control" rows="3" required></textarea>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-geo-alt-fill"></i> Address</label>
+                        <textarea name="address" class="form-control" rows="2" required></textarea>
                     </div>
                 </div>
-
+                
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-success px-4 py-2">
-                        <i class="bi bi-person-plus-fill"></i> Add Family Member
+                        <i class="bi bi-send-fill"></i> Submit Registration
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 
 <script>
     setTimeout(() => {

@@ -30,6 +30,7 @@ class FamilyMemberController extends Controller
         'relationship' => 'required|string|max:50',
         'payment_method' => 'required|in:cash,card',
         'gender' => 'required|in:male,female',
+        'dob' => 'required|date',
         
     ]);
 
@@ -65,6 +66,7 @@ class FamilyMemberController extends Controller
         'address' => $request->address,
         'payment_method' => $request->payment_method,
         'gender' => $request->gender,
+        'dob' => $request->dob,
         'status' => 'pending',
     ]);
 
@@ -81,6 +83,7 @@ class FamilyMemberController extends Controller
         'relationship' => $request->relationship,
         'payment_method' => $request->payment_method,
         'gender' => $request->gender,
+        'dob' => $request->dob,
         'status' => 'pending',
     ]);
 
