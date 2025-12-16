@@ -77,7 +77,7 @@
         <div class="form-container" style="margin-top: 0%; margin-left: 13%; ">
             <h2 class="mb-4 text-center text-success">🪦 Graveyard Registration Form</h2>
 
-            <form action="{{ route('family.store') }}" method="POST">
+            <form action="{{ route('user.register.store') }}" method="POST">
                 @csrf
 
                 <div class="row mb-3">
