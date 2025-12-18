@@ -43,6 +43,7 @@
                                     <th>Father Name</th>
                                     <th>Status</th>
                                     <th>Burial Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,6 +61,14 @@
                                             {{ ucfirst($reg->burial_status ?? 'Pending') }}
                                         </span>
                                     </td>
+                                    <td>
+                                        <a href="{{ route('user.registration.view', $reg->id) }}"
+                                           class="btn btn-sm btn-primary">View</a>
+                                        
+                                        <a href="{{ route('user.registration.edit', $reg->id) }}"
+                                           class="btn btn-sm btn-warning">Edit</a>
+                                    </td>
+
                                 </tr>
                                 @empty
                                 <tr>
@@ -90,9 +99,11 @@
                                     <th>Name</th>
                                     <th>Father Name</th>
                                     <th>Relation</th>
-                                    <th>CNIC</th>
+                                    {{-- <th>CNIC</th> --}}
                                     <th>Status</th>
                                     <th>Burial Status</th>
+                                    <th>Actions</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,13 +112,13 @@
                                     <td>{{ $member->name }}</td>
                                     <td>{{ $member->father_name }}</td>
                                     <td>{{ $member->relationship }}</td> 
-                                    <td>
+                                    {{-- <td>
                                         @if($member->cnic)
                                             {{ $member->cnic }}
                                         @else
                                             <span style="color: rgb(156, 155, 155)">NULL</span>
                                         @endif
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <span class="badge bg-{{ $reg->status === 'approved' ? 'success' : 'warning' }}">
                                             {{ ucfirst($reg->status) }}
@@ -122,6 +133,15 @@
                                             <span class="text-muted">NULL</span>
                                         @endif
                                     </td>
+                                    <td>
+                                        <a href="{{ route('user.family.view', $member->id) }}"
+                                           class="btn btn-sm btn-primary">View</a>
+                                        
+                                        <a href="{{ route('user.family.edit', $member->id) }}"
+                                           class="btn btn-sm btn-warning">Edit</a>
+                                    </td>
+
+
                                      
                                 </tr>
                                 @empty
@@ -142,4 +162,33 @@
 
     </div>
 </div>
+
+
+{{-- this is use for user_record_family_view and edit  back buttonn , when we click on back button it returns to family registraion table --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Activate tab from URL hash
+    const hash = window.location.hash;
+    if (hash) {
+        const trigger = document.querySelector(
+            'button[data-bs-target="' + hash + '"]'
+        );
+
+        if (trigger) {
+            const tab = new bootstrap.Tab(trigger);
+            tab.show();
+        }
+    }
+
+    // Update URL hash when user clicks tabs
+    document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(btn => {
+        btn.addEventListener('shown.bs.tab', function (e) {
+            history.replaceState(null, null, e.target.dataset.bsTarget);
+        });
+    });
+
+});
+</script>
+
 @endsection

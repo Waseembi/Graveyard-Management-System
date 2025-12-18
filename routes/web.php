@@ -72,6 +72,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/my-records', [UserRecordsController::class, 'index'])
     ->name('user.records');
 
+    Route::get('user/registration/{id}', [UserRecordsController::class, 'showRegistration'])
+        ->name('user.registration.view');
+
+    Route::get('user/registration/{id}/edit', [UserRecordsController::class, 'editRegistration'])
+        ->name('user.registration.edit');
+
+    Route::put('user/registration/{id}', [UserRecordsController::class, 'updateRegistration'])
+        ->name('user.registration.update');
+
+    Route::get('user/family/{id}', [UserRecordsController::class, 'showFamily'])
+        ->name('user.family.view');
+
+    Route::get('user/family/{id}/edit', [UserRecordsController::class, 'editFamily'])
+        ->name('user.family.edit');
+
+    Route::put('user/family/{id}', [UserRecordsController::class, 'updateFamily'])
+        ->name('user.family.update');
+
 
 });
 
