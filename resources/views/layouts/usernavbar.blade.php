@@ -14,7 +14,7 @@
 
     <a href="{{ route('family.create') }}" class="{{ request()->routeIs('family.create') ? 'active' : '' }}" style="color: black;"><i class="bi bi-people me-2"></i><span>Register For Family</span></a>
 
-    <a href="#" style="color: black;"><i class="bi bi-receipt me-2"  ></i><span>Payments</span></a>
+    <a href="{{ route('user.records') }}" style="color: black;"><i class="bi bi-receipt me-2"  ></i><span>My Registration</span></a>
 
     <a href="{{ route('user.profile') }}" class="{{ request()->routeIs('user.profile') ? 'active' : '' }}" style="color: black;"><i class="bi bi-person-gear me-2"></i><span>Profile</span></a>
     

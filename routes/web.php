@@ -14,6 +14,7 @@ use App\Http\Controllers\BurialController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\User;
+use App\Http\Controllers\UserRecordsController;
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
 Route::get('/about', function () {
@@ -65,6 +66,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/profile/edit', [UserController::class, 'editProfile'])->name('user.edit.profile');
     Route::post('/user/profile/update', [UserController::class, 'updateProfile'])->name('user.update.profile');
     Route::post('/user/profile/image', [UserController::class, 'updateImage'])->name('user.update.image');
+
+
+    //for my registrations
+    Route::get('/user/my-records', [UserRecordsController::class, 'index'])
+    ->name('user.records');
+
 
 });
 

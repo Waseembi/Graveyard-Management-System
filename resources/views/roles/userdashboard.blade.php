@@ -106,57 +106,55 @@
             </div>
         </div>
 
-        <!-- ================= RECENT ACTIVITY ================= -->
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-white fw-bold">
-                Recent Activity
-            </div>
-            <div class="card-body p-0">
-                <table class="table mb-0 table-striped">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Activity</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Grave Registered</td>
-                            <td>12 Sep 2025</td>
-                            <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>Payment Submitted</td>
-                            <td>10 Sep 2025</td>
-                            <td><span class="badge bg-warning">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>Marble Service Booked</td>
-                            <td>08 Sep 2025</td>
-                            <td><span class="badge bg-info">Processing</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <!-- ================= RECENT REGISTRATIONS ================= -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
+        <span>Recent Registrations</span>
+        {{-- {{ route('user.registrations.index') }} --}}
+        <a href="" class="btn btn-sm btn-outline-primary">
+            View All
+        </a>
+    </div>
 
-        <!-- ================= NOTIFICATIONS ================= -->
-        <div class="card shadow-sm border-0">
-            <div class="card-header bg-white fw-bold">
-                Notifications
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        💡 Your payment is pending approval.
-                    </li>
-                    <li class="list-group-item">
-                        📢 Marble service booking confirmed.
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Father Name</th>
+                    <th>Status</th>
+                    <th>Burial Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($recentRegistrations as $reg)
+                <tr>
+                    <td>{{ $reg->name }}</td>
+                    <td>{{ $reg->father_name }}</td>
+                    <td>
+                        <span class="badge bg-{{ $reg->status == 'approved' ? 'success' : 'warning' }}">
+                            {{ ucfirst($reg->status) }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge bg-{{ $reg->burial_status == 'completed' ? 'success' : 'secondary' }}">
+                            {{ ucfirst($reg->burial_status ?? 'Pending') }}
+                        </span>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="4" class="text-center text-muted">
+                        No registrations found
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 
     </div>
 </div>

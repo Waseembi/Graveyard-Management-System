@@ -22,12 +22,16 @@ class UserController extends Controller
 
     // Total registrations by user
     $totalRegistration = UserRegistration::where('user_id', $userId)->count();
-
     // Total family members added by user
     $familyCount = FamilyMember::where('user_id', $userId)->count();
 
+    $recentRegistrations = UserRegistration::where('user_id', $userId)
+        ->latest()
+        ->take(5)
+        ->get();
+
     // Services and Payments stay 0 as per your requirement
-    return view('roles.userdashboard', compact('totalRegistration', 'familyCount'));
+    return view('roles.userdashboard', compact('totalRegistration', 'familyCount', 'recentRegistrations'));
 }
 
 
