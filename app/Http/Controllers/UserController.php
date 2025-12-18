@@ -10,6 +10,7 @@ use App\Models\Grave;
 use App\Models\Burial;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use App\Models\FamilyMember;
 
 
 class UserController extends Controller
@@ -17,17 +18,18 @@ class UserController extends Controller
 
     public function index()
     {
-        $userId = Auth::id();
+    $userId = Auth::id();
 
-        $registrations = UserRegistration::where('user_id', $userId)->get();
-        $payments = Payment::where('user_id', $userId)->get();
-        $graves = Grave::whereHas('registration', function ($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })->get();
-        $burials = Burial::where('user_id', $userId)->get();
+    // Total registrations by user
+    $totalRegistration = UserRegistration::where('user_id', $userId)->count();
 
-        return view('roles.userdashboard', compact('registrations', 'payments', 'graves', 'burials'));
-    }
+    // Total family members added by user
+    $familyCount = FamilyMember::where('user_id', $userId)->count();
+
+    // Services and Payments stay 0 as per your requirement
+    return view('roles.userdashboard', compact('totalRegistration', 'familyCount'));
+}
+
 
 
 

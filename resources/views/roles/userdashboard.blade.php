@@ -31,49 +31,44 @@
         </div>
 
         <!-- ================= SUMMARY CARDS ================= -->
-        <div class="row mb-4">
-
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body text-center">
-                        <h6 class="text-muted">Total Registration</h6>
-                        <h3 class="fw-bold">0</h3>
-                        <i class="bi bi-geo-alt-fill fs-2 text-primary"></i>
-                    </div>
+        <!-- Unified Green Stat Overview -->
+   <div class="card shadow-sm border-0 text-white mb-4" style="background: linear-gradient(180deg,#1d9e7e, rgb(26, 158, 136));  border-radius: 10px; padding:1%;" >
+     <div class="card-body" >
+        <div class="row" >
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="bi bi-person-fill fs-3 me-2 ms-4 mt-1"  style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Total Registration</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $totalRegistration  }}</h3>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body text-center">
-                        <h6 class="text-muted">Family Members</h6>
-                        <h3 class="fw-bold">0</h3>
-                        <i class="bi bi-people-fill fs-2 text-success"></i>
-                    </div>
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="bi bi-people-fill  fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Family Members</h6>
+                    <h3 class="fw-bold mb-0 text-center">{{ $familyCount }}</h3>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body text-center">
-                        <h6 class="text-muted">Services Booked</h6>
-                        <h3 class="fw-bold">0</h3>
-                        <i class="bi bi-tools fs-2 text-danger"></i>
-                    </div>
+            <div class="col-md-6 col-lg-3 border-end border-white d-flex align-items-center">
+                <i class="bi bi-tools fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1">Services Booked</h6>
+                    <h3 class="fw-bold mb-0 text-center">0</h3>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body text-center">
-                        <h6 class="text-muted">Payments</h6>
-                        <h3 class="fw-bold">0</h3>
-                        <i class="bi bi-cash-coin fs-2 text-warning"></i>
-                    </div>
+            <div class="col-md-6 col-lg-3 d-flex align-items-center">
+                <i class="bi bi-cash-coin fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
+                <div class="mt-3 mb-3">
+                    <h6 class="mb-1 ">Payments</h6>
+                    <h3 class="fw-bold mb-0 text-center">0</h3>
                 </div>
             </div>
-
         </div>
+    </div>
+</div>
 
         <!-- ================= QUICK ACTIONS ================= -->
         <div class="card shadow-sm border-0 mb-4">
