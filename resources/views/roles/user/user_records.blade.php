@@ -4,19 +4,20 @@
 
 {{-- Success Message --}}
 @if(session('success'))
-    <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 400px;
-    z-index: 1050;
-    box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 0.5rem 1rem;
-    ">      
+    <div id="success-alert" class="alert alert-success text-center mx-auto shadow-lg" style="
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 400px;
+        z-index: 1050;
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 0.75rem 1.25rem;
+        background-color: #28a745;
+        color: #fff;
+    ">
         {{ session('success') }}
     </div>
 @endif
@@ -25,10 +26,10 @@
     <div class="container-fluid">
 
         <!-- ================= PAGE TITLE ================= -->
-        <h4 class="mb-3">My Records</h4>
+        <h4 class="mb-4 fw-bold text-success">My Records</h4>
 
         <!-- ================= TABS ================= -->
-        <ul class="nav nav-tabs" id="recordTabs" role="tablist">
+        <ul class="nav nav-tabs mb-3" id="recordTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="reg-tab" data-bs-toggle="tab"
                         data-bs-target="#registrations" type="button" role="tab">
@@ -45,156 +46,138 @@
         </ul>
 
         <!-- ================= TAB CONTENT ================= -->
-        <div class="tab-content mt-3" id="recordTabsContent">
+        <div class="tab-content" id="recordTabsContent">
 
             <!-- ================= REGISTRATIONS TAB ================= -->
             <div class="tab-pane fade show active" id="registrations" role="tabpanel">
-
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white fw-bold">
-                        My Registrations
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header text-white fw-semibold d-flex justify-content-between align-items-center" style="background-color: #1d9e7e">
+                        <span><i class="fa-solid fa-user me-2"></i> My Registrations</span>
+                        <span class="badge bg-light text-success">{{ $registrations->count() }} Records</span>
                     </div>
 
-                    <div class="card-body p-0">
-                        <table class="table table-striped mb-0">
-                            <thead class="table-light">
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover align-middle table-borderless mb-0">
+                            <thead class="table-success">
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Father Name</th>
                                     <th>Status</th>
                                     <th>Burial Status</th>
-                                    <th>Actions</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($registrations as $reg)
+                                @forelse($registrations as $index => $reg)
                                 <tr>
-                                    <td>{{ $reg->name }}</td>
+                                    <td class="fw-semibold text-muted">{{ $index + 1 }}</td>
+                                    <td class="fw-bold text-dark">{{ $reg->name }}</td>
                                     <td>{{ $reg->father_name }}</td>
                                     <td>
-                                        <span class="badge bg-{{ $reg->status === 'approved' ? 'success' : 'warning' }}">
+                                        <span class="badge rounded-pill 
+                                            {{ $reg->status == 'approved' ? 'bg-success' : ($reg->status == 'pending' ? 'bg-warning text-dark' : 'bg-secondary') }}">
                                             {{ ucfirst($reg->status) }}
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="badge bg-{{ $reg->burial_status === 'completed' ? 'success' : 'secondary' }}">
+                                        <span class="badge rounded-pill 
+                                            {{ $reg->burial_status == 'completed' ? 'bg-success' : 'bg-secondary' }}">
                                             {{ ucfirst($reg->burial_status ?? 'Pending') }}
                                         </span>
                                     </td>
-                                    <td>
-                                        <a href="{{ route('user.registration.view', $reg->id) }}"
-                                           class="btn btn-sm btn-primary">View</a>
-                                        
-                                        <a href="{{ route('user.registration.edit', $reg->id) }}"
-                                           class="btn btn-sm btn-warning">Edit</a>
+                                    <td class="text-center">
+                                        <a href="{{ route('user.registration.view', $reg->id) }}" class="btn btn-sm btn-outline-success rounded-pill me-1">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('user.registration.edit', $reg->id) }}" class="btn btn-sm btn-outline-warning rounded-pill me-1">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
                                     </td>
-
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted py-3">
-                                        No registrations found
-                                    </td>
+                                    <td colspan="6" class="text-center text-muted py-4">No registrations found</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
 
             <!-- ================= FAMILY MEMBERS TAB ================= -->
             <div class="tab-pane fade" id="family" role="tabpanel">
-
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white fw-bold">
-                        Family Members
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header text-white fw-semibold d-flex justify-content-between align-items-center" style="background-color: #1d9e7e">
+                        <span><i class="fa-solid fa-users me-2"></i> Family Members</span>
+                        <span class="badge bg-light text-success">{{ $familyMembers->count() }} Records</span>
                     </div>
 
-                    <div class="card-body p-0">
-                        <table class="table table-striped mb-0">
-                            <thead class="table-light">
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover align-middle table-borderless mb-0">
+                            <thead class="table-success">
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Father Name</th>
                                     <th>Relation</th>
-                                    {{-- <th>CNIC</th> --}}
                                     <th>Status</th>
                                     <th>Burial Status</th>
-                                    <th>Actions</th>
-
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($familyMembers as $member)
+                                @forelse($familyMembers as $index => $member)
                                 <tr>
-                                    <td>{{ $member->name }}</td>
+                                    <td class="fw-semibold text-muted">{{ $index + 1 }}</td>
+                                    <td class="fw-bold text-dark">{{ $member->name }}</td>
                                     <td>{{ $member->father_name }}</td>
-                                    <td>{{ $member->relationship }}</td> 
-                                    {{-- <td>
-                                        @if($member->cnic)
-                                            {{ $member->cnic }}
-                                        @else
-                                            <span style="color: rgb(156, 155, 155)">NULL</span>
-                                        @endif
-                                    </td> --}}
+                                    <td>{{ $member->relationship }}</td>
                                     <td>
-                                        <span class="badge bg-{{ $reg->status === 'approved' ? 'success' : 'warning' }}">
-                                            {{ ucfirst($reg->status) }}
+                                        <span class="badge rounded-pill 
+                                            {{ $member->status == 'approved' ? 'bg-success' : ($member->status == 'pending' ? 'bg-warning text-dark' : 'bg-secondary') }}">
+                                            {{ ucfirst($member->status) }}
                                         </span>
                                     </td>
                                     <td>
-                                        @if($member->registration)
-                                            <span class="badge bg-{{ $member->registration->burial_status === 'completed' ? 'success' : 'secondary' }}">
-                                                {{ ucfirst($member->registration->burial_status ?? 'Pending') }}
-                                            </span>
-                                        @else
-                                            <span class="text-muted">NULL</span>
-                                        @endif
+                                        <span class="badge rounded-pill 
+                                            {{ $member->registration && $member->registration->burial_status == 'completed' ? 'bg-success' : 'bg-secondary' }}">
+                                            {{ $member->registration->burial_status ?? 'Pending' }}
+                                        </span>
                                     </td>
-                                    <td>
-                                        <a href="{{ route('user.family.view', $member->id) }}"
-                                           class="btn btn-sm btn-primary">View</a>
-                                        
-                                        <a href="{{ route('user.family.edit', $member->id) }}"
-                                           class="btn btn-sm btn-warning">Edit</a>
+                                    <td class="text-center">
+                                        <a href="{{ route('user.family.view', $member->id) }}" class="btn btn-sm btn-outline-success rounded-pill me-1">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('user.family.edit', $member->id) }}" class="btn btn-sm btn-outline-warning rounded-pill me-1">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
                                     </td>
-
-
-                                     
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted py-3">
-                                        No family members found
-                                    </td>
+                                    <td colspan="7" class="text-center text-muted py-4">No family members found</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
 
         </div>
-
     </div>
 </div>
 
-
-{{-- this is use for user_record_family_view and edit  back buttonn , when we click on back button it returns to family registraion table --}}
+{{-- Tabs & Alert Scripts --}}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
     // Activate tab from URL hash
     const hash = window.location.hash;
     if (hash) {
-        const trigger = document.querySelector(
-            'button[data-bs-target="' + hash + '"]'
-        );
-
+        const trigger = document.querySelector('button[data-bs-target="' + hash + '"]');
         if (trigger) {
             const tab = new bootstrap.Tab(trigger);
             tab.show();
@@ -208,16 +191,17 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-});
-
-setTimeout(function() {
-        const alert = document.getElementById('success-alert');
-        if (alert) {
+    // Auto-hide success alert
+    const alert = document.getElementById('success-alert');
+    if (alert) {
+        setTimeout(() => {
             alert.style.transition = 'opacity 0.5s ease';
             alert.style.opacity = '0';
             setTimeout(() => alert.remove(), 500);
-        }
-    }, 4000);
+        }, 4000);
+    }
+
+});
 </script>
 
 @endsection
