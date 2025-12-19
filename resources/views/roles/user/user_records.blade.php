@@ -1,6 +1,26 @@
 @extends('layouts.userapp')
 
 @section('content')
+
+{{-- Success Message --}}
+@if(session('success'))
+    <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 400px;
+    z-index: 1050;
+    box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    ">      
+        {{ session('success') }}
+    </div>
+@endif
+
 <div class="content" id="mainContent">
     <div class="container-fluid">
 
@@ -189,6 +209,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+setTimeout(function() {
+        const alert = document.getElementById('success-alert');
+        if (alert) {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        }
+    }, 4000);
 </script>
 
 @endsection

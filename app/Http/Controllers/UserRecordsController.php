@@ -116,10 +116,12 @@ class UserRecordsController extends Controller
         $request->validate([
             'name'        => 'required|string|max:255',
             'father_name' => 'required|string|max:255',
-            'age'         => 'nullable|integer|min:0',
+            'age'         => 'required|integer|min:0',
             'cnic'        => 'nullable|string|max:20',
-            'dob'         => 'nullable|date',
-            'gender'      => 'nullable|in:male,female',
+            'dob'         => 'required|date',
+            'gender'      => 'required|in:male,female',
+            'address'     => 'required|string|max:255',
+            'relationship'=> 'required|string|max:100',
         ]);
 
         $member->update($request->only([
@@ -128,12 +130,29 @@ class UserRecordsController extends Controller
             'age',
             'cnic',
             'dob',
-            'gender'
+            'gender',
+            'address',
+            'relationship',
         ]));
 
+        // ✅ Update USER REGISTRATION using registration_id (IMPORTANT)
+    if ($member->registration_id) {
+        UserRegistration::where('id', $member->registration_id)->update([
+            'name'        => $request->name,
+            'father_name' => $request->father_name,
+            'cnic'        => $request->cnic,
+            'age'         => $request->age,
+            'dob'         => $request->dob,
+            'gender'      => $request->gender,
+            'address'     => $request->address,
+        ]);
+    }
+
+    // i use [#family] because after updating family member, user should be redirected to family section of user records page.
         return redirect()
-            ->route('user.records')
-            ->with('success', 'Family member updated successfully');
+         ->route('user.records', ['#family'])
+         ->with('success', 'Family member updated successfully');
+
     }
 
 }

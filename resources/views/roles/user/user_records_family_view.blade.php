@@ -35,6 +35,10 @@
                     {{ $member->gender ? ucfirst($member->gender) : '-' }}
                 </p>
 
+                <p><strong>Address:</strong>
+                    {{ $member->address ?? '-' }}
+                </p>
+
                 {{-- Optional Burial Status --}}
                 <p><strong>Burial Status:</strong>
                     @if($member->registration)
