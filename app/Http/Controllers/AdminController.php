@@ -83,7 +83,7 @@ class AdminController extends Controller
     $totalBurials = Burial::count();
 
     //pagination
-    $recentRegistrations = UserRegistration::latest()->paginate(2);
+    $recentRegistrations = UserRegistration::latest()->paginate(5);
 
 
 

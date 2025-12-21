@@ -23,9 +23,10 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
-Route::get('/search', function () {
-    return view('search');
-})->name('search');
+
+
+//for search page
+Route::get('/search', [GraveSearchController::class, 'index'])->name('search');
 
 
 // Route::middleware(['auth'])->group(function () {
@@ -120,7 +121,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/burials/search', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.search');
     Route::post('/admin/burials/store', [BurialController::class, 'storeBurial'])->name('admin.burials.store');
 
-//for burial Page
+//for burial search  Page
 Route::get('/admin/burials', [BurialController::class, 'index'])->name('admin.burials.index');
 
 
