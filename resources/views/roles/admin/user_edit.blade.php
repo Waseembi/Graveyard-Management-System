@@ -117,6 +117,20 @@
                                 <option value="pending" {{ $user->status == 'pending' ? 'selected' : '' }}>Pending</option>
                             </select>
                         </div>
+
+                        <div class="col-md-6">
+    <label class="form-label fw-semibold">Burial Status</label>
+    <select name="burial_status" class="form-select shadow-sm" required>
+        {{-- Show the current value as the first option --}}
+        <option value="{{ $user->burial_status }}" selected>{{ ucfirst(str_replace('_', ' ', $user->burial_status)) }}</option>
+
+        {{-- Only allow selecting "not_buried" if current value is "buried" --}}
+        @if($user->burial_status === 'buried')
+            <option value="not_buried">Not Buried</option>
+        @endif
+    </select>
+</div>
+
                     </div>
 
                     <div class="d-flex justify-content-end mt-4">

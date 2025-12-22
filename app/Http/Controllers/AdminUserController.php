@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserRegistration;
 use App\Models\FamilyMember;
+use App\Models\Burial;
+use App\Models\Grave;
 
 class AdminUserController extends Controller
 {
@@ -89,6 +91,7 @@ public function update(Request $request, $id)
         'age' => 'required|integer|min:1',
         'address' => 'required|string|max:255',
         'status' => 'required|in:approved,pending',
+        'burial_status' => 'required|in:buried,not_buried',
     ]);
 
     // Find the user by ID
@@ -103,6 +106,7 @@ public function update(Request $request, $id)
         'age' => $request->age,
         'address' => $request->address,
         'status' => $request->status,
+        'burial_status' => $request->burial_status,
     ]);
 
     // ✅ Update all related family members with the same registration_id
@@ -115,6 +119,13 @@ public function update(Request $request, $id)
         'address' => $request->address,
         'status' => $request->status,
     ]);
+
+     // If burial_status is 'not_buried', delete related burial and grave records
+    if ($request->burial_status === 'not_buried') {
+        Burial::where('registration_id', $user->id)->delete();
+        Grave::where('registration_id', $user->id)->delete();
+    }
+
 
     // Redirect back with success message
     return redirect()->route('admin.users')->with('success', 'User updated successfully!');

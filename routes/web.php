@@ -117,11 +117,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/profile/image', [AdminController::class, 'updateImage'])->name('admin.update.image');
 
 //for burial management
+    // Route::get('/admin/burials/add', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.add');
+    // Route::get('/admin/burials/search', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.search');
+    // Route::post('/admin/burials/store', [BurialController::class, 'storeBurial'])->name('admin.burials.store');
     Route::get('/admin/burials/add', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.add');
-    Route::get('/admin/burials/search', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.search');
+    Route::get('/admin/burials/search', [BurialController::class, 'searchRegistration'])->name('admin.burials.search');
     Route::post('/admin/burials/store', [BurialController::class, 'storeBurial'])->name('admin.burials.store');
 
-//for burial search  Page
+
+//for admin burial search  Page
 Route::get('/admin/burials', [BurialController::class, 'index'])->name('admin.burials.index');
 
 

@@ -30,80 +30,78 @@ class BurialController extends Controller
         return view('roles.admin.burials', compact('burials'));
     }
 
-
-
-   public function showAddBurialForm(Request $request)
+    // Show add burial page
+    public function showAddBurialForm()
     {
-    $registration = null;
+        return view('roles.admin.add_burials');
+    }
 
-    if ($request->has('query')) {
-        $query = trim($request->query('query'));
+    // Search registration
+    public function searchRegistration(Request $request)
+    {
+        $request->validate([
+            'name' => 'nullable|string',
+            'father_name' => 'nullable|string',
+            'cnic' => 'nullable|string',
+        ]);
 
-        if (is_numeric($query)) {
-            if (strlen($query) === 13) {
-                // CNIC match (stored as string)
-                $registration = UserRegistration::where('cnic', $query)->first();
-            } else {
-                // Registration ID match
-                $registration = UserRegistration::find($query);
-            }
-        } else {
-            // Name match
-            $registration = UserRegistration::where('name', 'like', "%$query%")->first();
+        $registration = UserRegistration::query()
+            ->when($request->name, fn ($q) =>
+                $q->where('name', 'like', '%' . $request->name . '%')
+            )
+            ->when($request->father_name, fn ($q) =>
+                $q->where('father_name', 'like', '%' . $request->father_name . '%')
+            )
+            ->when($request->cnic, fn ($q) =>
+                $q->where('cnic', 'like', '%' . $request->cnic . '%')
+            )
+            ->first();
+
+        return view('roles.admin.add_burials', compact('registration'));
+    }
+
+    // Store burial
+    public function storeBurial(Request $request)
+    {
+        $request->validate([
+            'registration_id' => 'required|exists:user_registrations,id',
+            'date_of_death' => 'required|date',
+        ]);
+
+        $registration = UserRegistration::findOrFail($request->registration_id);
+
+        if ($registration->status !== 'approved') {
+            return back()->with('error', 'User is not approved for burial.');
         }
+
+        if ($registration->burial_status === 'buried') {
+            return back()->with('error', 'Burial already exists.');
+        }
+
+        // Auto assign grave
+        $grave = Grave::create([
+            'registration_id' => $registration->id,
+            'user_id' => $registration->user_id,
+            'status' => 'booked',
+        ]);
+
+        Burial::create([
+            'registration_id' => $registration->id,
+            'user_id' => $registration->user_id,
+            'grave_id' => $grave->id,
+            'name' => $registration->name,
+            'father_name' => $registration->father_name,
+            'date_of_death' => $request->date_of_death,
+        ]);
+
+        $registration->update([
+            'burial_status' => 'buried',
+        ]);
+
+        return redirect()->route('admin.burials.add')
+            ->with('success', 'Burial record added successfully.');
     }
-
-    return view('roles.admin.add_burials', compact('registration'));
-    }
-
-
-
-
-public function storeBurial(Request $request)
-    {
-    $request->validate([
-        'registration_id' => 'required|exists:user_registrations,id',
-        'date_of_death' => 'required|date',
-    ]);
-
-    $registration = UserRegistration::with('user')->find($request->registration_id);
-
-    if (!$registration || $registration->status !== 'approved') {
-        return redirect()->back()->with('error', 'User is not approved for burial.');
-    }
-
-    
-    // ✅ Optional: Prevent duplicate burial for same registration
-    // if (Burial::where('registration_id', $registration->id)->exists()) {
-    //     return back()->with('error', 'Burial record already exists for this user.');
-    // }
-
-    // Create grave record and mark as booked
-    $grave = Grave::create([
-        'registration_id' => $registration->id,
-        'user_id' => $registration->user_id,
-        'location' => null, // or assign dynamically later
-        'status' => 'booked',
-    ]);
-
-    // Create burial record
-    Burial::create([
-        'registration_id' => $registration->id,
-        'user_id' => $registration->user_id,
-        'grave_id' => $grave->id,
-        'name' => $registration->name,
-        'father_name' => $registration->father_name,
-        'date_of_death' => $request->date_of_death,
-    ]);
-
-    $registration->update([
-    'burial_status' => 'buried',
-    ]);
-
-    return redirect()->route('admin.burials.add')->with('success', 'Burial record and grave assigned successfully.');
-    }
-
-
 
 
 }
+

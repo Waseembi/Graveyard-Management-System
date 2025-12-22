@@ -30,7 +30,7 @@ class UserRegistration extends Model
 }
 
 public function graves() {
-    return $this->hasMany(Grave::class);
+    return $this->hasMany(Grave::class, 'registration_id');
 }
 
 public function payments() {
@@ -46,7 +46,7 @@ public function marbleBookings() {
 }
 
 public function burials() {
-    return $this->hasMany(Burial::class);
+    return $this->hasMany(Burial::class, 'registration_id');
 }
 
 }
