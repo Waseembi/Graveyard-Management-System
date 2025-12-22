@@ -45,7 +45,7 @@ class BurialController extends Controller
             'cnic' => 'nullable|string',
         ]);
 
-        $registration = UserRegistration::query()
+        $registrations = UserRegistration::query()
             ->when($request->name, fn ($q) =>
                 $q->where('name', 'like', '%' . $request->name . '%')
             )
@@ -55,9 +55,9 @@ class BurialController extends Controller
             ->when($request->cnic, fn ($q) =>
                 $q->where('cnic', 'like', '%' . $request->cnic . '%')
             )
-            ->first();
+            ->get();
 
-        return view('roles.admin.add_burials', compact('registration'));
+        return view('roles.admin.add_burials', compact('registrations'));
     }
 
     // Store burial
