@@ -1,23 +1,3 @@
-{{-- @extends('layouts.userapp')
-
-@section('content')
-<div class="content" id="mainContent">
-    <div class="container-fluid">
-
-        <!-- Welcome -->
-        <div class="mb-4">
-            <h4>Welcome, {{ Auth::user()->name ?? 'User' }} 👋</h4>
-            <p class="text-muted">Here’s an overview of your account.</p>
-        </div>
-
-    </div>
-</div>
-@endsection --}}
-
-
-
-
-
 @extends('layouts.userapp')
 
 @section('content')
@@ -110,8 +90,8 @@
 <div class="card shadow-sm border-0 mb-4">
     <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
         <span>Recent Registrations</span>
-        {{-- {{ route('user.registrations.index') }} --}}
-        <a href="" class="btn btn-sm btn-outline-primary">
+        
+        <a href="{{ route('user.records') }}" class="btn btn-sm btn-outline-primary">
             View All
         </a>
     </div>

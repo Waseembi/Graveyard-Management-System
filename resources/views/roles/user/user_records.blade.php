@@ -2,22 +2,22 @@
 
 @section('content')
 
+
 {{-- Success Message --}}
 @if(session('success'))
-    <div id="success-alert" class="alert alert-success text-center mx-auto shadow-lg" style="
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 400px;
-        z-index: 1050;
-        border-radius: 10px;
-        font-weight: 500;
-        font-size: 0.95rem;
-        padding: 0.75rem 1.25rem;
-        background-color: #28a745;
-        color: #fff;
-    ">
+    <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 400px;
+    z-index: 1050;
+    box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    ">      
         {{ session('success') }}
     </div>
 @endif

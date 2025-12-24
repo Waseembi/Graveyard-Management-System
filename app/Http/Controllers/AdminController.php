@@ -153,31 +153,7 @@ class AdminController extends Controller
 }
 
 
-    
-//     public function updateImage(Request $request)
-//     {
-//     $request->validate([
-//         'profile_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-//     ]);
 
-//     /** @var \App\Models\User $admin */
-//     $admin = Auth::user();  // i add above line because without above line its give red line on save
-
-//     // Delete old image from public folder
-//     if ($admin->profile_image && File::exists(public_path('profile_images/' . $admin->profile_image))) {
-//         File::delete(public_path('profile_images/' . $admin->profile_image));
-//     }
-
-//     // Store new image in public/profile_images
-//     $image = $request->file('profile_image');
-//     $filename = time() . '_' . $image->getClientOriginalName();
-//     $image->move(public_path('profile_images'), $filename);
-
-//     $admin->profile_image = $filename;
-//     $admin->save();
-
-//     return redirect()->back()->with('success', 'Profile image updated successfully.');
-// }
 
 public function removeImage()
     {

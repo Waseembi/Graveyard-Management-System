@@ -4,7 +4,7 @@
 
 {{-- Success Message --}}
 @if(session('success'))
-    <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+    <div class="alert alert-success fade-alert text-center mx-auto mt-5" style="
     position: fixed;
     top: 20px;
     left: 50%;
@@ -17,9 +17,30 @@
     font-size: 0.95rem;
     padding: 0.5rem 1rem;
     ">      
-        {{ session('success') }}
+    {{ session('success') }}
     </div>
 @endif
+
+{{-- Error Message --}}
+@if($errors->any())
+    <div class="alert alert-danger fade-alert text-center mx-auto mt-5" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 400px;
+    z-index: 1050;
+    box-shadow: 0 0.5rem 1rem rgba(255, 0, 0, 0.2);
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    line-height: 1.3;
+    ">      
+    {{ $errors->first('grave_image') ?? $errors->first() }}
+    </div>
+@endif
+
 
 <div class="content" id="mainContent">
 <div class="container-fluid py-3">
@@ -93,13 +114,32 @@
 
                 {{-- Burial Form --}}
                 @if($registration->status === 'approved' && $registration->burial_status === 'not_buried')
-                    <form method="POST" action="{{ route('admin.burials.store') }}">
+
+                    <form method="POST" action="{{ route('admin.burials.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="registration_id" value="{{ $registration->id }}">
+                        <input type="hidden" name="registration_id" value="{{ $registration->id }}">  
                         <div class="mb-3">
                             <label class="form-label fw-semibold text-success">Date of Death</label>
-                            <input type="date" name="date_of_death" class="form-control rounded-pill shadow-sm" required>
+                            <input type="date" name="date_of_death" class="form-control rounded-pill shadow-sm"  max="{{ date('Y-m-d') }}" required>
                         </div>
+                        {{-- upload image --}}
+                        <div class="mb-3">
+    <label class="form-label fw-semibold text-success">
+        Grave Picture <small class="text-muted">(Optional)</small>
+    </label>
+    <input type="file" name="grave_image" 
+           class="form-control rounded-pill shadow-sm"
+           accept="image/*"
+           id="graveImageInput">
+</div>
+
+{{-- Preview --}}
+<div class="mb-3" id="imagePreviewContainer" style="display: none;">
+    <p class="fw-semibold text-success">Preview:</p>
+    <img id="imagePreview" src="" alt="Grave Preview" class="img-fluid rounded shadow-sm" style="max-width: 200px;">
+</div>
+
+
                         <div class="text-end">
                             <button class="btn btn-success rounded-pill px-4 shadow-sm">
                                 <i class="fa-solid fa-plus me-1"></i> Add Burial
@@ -157,15 +197,44 @@
     }
 </style>
 
-{{--  Scripts --}}
+{{-- Script --}}
 <script>
-    setTimeout(function() {
-        const alert = document.getElementById('success-alert');
-        if (alert) {
-            alert.style.transition = 'opacity 0.5s ease';
-            alert.style.opacity = '0';
-            setTimeout(() => alert.remove(), 500);
-        }
-    }, 4000);
+window.onload = function() {
+    // Image preview
+    const graveInput = document.getElementById('graveImageInput');
+    if(graveInput){
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const previewImage = document.getElementById('imagePreview');
+
+        graveInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.display = 'none';
+                previewImage.src = '';
+            }
+        });
+    }
+
+    // Fade all alerts
+    const alerts = document.querySelectorAll(".fade-alert");
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.style.transition = "opacity 0.5s ease";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 800);
+        }, 4000);
+    });
+};
 </script>
+
+
+
+
 @endsection

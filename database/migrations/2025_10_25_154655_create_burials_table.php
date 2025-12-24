@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('father_name');
             $table->date('date_of_death');
+            $table->string('grave_image')->nullable();
             $table->timestamps();
         });
     }

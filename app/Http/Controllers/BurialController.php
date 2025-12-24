@@ -63,10 +63,19 @@ class BurialController extends Controller
     // Store burial
     public function storeBurial(Request $request)
     {
-        $request->validate([
-            'registration_id' => 'required|exists:user_registrations,id',
-            'date_of_death' => 'required|date',
-        ]);
+        $request->validate(
+    [
+        'registration_id' => 'required|exists:user_registrations,id',
+        'date_of_death'   => 'required|date',
+        'grave_image'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // 2 MB limit
+    ],
+    [
+        'grave_image.max'   => 'Grave image must be less than 2 MB.',
+        'grave_image.image' => 'Only image files are allowed.',
+        'registration_id.required' => 'Registration ID is required.',
+        'date_of_death.required'   => 'Date of death is required.',
+    ]
+);
 
         $registration = UserRegistration::findOrFail($request->registration_id);
 
@@ -77,6 +86,14 @@ class BurialController extends Controller
         if ($registration->burial_status === 'buried') {
             return back()->with('error', 'Burial already exists.');
         }
+
+        /* ---------------- Image Upload ---------------- */
+        $imageName = null;
+            if ($request->hasFile('grave_image')) {
+                $image     = $request->file('grave_image');
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads/graves'), $imageName);
+            }
 
         // Auto assign grave
         $grave = Grave::create([
@@ -92,6 +109,7 @@ class BurialController extends Controller
             'name' => $registration->name,
             'father_name' => $registration->father_name,
             'date_of_death' => $request->date_of_death,
+            'grave_image'     => $imageName,
         ]);
 
         $registration->update([
