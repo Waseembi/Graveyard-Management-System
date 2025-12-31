@@ -95,12 +95,17 @@ class BurialController extends Controller
                 $image->move(public_path('uploads/graves'), $imageName);
             }
 
-        // Auto assign grave
-        $grave = Grave::create([
-            'registration_id' => $registration->id,
-            'user_id' => $registration->user_id,
-            'status' => 'booked',
-        ]);
+        $grave = Grave::where('status', 'available')->first();
+        if (!$grave) { 
+             $grave = Grave::create([ 
+                'registration_id' => $registration->id,
+                'user_id' => $registration->user_id,
+                'status' => 'booked',
+              ]); 
+            } 
+        else{  
+                $grave->update([ 'registration_id' => $registration->id, 'user_id' => $registration->user_id, 'status' => 'booked', ]); 
+            }
 
         Burial::create([
             'registration_id' => $registration->id,
@@ -122,4 +127,3 @@ class BurialController extends Controller
 
 
 }
-

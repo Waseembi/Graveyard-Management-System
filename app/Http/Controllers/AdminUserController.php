@@ -123,7 +123,7 @@ public function update(Request $request, $id)
      // If burial_status is 'not_buried', delete related burial and grave records
     if ($request->burial_status === 'not_buried') {
         Burial::where('registration_id', $user->id)->delete();
-        Grave::where('registration_id', $user->id)->delete();
+        Grave::where('registration_id', $user->id)->update([ 'registration_id' => null, 'user_id' => null, 'status' => 'available',  ]);
     }
 
 
@@ -140,8 +140,5 @@ public function show($id)
 
     return view('roles.admin.user_show', compact('user', 'familyMembers'));
     }
-
-
-
 
 }

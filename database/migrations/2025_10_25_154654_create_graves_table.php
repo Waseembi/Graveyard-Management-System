@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('graves', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('registration_id')->constrained('user_registrations')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('registration_id')->nullable()->constrained('user_registrations')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('location')->nullable(); // nullable
             $table->enum('status', ['available', 'booked'])->default('available');
             $table->timestamps();
