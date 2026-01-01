@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->string('purpose');
             $table->date('payment_date');
+            $table->year('payment_year');
             $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();
         });

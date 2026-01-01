@@ -109,6 +109,21 @@
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Gender</label>
+                            <select name="gender" class="form-select shadow-sm">
+                                <option value="">Select Gender</option>
+                                <option value="male" {{ old('gender', $user->gender)=='male' ? 'selected' : '' }}>Male</option>
+                                <option value="female" {{ old('gender', $user->gender)=='female' ? 'selected' : '' }}>Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold"> Date of Birth</label>
+                            <input type="date" name="dob" max="{{ date('Y-m-d') }}" required value="{{ old('dob', $user->dob) }}" class="form-control shadow-sm">
+                        </div>
+                </div>
+
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Status</label>

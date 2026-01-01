@@ -23,6 +23,9 @@ class UserRegistration extends Model
         'burial_status',
         'gender',
         'dob',
+        'approved_at',
+        'expiry_date',
+
     ];
 
     public function user() {
@@ -34,7 +37,7 @@ public function graves() {
 }
 
 public function payments() {
-    return $this->hasMany(Payment::class);
+    return $this->hasMany(Payment::class, 'registration_id');
 }
 
 public function familyMembers() {

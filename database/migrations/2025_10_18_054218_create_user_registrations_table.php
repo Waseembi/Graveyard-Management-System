@@ -24,6 +24,8 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('burial_status')->default('not_buried');
+            $table->date('approved_at')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->timestamp('registration_date')->useCurrent();
             $table->timestamps();
         });
