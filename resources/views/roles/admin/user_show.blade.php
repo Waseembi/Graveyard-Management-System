@@ -71,6 +71,47 @@
             </div>
         </div>
 
+
+        <!-- Payment Records Section -->
+    <div class="card shadow-sm border-0 mt-4 mb-4">
+        <div class="card-header bg-white">
+             <h6 class="mb-0 fw-semibold text-dark">Payment Records</h6>
+        </div>
+        <div class="card-body table-responsive">
+          @if($payments->isEmpty())
+            <p class="text-muted mb-0">No payment records found for this user.</p>
+         @else
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Paid On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($payments as $index => $payment)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $payment->amount }}</td>
+                            <td>{{ ucfirst($payment->method) }}</td>
+                            <td>
+                                <span class="badge bg-{{ $payment->status == 'paid' ? 'success' : 'warning' }}">
+                                    {{ ucfirst($payment->status) }}
+                                </span>
+                            </td>
+                            <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d M Y') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+         @endif
+        </div>
+    </div>
+
+
         <!-- Family Members Section -->
         <div class="card shadow-sm border-0">
             <div class="card-header bg-white">

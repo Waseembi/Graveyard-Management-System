@@ -208,12 +208,16 @@ public function show($id){
     if ($familyMembers) {
         $familyMembersUserID  = $familyMembers->user_id;
         $familyRecord = FamilyMember::where('user_id', $familyMembersUserID)->get();  
-    }else { 
+    }
+    else { 
         $familyRecord = collect(); 
         // this is used because without this the familymemmbers will give error if it is null. 
         }
+    
+    // Fetch all payment records for this user 
+    $payments = Payment::where('registration_id', $user->id)->orderBy('created_at', 'desc')->get();
 
-    return view('roles.admin.user_show', compact('user', 'familyRecord', 'userRegisterbywhom'));
+    return view('roles.admin.user_show', compact('user', 'familyRecord', 'userRegisterbywhom','payments'));
     }
 
 
