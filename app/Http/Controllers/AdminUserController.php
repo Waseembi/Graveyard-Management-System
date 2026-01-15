@@ -9,6 +9,7 @@ use App\Models\Burial;
 use App\Models\Grave;
 use App\Models\Payment;
 use Illuminate\Support\Carbon;
+use App\Models\User;
 
 class AdminUserController extends Controller
 {
@@ -195,9 +196,24 @@ public function update(Request $request, $id)
 //--------- Show All Users ----------
 public function show($id){
     $user = UserRegistration::findOrFail($id);
-    $familyMembers = FamilyMember::where('registration_id', $id)->get();
 
-    return view('roles.admin.user_show', compact('user', 'familyMembers'));
+    //this line will get who registered this user
+    $userRegisterbywhom = User::where('id', $user->user_id)->first();
+
+    // Case 1: user is a registrant 
+    $familyMembers = FamilyMember::where('registration_id', $user->id)->first(); 
+    
+
+    // Case 2: user might also be listed as a family member 
+    if ($familyMembers) {
+        $familyMembersUserID  = $familyMembers->user_id;
+        $familyRecord = FamilyMember::where('user_id', $familyMembersUserID)->get();  
+    }else { 
+        $familyRecord = collect(); 
+        // this is used because without this the familymemmbers will give error if it is null. 
+        }
+
+    return view('roles.admin.user_show', compact('user', 'familyRecord', 'userRegisterbywhom'));
     }
 
 

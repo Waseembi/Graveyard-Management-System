@@ -63,6 +63,11 @@
                     </div>
                     <div class="col-md-6"><strong>Registered On:</strong> {{ $user->created_at->format('d M Y') }}</div>
                 </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6 "><strong>Register By:</strong> <strong class="text-danger"> {{ $userRegisterbywhom->name }} </strong></div>
+                </div>
+
             </div>
         </div>
 
@@ -72,7 +77,7 @@
                 <h6 class="mb-0 fw-semibold text-dark">Family Members</h6>
             </div>
             <div class="card-body table-responsive">
-                @if($familyMembers->isEmpty())
+                @if($familyRecord->isEmpty())
                     <p class="text-muted mb-0">No family members found for this registration.</p>
                 @else
                     <table class="table table-hover align-middle">
@@ -89,7 +94,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($familyMembers as $index => $member)
+                            @foreach($familyRecord as $index => $member)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $member->name }}</td>
