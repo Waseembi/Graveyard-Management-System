@@ -23,7 +23,7 @@ class FamilyMemberController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'father_name' => 'required|string|max:255',
-        'cnic' => 'nullable|string|max:15',
+        'cnic' => 'nullable|digits:13',
         'age' => 'required|integer|min:1|max:120',
         'phone' => 'required|digits_between:7,15',
         'address' => 'required|string|max:500',
