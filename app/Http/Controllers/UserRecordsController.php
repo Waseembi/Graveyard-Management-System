@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserRegistration;
 use App\Models\FamilyMember;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Payment;
 
 class UserRecordsController extends Controller
 {
@@ -17,8 +18,9 @@ class UserRecordsController extends Controller
         $registrations = UserRegistration::where('user_id', $userId)->get();
         $familyMembers = FamilyMember::with('registration')->where('user_id', $userId)->get();
 
+        
 
-        return view('roles.user.user_records', compact('registrations', 'familyMembers'));
+        return view('roles.user.user_records', compact('registrations', 'familyMembers', ));
     }
 
 
@@ -32,7 +34,10 @@ class UserRecordsController extends Controller
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        return view('roles.user.user_records_view', compact('registration'));
+        // Fetch all payment records for this user 
+        $payments = Payment::where('registration_id', $registration->id)->orderBy('created_at', 'desc')->get();
+
+        return view('roles.user.user_records_view', compact('registration', 'payments'));
     }
 
     /**
@@ -84,12 +89,16 @@ class UserRecordsController extends Controller
      */
     public function showFamily($id)
     {
+
         $member = FamilyMember::with('registration')
             ->where('id', $id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
+            
+        // Fetch all payment records for this user 
+        $payments = Payment::where('registration_id', $member->registration_id)->orderBy('created_at', 'desc')->get();
 
-        return view('roles.user.user_records_family_view', compact('member'));
+        return view('roles.user.user_records_family_view', compact('member', 'payments'));
     }
 
     /**

@@ -125,13 +125,25 @@
                 </div>
 
                     <div class="row mb-4">
+                        {{-- // this will disable status change if burial_status is 'buried' --}}
+                        {{-- @if($user->burial_status !== 'buried')
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Status</label>
+                                <select name="status" class="form-select shadow-sm" required>
+                                    <option value="approved" {{ $user->status == 'approved' ? 'selected' : '' }}>Approved</option>
+                                    <option value="pending" {{ $user->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                </select>
+                            </div>
+                        @endif --}}
+
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Status</label>
-                            <select name="status" class="form-select shadow-sm" required>
+                            <select name="status" class="form-select shadow-sm" {{ $user->burial_status === 'buried' ? 'disabled' : '' }} required>
                                 <option value="approved" {{ $user->status == 'approved' ? 'selected' : '' }}>Approved</option>
                                 <option value="pending" {{ $user->status == 'pending' ? 'selected' : '' }}>Pending</option>
                             </select>
                         </div>
+
 
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Burial Status</label>

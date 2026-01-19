@@ -51,7 +51,7 @@
 </div>
 
         <!-- ================= QUICK ACTIONS ================= -->
-        <div class="card shadow-sm border-0 mb-4">
+        {{-- <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-white fw-bold">
                 Quick Actions
             </div>
@@ -84,7 +84,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- ================= RECENT REGISTRATIONS ================= -->
 <div class="card shadow-sm border-0 mb-4">

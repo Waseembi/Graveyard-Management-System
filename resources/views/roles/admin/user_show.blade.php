@@ -65,6 +65,11 @@
                 </div>
 
                 <div class="row mb-2">
+                    <div class="col-md-6"><strong>Burial Status:</strong> 
+                            <span class="badge bg-{{ $user->burial_status === 'buried' ? 'black' : 'secondary' }}">
+                                {{ ucfirst($user->burial_status ?? 'Pending') }}
+                            </span>
+                    </div>
                     <div class="col-md-6 "><strong>Register By:</strong> <strong class="text-danger"> {{ $userRegisterbywhom->name }} </strong></div>
                 </div>
 

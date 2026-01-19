@@ -89,7 +89,7 @@ public function update(Request $request, $id)
     $request->validate([
         'name' => 'required|string|max:255',
         'father_name' => 'required|string|max:255',
-        'cnic' => 'nullable|string|max:15',
+        'cnic' => 'nullable|digits:13',
         'phone' => 'required|string|max:20',
         'age' => 'required|integer|min:1',
         'address' => 'required|string|max:255',

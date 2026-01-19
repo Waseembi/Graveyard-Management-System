@@ -82,7 +82,7 @@
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill 
-                                            {{ $reg->burial_status == 'completed' ? 'bg-success' : 'bg-secondary' }}">
+                                            {{ $reg->burial_status == 'buried' ? 'bg-black' : 'bg-secondary' }}">
                                             {{ ucfirst($reg->burial_status ?? 'Pending') }}
                                         </span>
                                     </td>
@@ -142,7 +142,7 @@
                                     </td>
                                     <td>
                                         <span class="badge rounded-pill 
-                                            {{ $member->registration && $member->registration->burial_status == 'completed' ? 'bg-success' : 'bg-secondary' }}">
+                                            {{ $member->registration && $member->registration->burial_status == 'buried' ? 'bg-black' : 'bg-secondary' }}">
                                             {{ $member->registration->burial_status ?? 'Pending' }}
                                         </span>
                                     </td>
