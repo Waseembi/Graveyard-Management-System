@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="text-black text-center py-3 px-4 mb-2  shadow-sm" style="width: 100%;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div class="fw-semibold fs-6">
+            <i class="fa-solid fa-location-dot me-2"></i> Graveyard Location: 17km Super Highway, Dumba Goth, Karachi, Pakistan
+        </div>
+        <a href="https://www.google.com/maps?ll=24.933817,66.959762&z=16&t=m&hl=en&gl=US&mapclient=embed&cid=18394426567749612270" 
+           target="_blank" 
+           class="btn btn-light btn-sm rounded-pill mt-2 mt-md-0">
+            <i class="fa-solid fa-location-dot me-1"></i> View on Google Maps
+        </a>
+    </div>
+</div>
+
+
 <div class="container py-5">
 
     {{-- Header --}}
@@ -68,7 +82,7 @@
     </div>
 
     {{-- Active Filters --}}
-    @if(request()->hasAny(['name', 'father_name', 'cnic', 'grave_id', 'year']))
+    {{-- @if(request()->hasAny(['name', 'father_name', 'cnic', 'grave_id', 'year']))
         <div class="alert alert-success border-0 shadow-sm rounded-pill">
             <strong><i class="fa-solid fa-filter me-2"></i>Filters Applied:</strong>
             @if(request('name')) 
@@ -102,7 +116,7 @@
                 </span> 
             @endif
         </div>
-    @endif
+    @endif --}}
 
     {{-- Results --}}
     @if(isset($results))
@@ -139,6 +153,7 @@
                                 <td>
                                     <span class="badge bg-success-subtle text-success px-3 py-2">{{ $record->grave_id }}</span>
                                 </td>
+                                
                             </tr>
                         @empty
                             <tr>
