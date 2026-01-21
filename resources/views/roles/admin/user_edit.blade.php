@@ -21,7 +21,29 @@
         {{ session('success') }}
     </div>
 @endif
-
+ {{-- Validation Errors --}}
+    @if ($errors->any())
+        <div id="success-alert" class="alert alert-danger text-center mx-auto mt-5" style="
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 400px;
+            z-index: 1050;
+            box-shadow: 0 0.5rem 1rem rgba(128, 0, 0, 0.2);
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            line-height: 1.3;
+        ">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li style="list-style-type: none">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 {{-- Error message --}}
 @if(session('error'))
     <div id="success-alert" class="alert alert-danger text-center mx-auto mt-5" style="
@@ -62,7 +84,7 @@
                 <h6 class="mb-0 fw-semibold text-dark">Edit User Details</h6>
             </div>
             <div class="card-body">
-                @if($errors->any())
+                {{-- @if($errors->any())
                     <div class="alert alert-danger mb-4">
                         <ul class="mb-0">
                             @foreach ($errors->all() as $error)
@@ -70,7 +92,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                     @csrf
@@ -142,7 +164,7 @@
                                 <option value="approved" {{ $user->status == 'approved' ? 'selected' : '' }}>Approved</option>
                                 <option value="pending" {{ $user->status == 'pending' ? 'selected' : '' }}>Pending</option>
                             </select>
-                        </div>
+                         </div>  
 
 
                         <div class="col-md-6">

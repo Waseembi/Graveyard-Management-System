@@ -4,9 +4,9 @@
 <div class="text-black text-center py-3 px-4 mb-2  shadow-sm" style="width: 100%;">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
         <div class="fw-semibold fs-6">
-            <i class="fa-solid fa-location-dot me-2"></i> Graveyard Location: 17km Super Highway, Dumba Goth, Karachi, Pakistan
+            <i class="fa-solid fa-location-dot me-2"></i> Graveyard Location:  M-8 Highway, Baldia Town, Karachi, Pakistan
         </div>
-        <a href="https://www.google.com/maps?ll=24.933817,66.959762&z=16&t=m&hl=en&gl=US&mapclient=embed&cid=18394426567749612270" 
+        <a href="https://www.google.com/maps/place/Shamsabad+Shahpur+Graveyard/@24.9351656,66.9432931,17z/data=!3m1!4b1!4m6!3m5!1s0x3eb36b2f6c84d7f3:0x9c07e6d66a256c30!8m2!3d24.9351656!4d66.9432931!16s%2Fg%2F11cm73ksf4?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D" 
            target="_blank" 
            class="btn btn-light btn-sm rounded-pill mt-2 mt-md-0">
             <i class="fa-solid fa-location-dot me-1"></i> View on Google Maps

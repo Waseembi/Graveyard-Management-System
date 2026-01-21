@@ -149,7 +149,8 @@ public function update(Request $request, $id)
 
     //Case 1: status equal to Approved.
     //now adding the record in payments table if admin make user status  approved 
-    if ($request->status === 'approved') { 
+    // $user->status !== 'approved' && $request->status === 'approved' the login behind this code is if admin changes anything else so the payment record will not be created again and again.before this when admin change any other field it was creating multiple payment records if status is already approved.
+    if ($user->status !== 'approved' && $request->status === 'approved') { 
         $currentYear = now()->year; 
          Payment::create([ 
             'registration_id' => $user->id, 
@@ -161,11 +162,7 @@ public function update(Request $request, $id)
             'payment_date' => now(), 
             'status' => 'paid', 
             ]); 
-        // Update validity in user_registrations 
-        // $user->update([ 
-        //     'approved_at' => now(), 
-        //     'expiry_date' => now()->endOfYear(), // valid till end of current year
-        //     ]);
+        
 
         //this will uodate the payment date in user table
         $updateData['approved_at'] = now(); 
