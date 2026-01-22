@@ -107,7 +107,7 @@
                                     {{ ucfirst($payment->status) }}
                                 </span>
                             </td>
-                            <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d M Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($payment->payment_date)->format('d M Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>

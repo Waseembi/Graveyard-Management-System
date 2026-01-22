@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div class="sidebar" id="sidebar">
+<div class="sidebar"  id="sidebar">
     <div class="text-center mb-4">
         {{-- <div class="text-center ">
             <img src="{{ asset('images/logogms-removebg.png') }}" alt="Attock GMS Logo" class=""
@@ -23,7 +23,7 @@
     
 
 
-    <!-- 🌐 Back to Website -->
+    <!--  Back to Website -->
     {{-- <a href="{{ route('home') }}">
         <i class="fa-solid fa-globe me-2 text-info"></i> Back to Website
     </a> --}}
