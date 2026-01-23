@@ -19,9 +19,9 @@
     <a href="{{ route('user.profile') }}" class="{{ request()->routeIs('user.profile') ? 'active' : '' }}" style="color: black;"><i class="bi bi-person-gear me-2"></i><span>Profile</span></a>
     
 
-    <!-- 🌐 Back to Website -->
+    <!--  Back to Website -->
     <a href="{{ route('home') }}">
-        <i class="fa-solid fa-globe me-2 mt-3 text-info"  ></i> <span style="color: black;">Back to Website</span>
+        <i class="fa-solid fa-globe me-2 mt-3 text-success"  ></i> <span style="color: black;">Back to Website</span>
     </a>
 
     <form method="POST" action="{{ route('logout') }}" class="mt-3 px-3">
@@ -47,22 +47,22 @@
                 <a class="nav-link" href="#"><i class="fa-solid fa-bell"></i></a>
             </li> --}}
             <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+               <a class="nav-link dropdown-toggle d-flex align-items-center me-4" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
                 @if(Auth::user()->profile_image)
                     <img src="{{ asset('profile_images/user/' . Auth::user()->profile_image) }}" 
                          alt="Profile Image" 
-                         class="rounded-circle me-2  " 
-                         style="width: 35px; height: 35px; object-fit: cover;">
+                         class="rounded-circle border border-1 border-success shadow-sm  me-3  " 
+                         style="width: 37px; height: 37px; object-fit: cover;">
                 @else
-                    <i class="fa-solid fa-user me-2"></i>
+                    <i class="fa-solid fa-user me-3"></i>
                  @endif
                     {{ Auth::user()->name ?? 'User' }}
                 </a>
 
 
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="{{ route('user.profile') }}">Profile</a></li>
+                    {{-- <li><a class="dropdown-item" href="#">Settings</a></li> --}}
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">

@@ -18,16 +18,13 @@ class UserRecordsController extends Controller
         $registrations = UserRegistration::where('user_id', $userId)->get();
         $familyMembers = FamilyMember::with('registration')->where('user_id', $userId)->get();
 
-        
-
         return view('roles.user.user_records', compact('registrations', 'familyMembers', ));
     }
 
 
     
-    /**
-     * View single registration
-     */
+    //View single registration
+     
     public function showRegistration($id)
     {
         $registration = UserRegistration::where('id', $id)
@@ -51,11 +48,11 @@ class UserRecordsController extends Controller
         return view('roles.user.user_records_edit', compact('registration'));
     }
 
-    /**
-     * Update registration
-     */
+
+    // Update registration
     public function updateRegistration(Request $request, $id)
     {
+        $familyMember = FamilyMember::where('registration_id', $request->id)->first();
         $registration = UserRegistration::where('id', $id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
@@ -63,10 +60,11 @@ class UserRecordsController extends Controller
         $request->validate([
             'name'        => 'required|string|max:255',
             'father_name' => 'required|string|max:255',
-            'age'         => 'nullable|integer|min:0',
+            'age'         => 'required|integer|min:0',
             'cnic'        => 'nullable|digits:13',
-            'dob'         => 'nullable|date',
-            'gender'      => 'nullable|in:male,female',
+            'dob'         => 'required|date',
+            'gender'      => 'required|in:male,female',
+            'address'     => 'required|string|max:255',
         ]);
 
         $registration->update($request->only([
@@ -75,17 +73,29 @@ class UserRecordsController extends Controller
             'age',
             'cnic',
             'dob',
-            'gender'
+            'gender',
+            'address',
         ]));
 
+        if($familyMember){
+            // Also update the corresponding family member record
+            $familyMember->update([
+                'name'        => $request->name,
+                'father_name' => $request->father_name,
+                'age'         => $request->age,
+                'cnic'        => $request->cnic,
+                'dob'         => $request->dob,
+                'address'     => $request->address,
+                'gender'      => $request->gender,
+            ]);
+        }
         return redirect()
             ->route('user.records')
             ->with('success', 'Registration updated successfully');
     }
 
-    /**
-     * View family member
-     */
+    // View family member
+     
     public function showFamily($id)
     {
 
@@ -112,9 +122,8 @@ class UserRecordsController extends Controller
         return view('roles.user.user_records_family_edit', compact('member'));
     }
 
-    /**
-     * Update family member
-     */
+
+     // Update family member
     public function updateFamily(Request $request, $id)
     {
         $member = FamilyMember::where('id', $id)
@@ -143,7 +152,7 @@ class UserRecordsController extends Controller
             'relationship',
         ]));
 
-        // ✅ Update USER REGISTRATION using registration_id (IMPORTANT)
+        //  Update USER REGISTRATION using registration_id if exists
     if ($member->registration_id) {
         UserRegistration::where('id', $member->registration_id)->update([
             'name'        => $request->name,
@@ -156,7 +165,7 @@ class UserRecordsController extends Controller
         ]);
     }
 
-    // i use [#family] because after updating family member, user should be redirected to family section of user records page.
+    // I use [#family] because after updating family member, user should be redirected to family section of user records page.
         return redirect()
          ->route('user.records', ['#family'])
          ->with('success', 'Family member updated successfully');

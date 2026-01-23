@@ -58,18 +58,18 @@
                     @if(Auth::user()->profile_image)
                         <img src="{{ asset('profile_images/admin/' . Auth::user()->profile_image) }}" 
                             alt="Profile Image" 
-                            class="rounded-circle me-3" 
-                            style="width: 35px; height: 35px; object-fit: cover;">
+                            class="rounded-circle border border-1 border-success shadow-sm me-2" 
+                            style="width: 37px; height: 37px; object-fit: cover;">
                     @else
-                        <i class="fa-solid fa-user me-2"></i>
+                        <i class="fa-solid fa-user me-3"></i>
                     @endif
                      {{ Auth::user()->name ?? 'User' }}
                 </a>
 
 
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.profile') }}">Profile</a></li>
+                    {{-- <li><a class="dropdown-item" href="#">Settings</a></li> --}}
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">

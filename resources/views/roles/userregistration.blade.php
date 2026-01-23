@@ -118,7 +118,7 @@
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label"><i class="bi bi-credit-card-2-front-fill"></i> CNIC (optional)</label>
+                        <label class="form-label"><i class="bi bi-credit-card-2-front-fill"></i> CNIC </label>
                         <input type="text" name="cnic" value="{{ old('cnic') }}" class="form-control">
                     </div>
                     <div class="col-md-6">

@@ -108,6 +108,7 @@
                                 {{ ucfirst($registration->burial_status ?? 'Pending') }}
                             </span>
                 </div>
+                <div class="col-md-6"><strong>Address:</strong> {{ $registration->address ?? '-' }}</div>
             </div>
         </div>
 

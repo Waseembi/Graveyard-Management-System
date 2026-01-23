@@ -16,38 +16,97 @@
     </section>
 
 
-    <!--  Features Section -->
-    <section class="features-section py-5 bg-light ">
-        <div class="container">
-            <h2 class="text-center fw-bold mb-5 mt-5 ">What You Can Do</h2>
-            <div class="row g-4 justify-content-center">
+    <!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5 mt-5">What You Can Do</h2>
 
-                @php
-                $features = [
-                    ['icon' => 'fa-search', 'color' => 'text-primary', 'title' => 'Search Burial Records', 'desc' => 'Find detailed records of those buried, including names, dates, and plot locations.', 'btn' => 'Explore Records'],
-                    ['icon' => 'fa-cross', 'color' => 'text-secondary', 'title' => 'Grave Reservation', 'desc' => 'Reserve a grave at Attock GMS with verified plot details and documentation.', 'btn' => 'Reserve Now'],
-                    ['icon' => 'fa-bus', 'color' => 'text-warning', 'title' => 'Family Transportation', 'desc' => 'Provide transport for family members and relatives attending the funeral.', 'btn' => 'Arrange Transport'],
-                    ['icon' => 'fa-th-large', 'color' => 'text-info', 'title' => 'Marble Finishing', 'desc' => 'Add premium marble finishing to graves upon request for a respectful presentation.', 'btn' => 'Customize Grave'],
-                    ['icon' => 'fa-headset', 'color' => 'text-danger', 'title' => 'Get Support', 'desc' => 'Need help? Reach out to our team for assistance with records, access, or technical issues.', 'btn' => 'Contact Us'],
-                ];
-                @endphp
+        <div class="row g-4 justify-content-center">
 
-                @foreach($features as $f)
-                <div class="col-md-6 col-lg-4">
-                    <div class="feature-card text-center p-4 shadow-sm rounded-4 h-100">
-                        <div class="icon-container mb-3">
-                            <i class="fas {{ $f['icon'] }} fa-2x {{ $f['color'] }}"></i>
-                        </div>
-                        <h5 class="fw-semibold mb-3">{{ $f['title'] }}</h5>
-                        <p class="text-muted">{{ $f['desc'] }}</p>
-                        <a href="#" class="btn btn-outline-success rounded-pill px-4 py-1">{{ $f['btn'] }}</a>
+            <!-- Search Burial Records -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center p-4 shadow-sm rounded-4 h-100">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-search fa-2x text-primary"></i>
                     </div>
+                    <h5 class="fw-semibold mb-3">Search Burial Records</h5>
+                    <p class="text-muted">
+                        Find detailed records of those buried, including names, dates, and plot locations.
+                    </p>
+                    <a href="{{ route('search') }}" class="btn btn-outline-success rounded-pill px-4 py-1">
+                        Explore Records
+                    </a>
                 </div>
-                @endforeach
-
             </div>
+
+            <!-- Grave Reservation -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center p-4 shadow-sm rounded-4 h-100">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-place-of-worship fa-2x text-secondary"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-3">Grave Reservation</h5>
+                    <p class="text-muted">
+                        Reserve a grave at Attock GMS with verified plot details and documentation.
+                    </p>
+                    <a href="{{ route('user.register.create') }}" class="btn btn-outline-success rounded-pill px-4 py-1">
+                        Reserve Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Family Transportation -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center p-4 shadow-sm rounded-4 h-100">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-bus fa-2x text-warning"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-3">Family Transportation</h5>
+                    <p class="text-muted">
+                        Provide transport for family members and relatives attending the funeral.
+                    </p>
+                    <a href="#" class="btn btn-outline-success rounded-pill px-4 py-1">
+                        Arrange Transport
+                    </a>
+                </div>
+            </div>
+
+            <!-- Marble Finishing -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center p-4 shadow-sm rounded-4 h-100">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-th-large fa-2x text-info"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-3">Marble Finishing</h5>
+                    <p class="text-muted">
+                        Add premium marble finishing to graves upon request for a respectful presentation.
+                    </p>
+                    <a href="#" class="btn btn-outline-success rounded-pill px-4 py-1">
+                        Customize Grave
+                    </a>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center p-4 shadow-sm rounded-4 h-100">
+                    <div class="icon-container mb-3">
+                        <i class="fas fa-headset fa-2x text-danger"></i>
+                    </div>
+                    <h5 class="fw-semibold mb-3">Get Support</h5>
+                    <p class="text-muted">
+                        Need help? Reach out to our team for assistance with records, access, or technical issues.
+                    </p>
+                    <a href="{{ route('contact') }}" class="btn btn-outline-success rounded-pill px-4 py-1">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
+
 
 
     <!--  Call to Action Section -->
@@ -60,9 +119,9 @@
 
         <div class="container position-relative">
             <p class="fs-5 fst-italic text-light mt-4 mb-4">
-    "كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ" <br>
-    <small class="text-light">“Every soul shall taste death.” — Qur’an 3:185</small>
-</p>
+                "كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ" <br>
+            <small class="text-light">“Every soul shall taste death.” — Qur’an 3:185</small>
+            </p>
 
         </div>
     </section>
@@ -73,33 +132,33 @@
 <!--  Styles -->
 <style>
 
-.hero-section {
-    height: 520px;
-    position: relative;
-}
-.hero-section .content {
-    max-width: 700px;
-}
-.feature-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #e6e6e6;
-    transition: all 0.3s ease;
-}
-.feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(25,135,84,0.2);
-    background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
-}
-.icon-container i {
-    transition: transform 0.3s ease;
-}
-.feature-card:hover i {
-    transform: scale(1.2);
-}
-.cta-section {
-    position: relative;
-    overflow: hidden;
-}
+    .hero-section {
+        height: 520px;
+        position: relative;
+    }
+    .hero-section .content {
+        max-width: 700px;
+    }
+    .feature-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #e6e6e6;
+        transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(25,135,84,0.2);
+        background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+    }
+    .icon-container i {
+        transition: transform 0.3s ease;
+    }
+    .feature-card:hover i {
+        transform: scale(1.2);
+    }
+    .cta-section {
+        position: relative;
+        overflow: hidden;
+    }
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
