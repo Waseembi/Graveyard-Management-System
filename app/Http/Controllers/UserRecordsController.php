@@ -40,9 +40,8 @@ class UserRecordsController extends Controller
         return view('roles.user.user_records_view', compact('registration', 'payments'));
     }
 
-    /**
-     * Edit registration (limited fields)
-     */
+
+     //Edit registration 
     public function editRegistration($id)
     {
         $registration = UserRegistration::where('id', $id)
@@ -65,7 +64,7 @@ class UserRecordsController extends Controller
             'name'        => 'required|string|max:255',
             'father_name' => 'required|string|max:255',
             'age'         => 'nullable|integer|min:0',
-            'cnic'        => 'nullable|string|max:20',
+            'cnic'        => 'nullable|digits:13',
             'dob'         => 'nullable|date',
             'gender'      => 'nullable|in:male,female',
         ]);
@@ -126,7 +125,7 @@ class UserRecordsController extends Controller
             'name'        => 'required|string|max:255',
             'father_name' => 'required|string|max:255',
             'age'         => 'required|integer|min:0',
-            'cnic'        => 'nullable|string|max:20',
+            'cnic'        => 'nullable|digits:13',
             'dob'         => 'required|date',
             'gender'      => 'required|in:male,female',
             'address'     => 'required|string|max:255',
