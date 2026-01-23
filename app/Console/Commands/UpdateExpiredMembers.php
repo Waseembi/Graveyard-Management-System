@@ -45,34 +45,41 @@ class UpdateExpiredMembers extends Command
             ]);
 
             // Find the last payment year for this user
-            $lastPayment = Payment::where('user_id', $user->user_id)
+            $lastPayment = Payment::where('registration_id', $user->id)
                 ->orderByDesc('payment_year')
                 ->first();
+            
+            if ($lastPayment) { 
+                // Start from the year after the last payment 
+                $startYear = $lastPayment->payment_year + 1; 
+            } 
+            else { 
+                // Start from the registration year if no payments exist 
+                $startYear = $user->created_at->year; 
+                }
+            
+            $currentYear = Carbon::today()->year;
 
-            // If user has paid before, next year = last payment year + 1
-            // Otherwise fallback to current year
-            $nextYear = $lastPayment
-                ? $lastPayment->payment_year + 1
-                : Carbon::today()->year;
+            for ($year = $startYear; $year <= $currentYear; $year++) {
+                // Check if unpaid record already exists for this user/year
+                $exists = Payment::where('registration_id', $user->id)
+                    ->where('payment_year', $year)
+                    ->exists();
 
-            // Check if unpaid record already exists for this user/year
-            $exists = Payment::where('user_id', $user->user_id)
-                ->where('payment_year', $nextYear)
-                ->exists();
-
-            if (!$exists) {
-                Payment::create([
-                    'registration_id' => $user->id,
-                    'user_id' => $user->user_id,
-                    'method' => null, // filled when user pays
-                    'amount' => null, // filled when user pays
-                    'purpose' => 'Annual Grave Fee',
-                    'payment_date' => null, // stays null until payment
-                    'payment_year' => $nextYear,
-                    'status' => 'unpaid',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                if (!$exists) {
+                    Payment::create([
+                        'registration_id' => $user->id,
+                        'user_id' => $user->user_id,
+                        'method' => null, // filled when user pays
+                        'amount' => null, // filled when user pays
+                        'purpose' => 'Annual Grave Fee',
+                        'payment_date' => null, // stays null until payment
+                        'payment_year' => $year,
+                        'status' => 'unpaid',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
             }
         }
 

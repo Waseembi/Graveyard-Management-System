@@ -35,7 +35,7 @@ class UserRecordsController extends Controller
             ->firstOrFail();
 
         // Fetch all payment records for this user 
-        $payments = Payment::where('registration_id', $registration->id)->orderBy('created_at', 'desc')->get();
+        $payments = Payment::where('registration_id', $registration->id)->orderBy('payment_year', 'desc')->get();
 
         return view('roles.user.user_records_view', compact('registration', 'payments'));
     }

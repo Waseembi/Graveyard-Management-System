@@ -74,6 +74,7 @@
                         <th>Amount</th>
                         <th>Method</th>
                         <th>Status</th>
+                        <th>Year</th>
                         <th>Paid On</th>
                     </tr>
                 </thead>
@@ -88,7 +89,14 @@
                                     {{ ucfirst($payment->status) }}
                                 </span>
                             </td>
-                            <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d M Y') }}</td>
+                            <td>{{ $payment->payment_year }}</td>
+                            <td>
+                                @if($payment->payment_date)
+                                    {{ \Carbon\Carbon::parse($payment->payment_date)->format('d M Y') }}
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

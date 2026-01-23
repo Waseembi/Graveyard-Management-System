@@ -122,7 +122,7 @@ public function update(Request $request, $id)
         'phone' => $request->phone, 
         'age' => $request->age, 
         'address' => $request->address, 
-        'status' => $request->status, 
+        'status' => $user->status, 
         'burial_status' => $request->burial_status,
         'dob' => $request->dob,
         'gender' => $request->gender,
@@ -150,35 +150,75 @@ public function update(Request $request, $id)
     //Case 1: status equal to Approved.
     //now adding the record in payments table if admin make user status  approved 
     // $user->status !== 'approved' && $request->status === 'approved' the login behind this code is if admin changes anything else so the payment record will not be created again and again.before this when admin change any other field it was creating multiple payment records if status is already approved.
+   
     if ($user->status !== 'approved' && $request->status === 'approved') { 
-        $currentYear = now()->year; 
-         Payment::create([ 
-            'registration_id' => $user->id, 
-            'user_id' => $user->user_id, 
-            'method' => 'cash',
-            'amount' => 1000, 
-            'purpose' => 'Annual Grave Fee', 
-            'payment_year' => $currentYear, 
-            'payment_date' => now(), 
-            'status' => 'paid', 
-            ]); 
-        
+        // Case A: First-time approval (no payments yet)
+        $hasPayments = Payment::where('registration_id', $user->id)->exists();
 
-        //this will uodate the payment date in user table
-        $updateData['approved_at'] = now(); 
-        $updateData['expiry_date'] = now()->endOfYear();
+        if (!$hasPayments) {
+        // Create first payment record
+         Payment::create([
+            'registration_id' => $user->id,
+            'user_id' => $user->user_id,
+            'method' => 'cash',
+            'amount' => 1000,
+            'purpose' => 'Annual Grave Fee',
+            'payment_year' => now()->year,
+            'payment_date' => now(),
+            'status' => 'paid',
+        ]);
+            $updateData['status'] = 'approved';
+            $updateData['approved_at'] = now();
+            $updateData['expiry_date'] = Carbon::now()->endOfYear();
+        } else {
+        // Case B: Sequential approval (approve earliest unpaid year)
+            $payment = Payment::where('registration_id', $user->id)
+                ->where('status', 'unpaid')
+                ->orderBy('payment_year', 'asc')
+                ->first();
+
+            if ($payment) {
+                $payment->update([
+                    'status' => 'paid',
+                    'payment_date' => now(),
+                    'method' => 'cash',
+                    'amount' => 1000,
+                ]);
+
+                $updateData['status'] = 'pending';
+
+                $remainingUnpaid = Payment::where('registration_id', $user->id)
+                ->where('status', 'unpaid')
+                ->exists();
+
+                if (!$remainingUnpaid) {
+                     $updateData['status'] = 'approved';
+                     $updateData['approved_at'] = now();
+                     $updateData['expiry_date'] = Carbon::now()->endOfYear();
+               }
+            } 
+        }
     }
+
     // Case 2: Admin sets user back to pending (unapprove) 
     if ($request->status === 'pending') { 
+        // Find the latest paid payment for this registration 
+        $latestPaid = Payment::where('registration_id', $user->id)
+                     ->where('status', 'paid') 
+                     ->orderBy('payment_year', 'desc')->first();
+        // Delete payment record that matches approved_at year
+        if ($latestPaid) { 
+            $latestPaid->update([ 
+                'status' => 'unpaid', 
+                'payment_date' => null, 
+                'method' => null, 
+                'amount' => null, ]);
+        } 
         // Clear validity 
+        $updateData['status'] = 'pending';
         $updateData['approved_at'] = null; 
-        $updateData['expiry_date'] = null; 
-        // Delete payment record that matches approved_at year 
-        if ($user->approved_at) 
-            { 
-                Payment::where('registration_id', $user->id)
-                 ->whereDate('payment_date','=', $user->approved_at) ->delete(); 
-            } 
+        $updateData['expiry_date'] = null;  
+        
     }
     // Update the user record once 
     $user->update($updateData);
@@ -212,7 +252,7 @@ public function show($id){
         }
     
     // Fetch all payment records for this user 
-    $payments = Payment::where('registration_id', $user->id)->orderBy('created_at', 'desc')->get();
+    $payments = Payment::where('registration_id', $user->id)->orderBy('payment_year', 'desc')->get();
 
     return view('roles.admin.user_show', compact('user', 'familyRecord', 'userRegisterbywhom','payments'));
     }

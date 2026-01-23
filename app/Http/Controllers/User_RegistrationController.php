@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserRegistration;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Payment;
 
 class User_RegistrationController extends Controller
 {
@@ -49,13 +49,12 @@ class User_RegistrationController extends Controller
 
     if (!Auth::check()) {
     return redirect()->route('login')->with('error', 'Please login to register.');
-}
+    }
 
 
     // Create new registration
-        UserRegistration::create([
-            
-            'user_id' => Auth::id(), // 👈 current logged-in user
+    $user =   UserRegistration::create([
+            'user_id' => Auth::id(), //  current logged-in user
             'name' => $request->name,
             'father_name' => $request->father_name,
             'cnic' => $request->cnic,
@@ -64,9 +63,16 @@ class User_RegistrationController extends Controller
             'address' => $request->address,
             'payment_method' => $request->payment_method,
             'gender' => $request->gender,
-            'status' => 'pending', // 👈 default status
+            'status' => 'pending', //  default status
             'dob' => $request->dob,
         ]);
+
+        Payment::create([ 
+        'registration_id' => $user->id, 
+        'user_id' => $user->user_id, 
+        'purpose' => 'Annual Grave Fee', 
+        'payment_year' => $user->created_at->year, 
+        'status' => 'unpaid', ]);
 
     return redirect()->route('registration.create')
         ->with('success', 'Registration successfully done.');
@@ -123,12 +129,11 @@ public function ustore(Request $request)
 
     if (!Auth::check()) {
     return redirect()->route('login')->with('error', 'Please login to register.');
-}
+  }
 
     // Create new registration
-        UserRegistration::create([
-            
-            'user_id' => Auth::id(), // 👈 current logged-in user
+    $user =  UserRegistration::create([
+            'user_id' => Auth::id(), //  current logged-in user
             'name' => $request->name,
             'father_name' => $request->father_name,
             'cnic' => $request->cnic,
@@ -137,9 +142,16 @@ public function ustore(Request $request)
             'address' => $request->address,
             'payment_method' => $request->payment_method,
             'gender' => $request->gender,
-            'status' => 'pending', // 👈 default status
+            'status' => 'pending', //  default status
             'dob' => $request->dob,
         ]);
+
+        Payment::create([ 
+        'registration_id' => $user->id, 
+        'user_id' => $user->user_id, 
+        'purpose' => 'Annual Grave Fee', 
+        'payment_year' => $user->created_at->year, 
+        'status' => 'unpaid', ]);
 
     return redirect()->route('user.register.create')->with('success', 'Registration successfully done.');
 }
