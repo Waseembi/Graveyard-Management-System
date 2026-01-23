@@ -48,16 +48,7 @@
             </div>
         </div>
 
-        {{-- Active Filters --}}
-        @if(request()->hasAny(['name', 'cnic', 'grave_id', 'year']))
-            <div class="alert alert-success border-0 shadow-sm rounded-pill">
-                <strong><i class="fa-solid fa-filter me-2"></i>Filters Applied:</strong>
-                @if(request('name')) <span class="badge rounded-pill bg-light text-success me-1">Name: {{ request('name') }}</span> @endif
-                @if(request('cnic')) <span class="badge rounded-pill bg-light text-success me-1">CNIC: {{ request('cnic') }}</span> @endif
-                @if(request('grave_id')) <span class="badge rounded-pill bg-light text-success me-1">Grave ID: {{ request('grave_id') }}</span> @endif
-                @if(request('year')) <span class="badge rounded-pill bg-light text-success me-1">Year: {{ request('year') }}</span> @endif
-            </div>
-        @endif
+        
 
         {{-- Burial Records Table --}}
         <div class="card border-0 shadow-sm rounded-4">
@@ -126,11 +117,11 @@
 
 {{-- Green Theme Styling --}}
 <style>
-    .hover-row:hover {
-        background-color: #e8f5e9 !important; /* soft green hover */
+    /* .hover-row:hover {
+        background-color: #e8f5e9 !important; 
         transform: scale(1.01);
         transition: all 0.2s ease-in-out;
-    }
+    } */
 
     .table thead th {
         vertical-align: middle !important;

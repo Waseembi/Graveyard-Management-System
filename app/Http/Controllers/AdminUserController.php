@@ -93,7 +93,7 @@ public function update(Request $request, $id)
         'phone' => 'required|string|max:20',
         'age' => 'required|integer|min:1',
         'address' => 'required|string|max:255',
-        'status' => 'required|in:approved,pending',
+        'status' => 'nullable|in:approved,pending',
         'burial_status' => 'required|in:buried,not_buried',
         'dob'         => 'nullable|date',
         'gender'      => 'nullable|in:male,female',

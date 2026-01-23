@@ -188,11 +188,11 @@
     color: #fff;
 }
 
-.hover-row:hover {
+/* .hover-row:hover {
     background-color: #e8f5e9 !important;
     transform: scale(1.01);
     transition: all 0.2s ease-in-out;
-}
+} */
 
 .table thead th {
     vertical-align: middle !important;
