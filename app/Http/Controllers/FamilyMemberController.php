@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FamilyMember;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserRegistration;
 
@@ -56,7 +57,7 @@ class FamilyMemberController extends Controller
     }
 
     // ✅ Step 1: Create user registration
-    $registration = UserRegistration::create([
+    $user = UserRegistration::create([
         'user_id' => Auth::id(),
         'name' => $request->name,
         'father_name' => $request->father_name,
@@ -72,7 +73,7 @@ class FamilyMemberController extends Controller
 
     // ✅ Step 2: Create family member record linked to user registration
     FamilyMember::create([
-        'registration_id' => $registration->id,
+        'registration_id' => $user->id,
         'user_id' => Auth::id(),
         'name' => $request->name,
         'father_name' => $request->father_name,
@@ -86,6 +87,13 @@ class FamilyMemberController extends Controller
         'dob' => $request->dob,
         'status' => 'pending',
     ]);
+
+    Payment::create([ 
+        'registration_id' => $user->id, 
+        'user_id' => $user->user_id, 
+        'purpose' => 'Annual Grave Fee', 
+        'payment_year' => $user->created_at->year, 
+        'status' => 'unpaid', ]);
 
     return redirect()->route('family.create')->with('success', 'Registration completed successfully!');
 }

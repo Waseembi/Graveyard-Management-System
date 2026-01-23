@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('registration_id')->constrained('user_registrations')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('method', ['online', 'cash'])->nullable()->change();
-            $table->decimal('amount', 10, 2)->nullable()->change();
+            $table->enum('method', ['online', 'cash'])->nullable();
+            $table->decimal('amount', 10, 2)->nullable();
             $table->string('purpose');
-            $table->date('payment_date')->nullable()->change();
+            $table->date('payment_date')->nullable();
             $table->year('payment_year');
             $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();

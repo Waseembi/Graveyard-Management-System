@@ -7,7 +7,7 @@
             <div class="text-center ">
                 <img src="{{ asset('images/logogms-removebg.png') }}" 
                      alt="GMS Logo" 
-                     class="img-fluid ms-2"
+                     class="img-fluid ms-2 "
                      style="width: 68px; height: 68px; border-radius: 40%;  object-fit: cover; ">
             </div>
             {{-- 🪦 --}}
@@ -41,19 +41,27 @@
             {{-- //authication links --}}
             <ul class="navbar-nav ms-auto">
             @auth
-        <li class="nav-item me-3">
+        {{-- <li class="nav-item me-3">
             <a class="nav-link text-white" href="#">
                 <i class="fa-solid fa-bell"></i>
             </a>
-        </li>
+        </li> --}}
 
         <li class="nav-item dropdown">
 
 
-    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <i class="fa-solid fa-user me-2"></i> {{ Auth::user()->name ?? 'User' }}
-    <i class="fa-solid fa-caret-down ms-2"></i>
-</a>
+        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button"   data-bs-toggle="dropdown" aria-expanded="false">
+            @if(Auth::user()->profile_image)
+                <img src="{{ asset('profile_images/user/' . Auth::user()->profile_image) }}" 
+                     alt="Profile Image" 
+                     class="rounded-circle me-3" 
+                     style="width: 35px; height: 35px; object-fit: cover;">
+            @else
+                <i class="fa-solid fa-user me-3"></i>
+            @endif
+            {{ Auth::user()->name ?? 'User' }}
+            <i class="fa-solid fa-caret-down ms-2"></i>
+        </a>
 
 
 

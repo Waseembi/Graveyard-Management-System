@@ -49,13 +49,22 @@
         <h5 class="mb-0">Admin Dashboard</h5>
 
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item me-3">
+            {{-- <li class="nav-item me-3">
                 <a class="nav-link" href="#"><i class="fa-solid fa-bell"></i></a>
-            </li>
+            </li> --}}
+            
             <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
-            <i class="fa-solid fa-user me-2"></i> {{ Auth::user()->name ?? 'User' }}
-            </a>
+                    @if(Auth::user()->profile_image)
+                        <img src="{{ asset('profile_images/admin/' . Auth::user()->profile_image) }}" 
+                            alt="Profile Image" 
+                            class="rounded-circle me-3" 
+                            style="width: 35px; height: 35px; object-fit: cover;">
+                    @else
+                        <i class="fa-solid fa-user me-2"></i>
+                    @endif
+                     {{ Auth::user()->name ?? 'User' }}
+                </a>
 
 
                 <ul class="dropdown-menu dropdown-menu-end">

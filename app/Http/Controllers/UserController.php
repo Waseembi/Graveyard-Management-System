@@ -59,7 +59,7 @@ class UserController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $user->id,
         'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:4048',
-        'password' => 'required|min:4|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/  ',
+        'password' => 'nullable|min:4|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/  ',
     ]);
 
     // Update image

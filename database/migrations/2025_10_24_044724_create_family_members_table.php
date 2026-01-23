@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('phone');
             $table->string('cnic')->nullable();
             $table->text('address');
+            $table->date('dob');
+            $table->enum('gender', ['male', 'female']);
             $table->string('relationship');
             $table->enum('payment_method', ['cash', 'card']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');

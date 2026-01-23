@@ -25,64 +25,64 @@
         }
 
         /* Sidebar */
-.sidebar {
-    height: 100vh;
-    width: 220px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #ffffff;
-    color: #000000;
-    padding-top: 60px;
-    transition: all 0.3s ease;
-    box-shadow: 7px 17px 10px rgba(3, 3, 3, 0.09);
-}
-
-.sidebar.hidden {
-    margin-left: -240px;
-}
-
-.sidebar a {
-    color: #6c757d;
-    text-decoration: none;
-    display: block;
-    padding: 12px 20px;
-    transition: 0.3s ease;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-
-.sidebar a:hover  {
-    background-color: #1aa08a;
-    color: #ffffff;
-    border-radius: 15px;
-    margin-left: 6px;
-    margin-right: 6px;
-    padding-left: 24px;
-}
-
-    .sidebar a:hover i, 
-    .sidebar a:hover span,
-    .sidebar a.active i,
-    .sidebar a.active span
-    {
-    color: #ffffff;
-    }
-
-    .sidebar a.hover span{
-    color: #ffffff;
-    }
-
-.sidebar a.active {
-    background-color: #1aa08a;
-    color: #ffffff;
-    border-radius: 15px;
-    margin-left: 6px;
-    margin-right: 6px;
-    padding-left: 24px;
-}
+        .sidebar {
+            height: 100vh;
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            color: #000000;
+            padding-top: 60px;
+            transition: all 0.3s ease;
+            box-shadow: 7px 17px 10px rgba(3, 3, 3, 0.09);
+        }
+        
+        .sidebar.hidden {
+            margin-left: -240px;
+        }
+        
+        .sidebar a {
+            color: #6c757d;
+            text-decoration: none;
+            display: block;
+            padding: 12px 20px;
+            transition: 0.3s ease;
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .sidebar a:hover  {
+            background-color: #1aa08a;
+            color: #ffffff;
+            border-radius: 15px;
+            margin-left: 6px;
+            margin-right: 6px;
+            padding-left: 24px;
+        }
+        
+            .sidebar a:hover i, 
+            .sidebar a:hover span,
+            .sidebar a.active i,
+            .sidebar a.active span
+            {
+            color: #ffffff;
+            }
+        
+            .sidebar a.hover span{
+            color: #ffffff;
+            }
+        
+        .sidebar a.active {
+            background-color: #1aa08a;
+            color: #ffffff;
+            border-radius: 15px;
+            margin-left: 6px;
+            margin-right: 6px;
+            padding-left: 24px;
+        }
 
 
         /* Navbar */

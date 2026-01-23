@@ -108,33 +108,33 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-person-fill"></i> Full Name</label>
-                        <input type="text" name="name" class="form-control" required>
+                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-person-badge-fill"></i> Father Name</label>
-                        <input type="text" name="father_name" class="form-control" required>
+                        <input type="text" name="father_name" value="{{ old('father_name') }}" class="form-control" required>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-credit-card-2-front-fill"></i> CNIC (optional)</label>
-                        <input type="text" name="cnic" class="form-control">
+                        <input type="text" name="cnic" value="{{ old('cnic') }}" class="form-control">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-telephone-fill"></i> Phone Number</label>
-                        <input type="text" name="phone" class="form-control" required>
+                        <input type="text" name="phone" value="{{ old('phone') }}" class="form-control" required>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-calendar-heart-fill"></i> Age</label>
-                        <input type="number" name="age" class="form-control" required>
+                        <input type="number" name="age" value="{{ old('age') }}" class="form-control" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-calendar-date-fill"></i> Date of Birth</label>
-                        <input type="date" name="dob" class="form-control"  max="{{ date('Y-m-d') }}"required>
+                        <input type="date" name="dob" value="{{ old('dob') }}" class="form-control"  max="{{ date('Y-m-d') }}"required>
                     </div> 
                 </div>
 
@@ -144,16 +144,16 @@
                         <label class="form-label"><i class="bi bi-gender-ambiguous"></i> Gender</label>
                         <select name="gender" class="form-select" required>
                             <option value="">Select</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label"><i class="bi bi-wallet-fill"></i> Payment Method</label>
                         <select name="payment_method" class="form-select" required>
                             <option value="">Select</option>
-                            <option value="cash">Cash</option>
-                            <option value="card">Card</option>
+                            <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="card" {{ old('payment_method') == 'card' ? 'selected' : '' }}>Card</option>
                         </select>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                 <div class="row mb-3">
                     <div class="col-md-12">
                         <label class="form-label"><i class="bi bi-geo-alt-fill"></i> Address</label>
-                        <textarea name="address" class="form-control" rows="3" required></textarea>
+                        <textarea name="address" class="form-control" rows="3" required>{{ old('address') }}</textarea>
                     </div>
                 </div>
                 

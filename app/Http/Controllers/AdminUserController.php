@@ -222,6 +222,8 @@ public function update(Request $request, $id)
     }
     // Update the user record once 
     $user->update($updateData);
+    // update status to family members 
+    FamilyMember::where('registration_id', $user->id)->update([ 'status' => $updateData['status'], ]);
 
 
     // Redirect back with success message
