@@ -129,6 +129,7 @@ public function update(Request $request, $id)
     ];
 
     //  Update all related family members with the same registration_id
+    $status = $request->status ?? $user->status;
     FamilyMember::where('registration_id', $user->id)->update([
         'name' => $request->name,
         'father_name' => $request->father_name,
@@ -138,7 +139,7 @@ public function update(Request $request, $id)
         'dob' => $request->dob,
         'gender' => $request->gender,
         'address' => $request->address,
-        'status' => $request->status,
+        'status' => $status,
     ]);
 
      // If burial_status is 'not_buried', delete related burial and grave records
