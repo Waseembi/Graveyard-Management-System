@@ -37,13 +37,13 @@
                         </div>
                     </div>
 
-                    <div class="col-md">
+                    {{-- <div class="col-md">
                         <div class="input-group">
                             <span class="input-group-text bg-light"><i class="fa-solid fa-user-tie"></i></span>
                             <input type="text" name="father_name" class="form-control rounded-end shadow-sm p-2"
                                    placeholder="Father Name e.g. Khan Sahib" value="{{ request('father_name') }}">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="col-md">
                         <div class="input-group">

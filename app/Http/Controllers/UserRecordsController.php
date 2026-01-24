@@ -65,6 +65,8 @@ class UserRecordsController extends Controller
             'dob'         => 'required|date',
             'gender'      => 'required|in:male,female',
             'address'     => 'required|string|max:255',
+        ],[
+            'cnic.digits' => 'The CNIC must be exactly 13 digits.',
         ]);
 
         $registration->update($request->only([
