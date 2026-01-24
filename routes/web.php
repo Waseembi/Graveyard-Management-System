@@ -17,16 +17,20 @@ use App\Models\User;
 use App\Http\Controllers\UserRecordsController;
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
 
+
 //for search page
 Route::get('/search', [GraveSearchController::class, 'index'])->name('search');
+Route::get('/search-grave', [GraveSearchController::class, 'index'])->name('grave.search');
 
 
 // Route::middleware(['auth'])->group(function () {
@@ -35,7 +39,6 @@ Route::get('/search', [GraveSearchController::class, 'index'])->name('search');
 // });
 
 
-Route::get('/search-grave', [GraveSearchController::class, 'index'])->name('grave.search');
 
 // Route::get('/register-grave', [GraveRegistrationController::class, 'create'])->name('registration.create');
 // Route::post('/register-grave', [GraveRegistrationController::class, 'store'])->name('registration.store');

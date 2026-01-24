@@ -144,7 +144,7 @@
                                 <td class="fw-semibold text-muted">{{ $index + 1 }}</td>
                                 <td class="fw-bold text-dark">{{ $record->name }}</td>
                                 <td>{{ $record->father_name }}</td>
-                                <td class="text-muted">{{ $record->registration->cnic ?? '-' }}</td>
+                                <td class="text-muted">{{ optional($record->registration)->cnic ?? '-' }}</td>
                                 <td>
                                     <span class="badge bg-light text-success px-3 py-2">
                                         {{ \Carbon\Carbon::parse($record->date_of_death)->format('d M Y') }}

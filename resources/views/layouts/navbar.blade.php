@@ -41,27 +41,27 @@
             {{-- //authication links --}}
             <ul class="navbar-nav ms-auto">
             @auth
-        {{-- <li class="nav-item me-3">
-            <a class="nav-link text-white" href="#">
-                <i class="fa-solid fa-bell"></i>
-            </a>
-        </li> --}}
+                {{-- <li class="nav-item me-3">
+                    <a class="nav-link text-white" href="#">
+                        <i class="fa-solid fa-bell"></i>
+                    </a>
+                </li> --}}
 
-        <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
 
 
-        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button"   data-bs-toggle="dropdown" aria-expanded="false">
-            @if(Auth::user()->profile_image)
-                <img src="{{ asset('profile_images/user/' . Auth::user()->profile_image) }}" 
-                     alt="Profile Image" 
-                     class="rounded-circle me-3" 
-                     style="width: 35px; height: 35px; object-fit: cover;">
-            @else
-                <i class="fa-solid fa-user me-3"></i>
-            @endif
-            {{ Auth::user()->name ?? 'User' }}
-            <i class="fa-solid fa-caret-down ms-2"></i>
-        </a>
+               <a class="nav-link dropdown-toggle d-flex align-items-center  me-0" href="#" id="profileDropdown"       role="button"   data-bs-toggle="dropdown" aria-expanded="false">
+                   @if(Auth::user()->profile_image)
+                       <img src="{{ asset('profile_images/user/' . Auth::user()->profile_image) }}" 
+                            alt="Profile Image" 
+                            class="rounded-circle me-3" 
+                            style="width: 35px; height: 35px; object-fit: cover;">
+                   @else
+                       <i class="fa-solid fa-user me-3"></i>
+                   @endif
+                   {{ Auth::user()->name ?? 'User' }}
+                   <i class="fa-solid fa-caret-down ms-1 "></i>
+               </a>
 
 
 
@@ -72,7 +72,7 @@
             </a>
         </li>
         <li>
-            <a class="dropdown-item d-flex align-items-center" href="#">
+            <a class="dropdown-item d-flex align-items-center" href="{{ route('user.profile') }}">
                 <i class="fa-solid fa-user-gear me-2 text-secondary"></i> Profile
             </a>
         </li>
