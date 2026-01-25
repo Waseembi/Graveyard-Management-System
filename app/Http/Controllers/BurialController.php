@@ -14,18 +14,35 @@ class BurialController extends Controller
     //to show burial page for admin
     public function index(Request $request)
     {
-        $name = $request->input('name');
-        $cnic = $request->input('cnic');
-        $graveId = $request->input('grave_id');
-        $year = $request->input('year');
+        // $name = $request->input('name');
+        // $cnic = $request->input('cnic');
+        // $graveId = $request->input('grave_id');
+        // $year = $request->input('year');
 
-        $burials = Burial::with(['registration', 'grave'])
-            ->when($name, fn($q) => $q->where('name', 'like', "%$name%"))
-            ->when($cnic, fn($q) => $q->orWhereHas('registration', fn($qr) => $qr->where('cnic', 'like',    "%$cnic%")))
-            ->when($graveId, fn($q) => $q->where('grave_id', $graveId))
-            ->when($year, fn($q) => $q->whereYear('date_of_death', $year))
-            ->latest()
-            ->get();
+        // $burials = Burial::with(['registration', 'grave'])
+        //     ->when($name, fn($q) => $q->where('name', 'like', "%$name%"))
+        //     ->when($cnic, fn($q) => $q->orWhereHas('registration', fn($qr) => $qr->where('cnic', $cnic)))
+        //     ->when($graveId, fn($q) => $q->where('grave_id', $graveId))
+        //     ->when($year, fn($q) => $q->whereYear('date_of_death', $year))
+        //     ->latest()
+        //     ->get();
+
+        $query = Burial::with(['registration']);
+
+        if($request->filled('name')){
+                $query->where('name','like',"%{$request->name}%");
+        } 
+        if($request->filled('cnic')){
+          $query->whereHas('registration',function($q) use ($request){
+           $q->where('cnic', $request->cnic); });
+        }
+        if($request->filled('grave_id')){
+          $query->where('grave_id', $request->grave_id);
+        }
+        if($request->filled('year')){
+          $query->whereYear('date_of_death', $request->year);
+        }
+        $burials = $query->latest()->get();
 
         return view('roles.admin.burials', compact('burials'));
     }
@@ -36,7 +53,7 @@ class BurialController extends Controller
         return view('roles.admin.add_burials');
     }
 
-    // Search registration
+    // admin search burials in add to burial page
     public function searchRegistration(Request $request)
     {
         $request->validate([
@@ -45,17 +62,28 @@ class BurialController extends Controller
             'cnic' => 'nullable|string',
         ]);
 
-        $registrations = UserRegistration::query()
-            ->when($request->name, fn ($q) =>
-                $q->where('name', 'like', '%' . $request->name . '%')
-            )
-            ->when($request->father_name, fn ($q) =>
-                $q->where('father_name', 'like', '%' . $request->father_name . '%')
-            )
-            ->when($request->cnic, fn ($q) =>
-                $q->where('cnic', 'like', '%' . $request->cnic . '%')
-            )
-            ->get();
+        // $registrations = UserRegistration::query()
+        //     ->when($request->name, fn ($q) =>
+        //         $q->where('name', 'like', '%' . $request->name . '%')
+        //     )
+        //     ->when($request->father_name, fn ($q) =>
+        //         $q->where('father_name', 'like', '%' . $request->father_name . '%')
+        //     )
+        //     ->when($request->cnic, fn ($q) =>
+        //         $q->where('cnic',  $request->cnic)
+        //     )
+        //     ->get();
+
+        $registrations = collect();
+        if ($request->filled('name')){
+            $registrations = UserRegistration::where('name', 'like', "%{$request->name}%")->latest()->get();
+        }
+        if ($request->filled('cnic')){
+            $registrations = UserRegistration::where('cnic', $request->cnic)->latest()->get();
+        }
+        if ($request->filled('father_name')){
+            $registrations = UserRegistration::where('father_name', 'like', "%{$request->father_name}%")->latest()->get();
+        }
 
         return view('roles.admin.add_burials', compact('registrations'));
     }

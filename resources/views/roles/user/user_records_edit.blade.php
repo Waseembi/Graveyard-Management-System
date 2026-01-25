@@ -85,16 +85,6 @@
                 <h6 class="mb-0 fw-semibold text-dark">Edit Details</h6>
             </div>
             <div class="card-body">
-                {{-- @if($errors->any())
-                    <div class="alert alert-danger mb-4">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif --}}
-
                 <form method="POST" action="{{ route('user.registration.update', $registration->id) }}">
                     @csrf
                     @method('PUT')
@@ -139,7 +129,7 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label class="form-label fw-semibold">Address</label>
-                            <input type="text" name="address" value="{{ old('address',      $registration->address) }}" class="form-control shadow-sm" required>
+                            <input type="text" name="address" value="{{ old('address',  $registration->address) }}" class="form-control shadow-sm" required>
                         </div>
                     </div>
 

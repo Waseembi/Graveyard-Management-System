@@ -61,13 +61,13 @@ public function index(Request $request)
 }
 
 
-    
-
 //---------- Delete a registration ------------
     public function destroy($id)
     {
         UserRegistration::findOrFail($id)->delete();
         FamilyMember::where('registration_id', $id)->delete();
+        Burial::where('registration_id', $id)->delete();
+        Grave::where('registration_id', $id)->update([ 'registration_id' => null, 'user_id' => null, 'status' => 'available' ]);
 
         return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
     }
@@ -101,18 +101,15 @@ public function update(Request $request, $id)
 
     // Find the user by ID
     $user = UserRegistration::findOrFail($id);
+    //edit the person in burial table if he is buried
+    $burial = Burial::where('registration_id', $user->id)->first();
+    if ($burial) {
+        $burial->update([
+            'name'        => $request->name,
+            'father_name' => $request->father_name,
+        ]);
+    }
 
-    // Update the user record
-    // $user->update([
-    //     'name' => $request->name,
-    //     'father_name' => $request->father_name,
-    //     'cnic' => $request->cnic,
-    //     'phone' => $request->phone,
-    //     'age' => $request->age,
-    //     'address' => $request->address,
-    //     'status' => $request->status,
-    //     'burial_status' => $request->burial_status,
-    // ]);
 
     //Prepare update data beavise we updating user two times also in below payment 
     $updateData = [ 

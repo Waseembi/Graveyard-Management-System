@@ -3,7 +3,7 @@
 @section('content')
 <div class="about-wrapper" >
 
-    <!-- 🌿 Hero Section -->
+    <!--  Hero Section -->
     <section class="py-5 bg-gradient " >
         <div class="container">
             <div class="row align-items-center g-5 flex-column-reverse flex-lg-row" style="margin-top: -2%;">
@@ -45,7 +45,7 @@
         </div>
     </section>
 
-    <!-- 🌟 Vision & Mission -->
+    <!--  Vision & Mission -->
     <section class="py-5">
         <div class="container text-center">
             <h3 class="fw-bold  mb-5 text-success">Our Vision & Mission</h3>
@@ -65,7 +65,7 @@
         </div>
     </section>
 
-    <!-- 🌈 Why Choose Us -->
+    <!--  Why Choose Us -->
 <section class="py-5">
     <div class="container text-center">
         <h3 class="fw-bold  mb-5 text-success">Why Choose Attock GMS?</h3>

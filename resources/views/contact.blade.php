@@ -25,7 +25,7 @@
 <section class="py-5 hero-gradient text-dark">
     <div class="container text-center">
         <div class="mb-3">
-            <i class="fas fa-envelope-open-text fa-3x icon-pulse"></i>
+            <i class="fas fa-envelope-open-text fa-3x"></i>
         </div>
         <h3 class="display-5 fw-bold mb-2">Get In Touch</h3>
         <p class="lead text-muted">Have questions, feedback, or support requests? We’re here to help.</p>

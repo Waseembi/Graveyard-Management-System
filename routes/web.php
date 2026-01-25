@@ -27,27 +27,10 @@ Route::get('/contact', function () {
 })->name('contact');
 
 
-
 //for search page
 Route::get('/search', [GraveSearchController::class, 'index'])->name('search');
 Route::get('/search-grave', [GraveSearchController::class, 'index'])->name('grave.search');
 
-
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/register-grave', [User_RegistrationController::class, 'create'])->name('registration.create');
-//     Route::post('/register-grave', [User_RegistrationController::class, 'store'])->name('registration.store');
-// });
-
-
-
-// Route::get('/register-grave', [GraveRegistrationController::class, 'create'])->name('registration.create');
-// Route::post('/register-grave', [GraveRegistrationController::class, 'store'])->name('registration.store');
-
-
-
-
-
-// Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -120,13 +103,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/profile/image', [AdminController::class, 'updateImage'])->name('admin.update.image');
 
 //for burial management
-    // Route::get('/admin/burials/add', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.add');
-    // Route::get('/admin/burials/search', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.search');
-    // Route::post('/admin/burials/store', [BurialController::class, 'storeBurial'])->name('admin.burials.store');
+    
     Route::get('/admin/burials/add', [BurialController::class, 'showAddBurialForm'])->name('admin.burials.add');
     Route::get('/admin/burials/search', [BurialController::class, 'searchRegistration'])->name('admin.burials.search');
     Route::post('/admin/burials/store', [BurialController::class, 'storeBurial'])->name('admin.burials.store');
-
 
 //for admin burial search  Page
 Route::get('/admin/burials', [BurialController::class, 'index'])->name('admin.burials.index');
@@ -165,3 +145,6 @@ Route::post('register', [RegisterController::class, 'submitForm'])->name('regist
 
 Route::get('verify-code', [RegisterController::class, 'showVerifyForm'])->name('verify.code.form');
 Route::post('verify-code', [RegisterController::class, 'verifyCode'])->name('verify.code');
+
+
+

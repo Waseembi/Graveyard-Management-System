@@ -58,57 +58,7 @@
             </form>
         </div>
 
-      
-        <!-- Stats Section -->
-{{-- <div class="row g-3 mb-4">
-    <div class="col-md-3">
-        <div class="stat-card bg-gradient-success d-flex align-items-center">
-            <div class="stat-icon me-3">
-                <i class="fa-solid fa-users fa-1x"></i>
-            </div>
-            <div>
-                <div class="stat-title">Total Users</div>
-                <div class="stat-value">{{ $stats['total'] }}</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="stat-card bg-gradient-info d-flex align-items-center">
-            <div class="stat-icon me-3">
-                <i class="fa-solid fa-user-check fa-1x"></i>
-            </div>
-            <div>
-                <div class="stat-title">Approved Users</div>
-                <div class="stat-value">{{ $stats['approved'] }}</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="stat-card bg-gradient-warning d-flex align-items-center">
-            <div class="stat-icon me-3">
-                <i class="fa-solid fa-hourglass-half fa-1x"></i>
-            </div>
-            <div>
-                <div class="stat-title">Pending Users</div>
-                <div class="stat-value">{{ $stats['pending'] }}</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="stat-card bg-gradient-dark d-flex align-items-center">
-            <div class="stat-icon me-3">
-                <i class="fa-solid fa-user-slash fa-1x"></i>
-            </div>
-            <div>
-                <div class="stat-title">Buried Users</div>
-                <div class="stat-value">{{ $stats['buried'] }}</div>
-            </div>
-        </div>
-    </div>
-</div> --}}
+     
 
 <!-- Unified Green Stat Overview -->
 <div class="card shadow-sm border-0 text-white mb-4" style="background: linear-gradient(180deg,#1d9e7e, rgb(26, 158, 136));  border-radius: 10px; " >
@@ -211,6 +161,7 @@
                                         class="btn btn-sm btn-outline-danger rounded-pill delete-user">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
+                                
                             </form>
                         </td>
                     </tr>
@@ -306,11 +257,11 @@
     }
 
     /* Table row hover effect */
-    .table-hover tbody tr:hover {
+    /* .table-hover tbody tr:hover {
         background-color: rgba(0, 0, 0, 0.03);
         transform: translateY(-2px);
         transition: 0.2s ease;
-    }
+    } */
 
     /* Badge styling */
     .badge {

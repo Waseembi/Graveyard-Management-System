@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserRegistration;
 use App\Models\FamilyMember;
+use App\Models\Burial;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Payment;
 
@@ -56,6 +57,7 @@ class UserRecordsController extends Controller
         $registration = UserRegistration::where('id', $id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
+        $burial = Burial::where('registration_id', $registration->id)->first();
 
         $request->validate([
             'name'        => 'required|string|max:255',
@@ -80,7 +82,6 @@ class UserRecordsController extends Controller
         ]));
 
         if($familyMember){
-            // Also update the corresponding family member record
             $familyMember->update([
                 'name'        => $request->name,
                 'father_name' => $request->father_name,
@@ -91,13 +92,21 @@ class UserRecordsController extends Controller
                 'gender'      => $request->gender,
             ]);
         }
+
+        if ($burial) { 
+            $burial->update([ 
+                'name' => $request->name, 
+                'father_name' => $request->father_name, 
+            ]);
+            }
         return redirect()
             ->route('user.records')
             ->with('success', 'Registration updated successfully');
     }
 
-    // View family member
-     
+
+
+    // View family member 
     public function showFamily($id)
     {
 
@@ -112,9 +121,7 @@ class UserRecordsController extends Controller
         return view('roles.user.user_records_family_view', compact('member', 'payments'));
     }
 
-    /**
-     * Edit family member
-     */
+    // Edit family member
     public function editFamily($id)
     {
         $member = FamilyMember::where('id', $id)
@@ -131,6 +138,8 @@ class UserRecordsController extends Controller
         $member = FamilyMember::where('id', $id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
+        $registration = UserRegistration::where('id', $member->registration_id)->first();
+        $burial = Burial::where('registration_id', $registration->id)->first();
 
         $request->validate([
             'name'        => 'required|string|max:255',
@@ -165,6 +174,13 @@ class UserRecordsController extends Controller
             'gender'      => $request->gender,
             'address'     => $request->address,
         ]);
+    }
+
+    if ($burial) { 
+            $burial->update([ 
+                'name' => $request->name, 
+                'father_name' => $request->father_name, 
+            ]);
     }
 
     // I use [#family] because after updating family member, user should be redirected to family section of user records page.

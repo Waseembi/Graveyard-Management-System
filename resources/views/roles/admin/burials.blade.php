@@ -86,13 +86,13 @@
                                 </td>
                                 <td>
                                     <span class="badge bg-success-subtle text-success px-3 py-2">
-                                        {{ $burial->grave->id ?? 'N/A' }}
+                                        {{ optional($burial->grave)->id ?? 'N/A' }}
                                     </span>
                                 </td>
                                 <td>
                                     <span class="badge px-3 py-2 rounded-pill {{ 
                                         $burial->registration->burial_status === 'buried' 
-                                            ? 'bg-success text-white' 
+                                            ? 'bg-black text-white' 
                                             : 'bg-warning text-dark'
                                     }}">
                                         {{ ucfirst($burial->registration->burial_status ?? 'Pending') }}

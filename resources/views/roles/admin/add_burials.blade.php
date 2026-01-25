@@ -124,20 +124,20 @@
                         </div>
                         {{-- upload image --}}
                         <div class="mb-3">
-    <label class="form-label fw-semibold text-success">
-        Grave Picture <small class="text-muted">(Optional)</small>
-    </label>
-    <input type="file" name="grave_image" 
-           class="form-control rounded-pill shadow-sm"
-           accept="image/*"
-           id="graveImageInput">
-</div>
+                            <label class="form-label fw-semibold text-success">
+                                Grave Picture <small class="text-muted">(Optional)</small>
+                            </label>
+                            <input type="file" name="grave_image" 
+                                   class="form-control rounded-pill shadow-sm"
+                                   accept="image/*"
+                                   id="graveImageInput">
+                        </div>
 
-{{-- Preview --}}
-<div class="mb-3" id="imagePreviewContainer" style="display: none;">
-    <p class="fw-semibold text-success">Preview:</p>
-    <img id="imagePreview" src="" alt="Grave Preview" class="img-fluid rounded shadow-sm" style="max-width: 200px;">
-</div>
+                        {{-- Preview --}}
+                        <div class="mb-3" id="imagePreviewContainer" style="display: none;">
+                            <p class="fw-semibold text-success">Preview:</p>
+                            <img id="imagePreview" src="" alt="Grave Preview" class="img-fluid rounded shadow-sm" style="max-width: 200px;">
+                        </div>
 
 
                         <div class="text-end">

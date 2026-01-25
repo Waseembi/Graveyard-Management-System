@@ -50,41 +50,6 @@
     </div>
 </div>
 
-        <!-- ================= QUICK ACTIONS ================= -->
-        {{-- <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-white fw-bold">
-                Quick Actions
-            </div>
-            <div class="card-body">
-                <div class="row g-3">
-
-                    <div class="col-md-3">
-                        <a href="{{ route('user.register.create') }}" class="btn btn-primary w-100">
-                            <i class="bi bi-plus-circle"></i> Register Grave
-                        </a>
-                    </div>
-
-                    <div class="col-md-3">
-                        <a href="{{ route('family.create') }}" class="btn btn-success w-100">
-                            <i class="bi bi-person-plus"></i> Add Family Member
-                        </a>
-                    </div>
-
-                    <div class="col-md-3">
-                        <a href="{{ route('search') }}" class="btn btn-warning w-100">
-                            <i class="bi bi-search"></i> Search Burial
-                        </a>
-                    </div>
-
-                    <div class="col-md-3">
-                        <a href="#" class="btn btn-danger w-100">
-                            <i class="bi bi-credit-card"></i> Make Payment
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div> --}}
 
         <!-- ================= RECENT REGISTRATIONS ================= -->
 <div class="card shadow-sm border-0 mb-4">

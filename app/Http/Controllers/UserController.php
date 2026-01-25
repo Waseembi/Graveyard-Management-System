@@ -87,9 +87,6 @@ class UserController extends Controller
 }
 
 
-    
-
-
 public function removeImage()
     {
     $user = Auth::user();

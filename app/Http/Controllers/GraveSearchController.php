@@ -63,7 +63,17 @@ class GraveSearchController extends Controller
     $results = $query->latest()->get();
 
     return view('search', compact('results'));
-}
+
+
+    // this code will works only if user search by name else it will not return any result when page is loaded like in first code it returns all records when no search is made
+    // $results = collect(); // empty collection by default 
+    // if($request->filled('search')){ 
+    //     $results = Burial::with(['registration','grave'])
+    //                 ->where('name','like',"%{$request->search}%")
+    //                 ->latest() ->get(); }
+
+
+                    }
 
 
 

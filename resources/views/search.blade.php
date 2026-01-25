@@ -37,14 +37,6 @@
                         </div>
                     </div>
 
-                    {{-- <div class="col-md">
-                        <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="fa-solid fa-user-tie"></i></span>
-                            <input type="text" name="father_name" class="form-control rounded-end shadow-sm p-2"
-                                   placeholder="Father Name e.g. Khan Sahib" value="{{ request('father_name') }}">
-                        </div>
-                    </div> --}}
-
                     <div class="col-md">
                         <div class="input-group">
                             <span class="input-group-text bg-light"><i class="fa-solid fa-id-card"></i></span>
@@ -81,42 +73,6 @@
         </div>
     </div>
 
-    {{-- Active Filters --}}
-    {{-- @if(request()->hasAny(['name', 'father_name', 'cnic', 'grave_id', 'year']))
-        <div class="alert alert-success border-0 shadow-sm rounded-pill">
-            <strong><i class="fa-solid fa-filter me-2"></i>Filters Applied:</strong>
-            @if(request('name')) 
-                <span class="badge rounded-pill bg-light text-success me-1">
-                    Name: {{ request('name') }}
-                    <a href="{{ url()->current() }}" class="text-danger ms-2"><i class="fa-solid fa-xmark"></i></a>
-                </span> 
-            @endif
-            @if(request('father_name')) 
-                <span class="badge rounded-pill bg-light text-success me-1">
-                    Father Name: {{ request('father_name') }}
-                    <a href="{{ url()->current() }}" class="text-danger ms-2"><i class="fa-solid fa-xmark"></i></a>
-                </span> 
-            @endif
-            @if(request('cnic')) 
-                <span class="badge rounded-pill bg-light text-success me-1">
-                    CNIC: {{ request('cnic') }}
-                    <a href="{{ url()->current() }}" class="text-danger ms-2"><i class="fa-solid fa-xmark"></i></a>
-                </span> 
-            @endif
-            @if(request('grave_id')) 
-                <span class="badge rounded-pill bg-light text-success me-1">
-                    Grave ID: {{ request('grave_id') }}
-                    <a href="{{ url()->current() }}" class="text-danger ms-2"><i class="fa-solid fa-xmark"></i></a>
-                </span> 
-            @endif
-            @if(request('year')) 
-                <span class="badge rounded-pill bg-light text-success me-1">
-                    Year: {{ request('year') }}
-                    <a href="{{ url()->current() }}" class="text-danger ms-2"><i class="fa-solid fa-xmark"></i></a>
-                </span> 
-            @endif
-        </div>
-    @endif --}}
 
     {{-- Results --}}
     @if(isset($results))

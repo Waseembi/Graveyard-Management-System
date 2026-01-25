@@ -155,19 +155,19 @@ class AdminController extends Controller
 
 
 
-public function removeImage()
-    {
-    $admin = Auth::user();
+// public function removeImage()
+//     {
+//     $admin = Auth::user();
 
-    if ($admin->profile_image && File::exists(public_path('profile_images/' . $admin->profile_image))) {
-        File::delete(public_path('profile_images/' . $admin->profile_image));
-        $admin->profile_image = null;
+//     if ($admin->profile_image && File::exists(public_path('profile_images/' . $admin->profile_image))) {
+//         File::delete(public_path('profile_images/' . $admin->profile_image));
+//         $admin->profile_image = null;
     
-        $admin->save();   
-    }
+//         $admin->save();   
+//     }
 
-    return redirect()->back()->with('success', 'Profile image removed.');
-    }
+//     return redirect()->back()->with('success', 'Profile image removed.');
+//     }
 
 
 
