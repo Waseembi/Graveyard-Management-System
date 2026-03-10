@@ -126,6 +126,8 @@ Route::patch('/admin/marble-services/{id}', [MarbleBookingController::class, 'up
 
 // ===========   MAP   ===========
 Route::get('/grave-map', [MapController::class, 'showMap'])->name('grave.map'); 
+Route::get('/grave-book/{id}', [MapController::class, 'create'])->name('grave.book');
+Route::post('/grave-store', [MapController::class, 'store'])->name('grave.store');
 
 
 

@@ -12,12 +12,12 @@ use App\Models\Payment;
 class MapController extends Controller
 {
     public function showMap(){
-    $graves = Grave::all(); // each grave has id + status (available/booked)
-    return view('roles.map.mapview', compact('graves'));
+        $graves = Grave::all(); // each grave has id + status (available/booked)
+        return view('roles.map.mapview', compact('graves'));
     }
 
-    public function create(){
-        return view('GraveReservation');
+    public function create($id){
+        return view('roles.map.registration', ['grave_id' => $id]);
     }
 
     public function store(Request $request)
@@ -81,7 +81,15 @@ class MapController extends Controller
         'payment_year' => $user->created_at->year, 
         'status' => 'unpaid', ]);
 
-    return redirect()->route('registration.create')
+        // Update the specific grave
+        $grave = Grave::findOrFail($request->grave_id);
+        $grave->update([
+        'registration_id' => $user->id,
+        'user_id' => $user->user_id,
+        'status' => 'booked',
+        ]);
+
+    return redirect()->route('grave.book')
         ->with('success', 'Registration successfully done.');
 }
 

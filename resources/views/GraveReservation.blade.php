@@ -104,6 +104,7 @@
 
             <div class="row mb-3">
                 <div class="col-md-6">
+                    
                     <label class="form-label"><i class="bi bi-person-fill"></i> Full Name</label>
                     <input type="text" name="name" value="{{ old('name') }}" class="form-control" required>
                 </div>

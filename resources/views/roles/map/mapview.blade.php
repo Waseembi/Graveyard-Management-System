@@ -6,10 +6,9 @@
 
     <div class="grave-map">
         @foreach($graves as $grave)
-        {{-- {{ $grave->status === 'available' ? route('grave.book', $grave->id) : '#' }} --}}
-            <a href=""
+            <a href="{{ $grave->status === 'available' ? route('grave.book', $grave->id) : '#' }}"
                class="grave-box {{ $grave->status === 'available' ? 'available' : 'booked' }}">
-                {{ $grave->id }}
+                {{ $grave->id }} 
             </a>
         @endforeach
     </div>
