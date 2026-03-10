@@ -24,4 +24,10 @@ public function grave() {
     return $this->belongsTo(Grave::class);
 }
 
+public function marbleBookings()
+{
+    return $this->hasMany(MarbleBooking::class, 'grave_id', 'grave_id');
+}
+
+
 }

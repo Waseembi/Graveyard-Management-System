@@ -21,6 +21,49 @@
     </div>
 @endif
 
+ {{-- Validation Errors --}}
+    @if ($errors->any())
+        <div id="success-alert" class="alert alert-danger text-center mx-auto mt-5" style="
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 400px;
+            z-index: 1050;
+            box-shadow: 0 0.5rem 1rem rgba(128, 0, 0, 0.2);
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            line-height: 1.3;
+        ">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li style="list-style-type: none">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+{{-- Error Message --}}
+@if(session('success'))
+    <div id="success-alert" class="alert alert-success text-center mx-auto mt-5" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 400px;
+    z-index: 1050;
+    box-shadow: 0 0.5rem 1rem rgba(0, 128, 0, 0.2);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    ">      
+        {{ session('success') }}
+    </div>
+@endif
+
 <!-- Hero Header -->
 <section class="py-5 hero-gradient text-dark">
     <div class="container text-center">
@@ -96,7 +139,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Message</label>
-                            <textarea name="message" rows="5" class="form-control rounded-3 shadow-sm" placeholder="Write your message..." required></textarea>
+                            <textarea name="message" rows="5" class="form-control rounded-3 shadow-sm" placeholder="Write your message..." required maxlength="100"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-sage fw-bold rounded-pill px-4 py-2">

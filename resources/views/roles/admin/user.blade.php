@@ -52,6 +52,11 @@
             <form class="d-flex" method="GET" action="{{ route('admin.users') }}">
                 <input type="text" name="search" class="form-control form-control-sm me-2"
                        placeholder="Search user...">
+                {{-- <select name="status">
+                    <option value="">Select All</option>
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                </select>  --}}
                 <button class="btn btn-success btn-sm">
                     <i class="fa-solid fa-search"></i>
                 </button>

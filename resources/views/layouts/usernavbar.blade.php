@@ -16,6 +16,8 @@
 
     <a href="{{ route('user.records') }}" class="{{ request()->routeIs('user.records') ? 'active' : '' }}" style="color: black;"><i class="bi bi-receipt me-2"  ></i><span>My Registration</span></a>
 
+    <a href="{{ route('marble.service.index') }}" class="{{ request()->routeIs('marble.service.index') ? 'active' : '' }}" style="color: black;"><i class="bi bi-windows me-2"></i><span>Marble Service</span></a>
+
     <a href="{{ route('user.profile') }}" class="{{ request()->routeIs('user.profile') ? 'active' : '' }}" style="color: black;"><i class="bi bi-person-gear me-2"></i><span>Profile</span></a>
     
 

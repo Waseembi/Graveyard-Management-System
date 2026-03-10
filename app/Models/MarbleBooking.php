@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Marble_Booking extends Model
+class MarbleBooking extends Model
 {
     protected $guarded = [];
 
@@ -15,6 +15,11 @@ class Marble_Booking extends Model
 
     public function registration() {
     return $this->belongsTo(UserRegistration::class);
+    }
+
+    public function burial() {
+        return $this->belongsTo(Burial::class, 'grave_id', 'grave_id');
+    // return $this->belongsTo(Burial::class);
     }
 
 }

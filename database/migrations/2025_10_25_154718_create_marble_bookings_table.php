@@ -18,7 +18,10 @@ return new class extends Migration
             $table->foreignId('grave_id')->constrained('graves')->onDelete('cascade');
             $table->string('payment_method');
             $table->timestamp('booking_date')->useCurrent();
-            $table->enum('status', ['pending', 'confirmed'])->default('pending');
+            $table->enum('status', ['pending', 'approved','inprocess','completed','rejected'])->default('pending');
+            $table->decimal('amount', 10, 2)->default(20000);
+            $table->timestamp('completed_at')->nullable();
+
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('marble_bookings');
     }
 };

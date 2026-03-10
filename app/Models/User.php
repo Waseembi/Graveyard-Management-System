@@ -24,7 +24,7 @@ class User extends Authenticatable
 }
 
 public function registrations() {
-    return $this->hasMany(User_Registration::class);
+    return $this->hasMany(UserRegistration::class);
 }
 
 public function payments() {
@@ -32,7 +32,7 @@ public function payments() {
 }
 
 public function marbleBookings() {
-    return $this->hasMany(Marble_Booking::class);
+    return $this->hasMany(MarbleBooking::class);
 }
 
 public function graves() {

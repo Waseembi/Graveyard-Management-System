@@ -46,6 +46,17 @@ public function index(Request $request)
         });
     }
 
+    // if ($request->filled('status')) {
+    //     $status = $request->status;
+    //     $query->where('status', $status);
+    // }
+
+    // if ($request->filled('cnic')) {
+    //     $cnic = $request->cnic;
+
+    //     $query->where('cnic', $cnic);
+    // }
+
     // Paginated users
     $registrations = $query->latest()->paginate(10);
 

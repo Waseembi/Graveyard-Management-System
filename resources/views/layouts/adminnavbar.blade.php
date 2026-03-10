@@ -19,6 +19,8 @@
 
     <a href="{{ route('admin.burials.add') }}" class="{{ request()->routeIs('admin.burials.add') ? 'active' : '' }}" style="color: black;"><i class="bi bi-receipt me-2"></i><span>Add Burial</span> </a>
 
+    <a href="{{ route('admin.marble.index') }}" class="{{ request()->routeIs('admin.marble.index') ? 'active' : '' }}" style="color: black;"><i class="bi bi-card-checklist me-2"></i><span>Marble Services</span> </a>
+
 
 
     <a href="{{ route('admin.profile') }}" class="{{ request()->routeIs('admin.profile') ? 'active' : '' }}" style="color: black;"><i class="bi bi-person-gear me-2 "></i><span>Profile</span></a> 

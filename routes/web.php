@@ -13,8 +13,11 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\BurialController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\MarbleBookingController; 
 use App\Models\User;
 use App\Http\Controllers\UserRecordsController;
+use App\Http\Controllers\MapController;
+
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
 
@@ -111,6 +114,18 @@ Route::middleware(['auth'])->group(function () {
 //for admin burial search  Page
 Route::get('/admin/burials', [BurialController::class, 'index'])->name('admin.burials.index');
 
+
+// ===========   MARBLE BOOKING  ===========
+//for user marble booking management
+Route::get('/marble-services', [MarbleBookingController::class, 'index'])->name('marble.service.index'); 
+Route::get('/marble-services/book/{grave}', [MarbleBookingController::class, 'create'])->name('marble.service.create'); Route::post('/marble-services/book/{grave}', [MarbleBookingController::class, 'store'])->name('marble.service.store');
+//for admin marble booking management
+Route::get('/admin/marble-services', [MarbleBookingController::class, 'adminindex'])->name('admin.marble.index'); 
+Route::patch('/admin/marble-services/{id}', [MarbleBookingController::class, 'update'])->name('admin.marble.update');
+
+
+// ===========   MAP   ===========
+Route::get('/grave-map', [MapController::class, 'showMap'])->name('grave.map'); 
 
 
 
