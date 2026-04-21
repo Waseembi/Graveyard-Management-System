@@ -86,10 +86,10 @@ class MapController extends Controller
         $grave->update([
         'registration_id' => $user->id,
         'user_id' => $user->user_id,
-        'status' => 'booked',
+        'status' => 'available',
         ]);
 
-    return redirect()->route('grave.book')
+    return redirect()->route('grave.book',  ['id' => $request->grave_id])
         ->with('success', 'Registration successfully done.');
 }
 

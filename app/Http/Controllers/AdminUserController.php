@@ -151,7 +151,7 @@ public function update(Request $request, $id)
     ]);
 
      // If burial_status is 'not_buried', delete related burial and grave records
-    if ($request->burial_status === 'not_buried') {
+    if ($request->burial_status === 'not_buried' && $request->status !== 'approved') {
         Burial::where('registration_id', $user->id)->delete();
         Grave::where('registration_id', $user->id)->update([ 'registration_id' => null, 'user_id' => null, 'status' => 'available',  ]);
     }
@@ -207,6 +207,7 @@ public function update(Request $request, $id)
                }
             } 
         }
+        
     }
 
     // Case 2: Admin sets user back to pending (unapprove) 
@@ -234,6 +235,16 @@ public function update(Request $request, $id)
     // update status to family members 
     FamilyMember::where('registration_id', $user->id)->update([ 'status' => $updateData['status'], ]);
 
+    // this is for Map booking , when user booked grave and pay fee then make grave status to book, After payment is marked as paid and user approved,
+    $grave = Grave::where('registration_id', $user->id)->first();
+    if ($grave) {
+        if ($updateData['status'] === 'approved') {
+            $grave->update(['status' => 'booked']);
+        } else {
+        $grave->update(['status' => 'available']);
+        }
+    
+    }
 
     // Redirect back with success message
     return redirect()->route('admin.users')->with('success', 'User updated successfully!');
