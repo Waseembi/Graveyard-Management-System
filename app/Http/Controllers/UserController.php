@@ -11,6 +11,8 @@ use App\Models\Burial;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use App\Models\FamilyMember;
+use App\Models\User;
+use App\Models\MarbleBooking;
 
 
 class UserController extends Controller
@@ -25,13 +27,15 @@ class UserController extends Controller
     // Total family members added by user
     $familyCount = FamilyMember::where('user_id', $userId)->count();
 
+     $marbleCount = MarbleBooking::where('user_id', $userId)->count();
+
     $recentRegistrations = UserRegistration::where('user_id', $userId)
         ->latest()
         ->take(5)
         ->get();
 
     // Services and Payments stay 0 as per your requirement
-    return view('roles.userdashboard', compact('totalRegistration', 'familyCount', 'recentRegistrations'));
+    return view('roles.userdashboard', compact('totalRegistration', 'familyCount', 'marbleCount', 'recentRegistrations'));
 }
 
 

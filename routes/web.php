@@ -124,10 +124,14 @@ Route::get('/admin/marble-services', [MarbleBookingController::class, 'admininde
 Route::patch('/admin/marble-services/{id}', [MarbleBookingController::class, 'update'])->name('admin.marble.update');
 
 
+
 // ===========   MAP   ===========
 Route::get('/grave-map', [MapController::class, 'showMap'])->name('grave.map'); 
-Route::get('/grave-book/{id}', [MapController::class, 'create'])->name('grave.book');
-Route::post('/grave-store', [MapController::class, 'store'])->name('grave.store');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/grave-book/{id}', [MapController::class, 'create'])->name('grave.book');
+    Route::post('/grave-store', [MapController::class, 'store'])->name('grave.store');
+});
+
 
 
 
