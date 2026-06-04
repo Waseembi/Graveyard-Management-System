@@ -27,6 +27,7 @@ return new class extends Migration
         $table->text('address');
         $table->enum('gender', ['male', 'female']);
         $table->date('dob');
+        $table->date('date_of_death');
         $table->boolean('in_process')->default(false);
 
         $table->string('death_certificate');

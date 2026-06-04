@@ -26,7 +26,7 @@ class BurialRequestController extends Controller
         return view('roles.user.request_burial_form', compact('registration'));
     }
 
-      public function store(Request $request){
+    public function store(Request $request){
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'registration_id' => 'required|exists:user_registrations,id',
@@ -54,6 +54,7 @@ class BurialRequestController extends Controller
             'address' => $registration->address,
             'gender' => $registration->gender,
             'dob' => $registration->dob,
+            'date_of_death' => $request->date_of_death,
             'death_certificate' => $imageName,
             'status' => 'pending',
             'in_process' => true,
@@ -74,28 +75,97 @@ class BurialRequestController extends Controller
     public function ashow($id)
     {
         $request = BurialRequest::with('user', 'registration')->findOrFail($id);
-        return view('admin.burial_requests.show', compact('request'));
+        return view('roles.admin.burial_request_form', compact('request'));
     }
 
-    public function approve($id)
-    {
-        $request = BurialRequest::findOrFail($id);
-        $registration = $request->registration;
+    public function approve(Request $request, $id)
+{
+    // ✅ Validation
+    $request->validate(
+        [
+            'grave_image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ],
+        [
+            'grave_image.max'   => 'Grave image must be less than 2 MB.',
+            'grave_image.image' => 'Only image files are allowed.',
+            'date_of_death.required' => 'Date of death is required.',
+        ]
+    );
 
-        Burial::create([
-            'user_id' => $request->user_id,
-            'registration_id' => $registration->id,
-            'death_certificate' => $request->death_certificate,
-        ]);
+    // ✅ Find burial request + registration
+    $burialRequest = BurialRequest::findOrFail($id);
+    $registration  = $burialRequest->registration;
 
-        if ($registration->grave_id) {
-            Grave::where('id', $registration->grave_id)->update(['status' => 'buried']);
+    // ---------------- IMAGE UPLOAD ----------------
+    $imageName = null;
+    if ($request->hasFile('grave_image')) {
+        $image = $request->file('grave_image');
+        $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('uploads/graves'), $imageName);
+    }
+
+    // ======================================================
+    // STEP 1: CHECK IF USER ALREADY BOOKED A GRAVE
+    // ======================================================
+    $grave = Grave::where('registration_id', $registration->id)
+                  ->where('status', 'booked')
+                  ->first();
+
+    // ======================================================
+    // STEP 2: IF NOT → ASSIGN NEW GRAVE
+    // ======================================================
+    if (!$grave) {
+        $grave = Grave::where('status', 'available')->first();
+
+        if (!$grave) {
+            return back()->with('error', 'No available graves.');
         }
 
-        $request->update(['status' => 'approved']);
-
-        return redirect()->route('admin.burial.requests')->with('success', 'Burial request approved.');
+        $grave->update([
+            'registration_id' => $registration->id,
+            'user_id'         => $registration->user_id,
+            'status'          => 'booked',
+        ]);
+    } else {
+        // ✅ Already booked → just ensure user_id is correct
+        $grave->update([
+            'user_id' => $registration->user_id,
+        ]);
     }
+
+    // ======================================================
+    // STEP 3: CREATE BURIAL RECORD
+    // ======================================================
+    Burial::create([
+        'registration_id' => $registration->id,
+        'user_id'         => $registration->user_id,
+        'grave_id'        => $grave->id,
+        'name'            => $registration->name,
+        'father_name'     => $registration->father_name,
+        'date_of_death'   => $burialRequest->date_of_death,
+        'grave_image'     => $imageName,
+    ]);
+
+    // ======================================================
+    // STEP 4: UPDATE REGISTRATION + REQUEST STATUS
+    // ======================================================
+    $registration->update([
+        'burial_status' => 'buried',
+    ]);
+
+    $burialRequest->update([
+        'status' => 'approved',
+        'in_process' => false,
+    ]);
+
+    // ======================================================
+    // SUCCESS
+    // ======================================================
+    return redirect()->route('admin.burial.requests')
+        ->with('success', 'Burial request approved and burial record created successfully.');
+} 
+
+
 
     public function reject($id)
     {
