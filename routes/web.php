@@ -14,12 +14,35 @@ use App\Http\Controllers\BurialController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MarbleBookingController; 
+use App\Http\Controllers\BurialRequestController;
 use App\Models\User;
 use App\Http\Controllers\UserRecordsController;
 use App\Http\Controllers\MapController;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
 
+
+// User burial request
+    Route::get('/burial-request', [BurialRequestController::class, 'index'])->name('burial.request.index');
+    Route::get('/burial-request/create/{registration}', [BurialRequestController::class, 'create'])->name('burial.request.create');
+    Route::post('/burial-request/store', [BurialRequestController::class, 'store'])->name('burial.request.store');
+
+    // Admin burial requests
+        Route::get('/admin/burial-requests', [BurialRequestController::class, 'aindex'])->name('admin.burial.requests');
+        Route::get('/admin/burial-requests/{id}', [BurialRequestController::class, 'ashow'])->name('admin.burial.requests.show');
+        Route::post('/admin/burial-requests/{id}/approve', [BurialRequestController::class, 'approve'])->name('admin.burial.requests.approve');
+        Route::post('/admin/burial-requests/{id}/reject', [BurialRequestController::class, 'reject'])->name('admin.burial.requests.reject');
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
+
+Route::get('/test-mail', function () {
+    Mail::raw('This is a test email from Attock GMS.', function ($message) {
+        $message->to('waseemafridigvt@gmail.com')
+                ->subject('Test Email');
+    });
+    return 'Mail sent!';
+});
+
 
 Route::get('/about', function () {
     return view('about');

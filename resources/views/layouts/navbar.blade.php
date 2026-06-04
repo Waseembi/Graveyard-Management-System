@@ -31,6 +31,7 @@
                 <li class="nav-item mx-3">
                     <a class="nav-link {{ request()->routeIs('GraveReservation') ? 'active-link' : '' }}" href="{{ route('registration.create') }}">GraveReservation</a>
                 </li>
+                
                 <li class="nav-item mx-3">
                     <a class="nav-link {{ request()->routeIs('grave.map') ? 'active-link' : '' }}" href="{{ route('grave.map') }}">Map</a>
                 </li>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\UserRegistration;
 use App\Models\FamilyMember;
@@ -204,6 +204,12 @@ public function update(Request $request, $id)
                      $updateData['status'] = 'approved';
                      $updateData['approved_at'] = now();
                      $updateData['expiry_date'] = Carbon::now()->endOfYear();
+
+                     // send email to user for approval
+                     $registeredUser = \App\Models\User::find($user->user_id);
+                    if ($registeredUser && $registeredUser->email) {
+                        Mail::to($registeredUser->email)->send(new \App\Mail\ApprovalNotificationMail($user));
+                    }
                }
             } 
         }

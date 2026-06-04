@@ -51,5 +51,9 @@ public function marbleBookings() {
 public function burials() {
     return $this->hasMany(Burial::class, 'registration_id');
 }
+public function burialRequests()
+    {
+        return $this->hasMany(BurialRequest::class, 'registration_id');
+    }
 
 }
