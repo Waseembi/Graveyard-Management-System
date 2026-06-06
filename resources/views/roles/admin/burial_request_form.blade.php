@@ -85,7 +85,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label fw-semibold"><i class="fa-solid fa-user me-2"></i>Burial Name</label>
-                        <input type="text" class="form-control rounded-pill" value="{{ $request->user->name }}" disabled>
+                        <input type="text" class="form-control rounded-pill" value="{{ $request->name }}" disabled>
                     </div>
 
                     <div class="mb-3">

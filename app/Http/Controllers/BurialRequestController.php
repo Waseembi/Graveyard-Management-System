@@ -9,6 +9,9 @@ use App\Models\Burial;
 use App\Models\User;
 use App\Models\BurialRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BurialApprovedMail;
+
 
 class BurialRequestController extends Controller
 {
@@ -157,6 +160,27 @@ class BurialRequestController extends Controller
         'status' => 'approved',
         'in_process' => false,
     ]);
+
+    // ======================================================
+    // STEP 5: SEND EMAIL TO USER
+    // ======================================================
+    $userEmail = $registration->user->email; // Assuming relation exists
+
+    $details = [
+        'name'          => $registration->name,
+        'registrationId'=> $registration->id,
+        'fatherName'    => $registration->father_name,
+        'age'           => $registration->age,
+        'dateOfDeath'   => $burialRequest->date_of_death,
+        'graveId'       => $grave->id,
+        'cnic'          => $registration->cnic,
+    ];
+
+    Mail::send('mails.burialApproved', ['details' => $details], function($message) use ($userEmail) {
+    $message->to($userEmail)
+            ->subject('Burial Approval Notification');
+});
+
 
     // ======================================================
     // SUCCESS

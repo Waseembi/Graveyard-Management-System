@@ -22,11 +22,10 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
 
-// User burial request
+    // User burial request
     Route::get('/burial-request', [BurialRequestController::class, 'index'])->name('burial.request.index');
     Route::get('/burial-request/create/{registration}', [BurialRequestController::class, 'create'])->name('burial.request.create');
     Route::post('/burial-request/store', [BurialRequestController::class, 'store'])->name('burial.request.store');
-
     // Admin burial requests
         Route::get('/admin/burial-requests', [BurialRequestController::class, 'aindex'])->name('admin.burial.requests');
         Route::get('/admin/burial-requests/{id}', [BurialRequestController::class, 'ashow'])->name('admin.burial.requests.show');
