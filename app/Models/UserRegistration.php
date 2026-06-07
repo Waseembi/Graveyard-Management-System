@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Grave;
 use App\Models\Payment;
 use App\Models\FamilyMember;    
+use App\Models\Marble_Booking;
+use App\Models\Burial;
+use App\Models\BurialRequest;
 
 class UserRegistration extends Model
 {
@@ -55,5 +58,6 @@ public function burialRequests()
     {
         return $this->hasMany(BurialRequest::class, 'registration_id');
     }
+
 
 }

@@ -70,6 +70,7 @@
                             <th>Date of Death</th>
                             <th>Grave ID</th>
                             <th>Status</th>
+                            <th>Death Certificate</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,6 +99,23 @@
                                         {{ ucfirst($burial->registration->burial_status ?? 'Pending') }}
                                     </span>
                                 </td>
+                                <td>
+    @php
+        $deathCertificate = optional($burial->registration->burialRequests->last())->death_certificate;
+    @endphp
+
+    @if($deathCertificate)
+        <a href="{{ asset('uploads/death/' . $deathCertificate) }}" 
+           target="_blank" 
+           class="btn btn-outline-primary btn-sm rounded-pill">
+            <i class="fa-solid fa-eye me-1"></i> View
+        </a>
+    @else
+        <span class="text-muted">N/A</span>
+    @endif
+</td>
+
+
                             </tr>
                         @empty
                             <tr>

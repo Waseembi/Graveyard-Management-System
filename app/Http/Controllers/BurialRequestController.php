@@ -174,6 +174,7 @@ class BurialRequestController extends Controller
         'dateOfDeath'   => $burialRequest->date_of_death,
         'graveId'       => $grave->id,
         'cnic'          => $registration->cnic,
+        'burial_registeredname' => $registration->user->name,
     ];
 
     Mail::send('mails.burialApproved', ['details' => $details], function($message) use ($userEmail) {

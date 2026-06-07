@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>Burial Approval Confirmation</h2>
-    <p>Dear {{ $details['name'] }},</p>
+    <p>Dear {{ $details['burial_registeredname']  }},</p>
 
     <p>Your burial request has been approved. Here are the details:</p>
 

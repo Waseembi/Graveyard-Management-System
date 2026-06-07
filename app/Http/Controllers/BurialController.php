@@ -29,7 +29,10 @@ class BurialController extends Controller
         //     ->latest()
         //     ->get();
 
-        $query = Burial::with(['registration']);
+        // $query = Burial::with(['registration']);
+        $query = Burial::with(['registration.burialRequests', 'grave']);
+
+
 
         if($request->filled('name')){
                 $query->where('name','like',"%{$request->name}%");
