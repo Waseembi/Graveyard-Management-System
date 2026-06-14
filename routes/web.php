@@ -18,6 +18,7 @@ use App\Http\Controllers\BurialRequestController;
 use App\Models\User;
 use App\Http\Controllers\UserRecordsController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\JazzCashController;   
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 
@@ -31,6 +32,10 @@ use Illuminate\Support\Facades\Mail;
         Route::get('/admin/burial-requests/{id}', [BurialRequestController::class, 'ashow'])->name('admin.burial.requests.show');
         Route::post('/admin/burial-requests/{id}/approve', [BurialRequestController::class, 'approve'])->name('admin.burial.requests.approve');
         Route::post('/admin/burial-requests/{id}/reject', [BurialRequestController::class, 'reject'])->name('admin.burial.requests.reject');
+
+
+Route::get('/jazzcash/checkout', [JazzCashController::class, 'checkout'])->name('jazzcash.checkout');
+Route::post('/jazzcash/response', [JazzCashController::class, 'response'])->name('jazzcash.response');
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
 
