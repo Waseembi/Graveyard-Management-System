@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class StripeController extends Controller
                     'product_data' => [
                         'name' => 'Graveyard Management Test Payment',
                     ],
-                    'unit_amount' => 2000, // $20 in cents
+                    'unit_amount' => 500, // $5 in cents
                 ],
                 'quantity' => 1,
             ]],

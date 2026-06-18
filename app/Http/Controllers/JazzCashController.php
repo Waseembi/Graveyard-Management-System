@@ -14,7 +14,7 @@ class JazzCashController extends Controller
         $password      = "zx28x1e32w";
         $integritySalt = "xx1v3gbs1c";
 
-        $returnUrl = "https://stowing-perjury-shriek.ngrok-free.dev/jazzcash/response";
+        $returnUrl = "http://127.0.0.1:8000/jazzcash/response";
 
         $txnDateTime       = date('YmdHis');
         $txnExpiryDateTime = date('YmdHis', strtotime('+3 days'));

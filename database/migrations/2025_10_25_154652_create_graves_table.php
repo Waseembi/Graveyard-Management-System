@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('location')->nullable(); // nullable
             $table->enum('status', ['available', 'booked'])->default('available');
+            $table->decimal('lat', 10, 7)->nullable();
+    $table->decimal('lng', 10, 7)->nullable();
+    $table->string('block')->nullable();
             $table->timestamps();
         });
     }

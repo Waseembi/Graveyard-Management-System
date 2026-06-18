@@ -11,10 +11,21 @@ use App\Models\Payment;
 
 class MapController extends Controller
 {
-    public function showMap(){
-        $graves = Grave::all(); // each grave has id + status (available/booked)
-        return view('roles.map.mapview', compact('graves'));
-    }
+    // public function showMap(){
+    //     $graves = Grave::all(); // each grave has id + status (available/booked)
+    //     return view('roles.map.mapview', compact('graves'));
+    // }
+   public function showMap()
+{
+    $graves = Grave::select('id','lat','lng','status')
+                   ->orderBy('id')
+                   ->get();
+
+    return view('roles.map.mapview', compact('graves'));
+}
+
+
+
 
     public function create($id){
         return view('roles.map.registration', ['grave_id' => $id]);
@@ -92,6 +103,14 @@ class MapController extends Controller
     return redirect()->route('grave.book',  ['id' => $request->grave_id])
         ->with('success', 'Registration successfully done.');
 }
+
+public function gravesApi()
+{
+    $graves = Grave::select('id', 'lat', 'lng', 'status')->get();
+    return response()->json($graves);
+}
+
+
 
 
 

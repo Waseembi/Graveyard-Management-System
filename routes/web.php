@@ -48,6 +48,7 @@ Route::get('/stripe/checkout', [StripeController::class, 'checkout']);
 Route::get('/stripe/success', [StripeController::class, 'success']);
 Route::get('/stripe/cancel', [StripeController::class, 'cancel']);
 
+Route::get('/api/graves', [MapController::class, 'gravesApi']);
 
 
 Route::get('/', [AuthController::class, 'home'])->name('home');
