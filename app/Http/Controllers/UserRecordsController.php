@@ -16,7 +16,7 @@ class UserRecordsController extends Controller
     {
         $userId = Auth::id();
 
-        $registrations = UserRegistration::where('user_id', $userId)->get();
+        $registrations = UserRegistration::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
         $familyMembers = FamilyMember::with('registration')->where('user_id', $userId)->get();
 
         return view('roles.user.user_records', compact('registrations', 'familyMembers', ));

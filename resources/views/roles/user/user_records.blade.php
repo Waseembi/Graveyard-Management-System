@@ -87,13 +87,26 @@
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('user.registration.view', $reg->id) }}" class="btn btn-sm btn-outline-success rounded-pill me-1">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                        <a href="{{ route('user.registration.edit', $reg->id) }}" class="btn btn-sm btn-outline-warning rounded-pill me-1">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
-                                    </td>
+    <a href="{{ route('user.registration.view', $reg->id) }}"
+       class="btn btn-sm btn-outline-success rounded-pill me-1">
+        <i class="fa-solid fa-eye"></i>
+    </a>
+
+    <a href="{{ route('user.registration.edit', $reg->id) }}"
+       class="btn btn-sm btn-outline-warning rounded-pill me-2">
+        <i class="fa-solid fa-pen"></i>
+    </a>
+
+    <span style="display:inline-block; width:110px;">
+        @if($reg->status === 'pending')
+            <a href="{{ route('stripe.pay', $reg->id) }}"
+               class="btn btn-sm btn-outline-primary rounded-pill">
+                <i class="fa-solid fa-credit-card"></i> Pay Fee
+            </a>
+        @endif
+    </span>
+</td>
+
                                 </tr>
                                 @empty
                                 <tr>

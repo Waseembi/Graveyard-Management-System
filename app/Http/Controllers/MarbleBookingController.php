@@ -27,26 +27,33 @@ class MarbleBookingController extends Controller
         return view('roles.user.marble_service_booking', compact('grave', 'burial')); 
     } 
 
-    public function store(Request $request, $graveId) {
-        $request->validate([ 
-            'payment_method' => 'required|in:cash,card',
-             ]); 
+    public function store(Request $request, $graveId)
+{
+    $request->validate([
+        'payment_method' => 'required|in:cash,card',
+    ]);
 
-        // Find the burial record for this grave and user 
-        $burial = Burial::where('grave_id', $graveId) ->where('user_id', auth()->id()) ->firstOrFail();
+    $burial = Burial::where('grave_id', $graveId)
+                    ->where('user_id', auth()->id())
+                    ->firstOrFail();
 
-        MarbleBooking::create([ 
-            'registration_id' => $burial->registration_id, 
-            'user_id' => auth()->id(), 
-            'grave_id' => $graveId, 
-            'payment_method' => $request->payment_method, 
-            'amount' => 20000, 
-            'status' => 'pending', 
-            ]); 
+    $booking = MarbleBooking::create([
+        'registration_id' => $burial->registration_id,
+        'user_id' => auth()->id(),
+        'grave_id' => $graveId,
+        'payment_method' => $request->payment_method,
+        'amount' => 20000,
+        'status' => 'pending',
+    ]);
 
-        return redirect()->route('marble.service.index')
-                        ->with('success', 'Marble service request submitted successfully!');
+    if ($request->payment_method === 'card') {
+        return redirect()->route('marble.pay', $booking->id);
     }
+
+    return redirect()->route('marble.service.index')
+                     ->with('success', 'Marble service request submitted successfully!');
+}
+
 
 
 

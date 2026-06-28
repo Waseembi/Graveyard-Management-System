@@ -68,7 +68,10 @@ class User_RegistrationController extends Controller
             'registration_id' => $user->id,
             'user_id' => $user->user_id,
             'purpose' => 'Annual Grave Fee',
-            'payment_year' => $user->created_at->year,
+            'payment_year' => now()->year,
+            'payment_date' => now(),
+            'method' => $user->payment_method,
+            'amount' => '1500',
             'status' => 'unpaid',
         ]);
 
@@ -222,7 +225,10 @@ public function ustore(Request $request)
         'registration_id' => $user->id, 
         'user_id' => $user->user_id, 
         'purpose' => 'Annual Grave Fee', 
-        'payment_year' => $user->created_at->year, 
+        'payment_year' => now()->year,
+        'payment_date' => now(),
+        'amount' => '1500',
+        'method' => $user->payment_method,
         'status' => 'unpaid', ]);
     
     return redirect()->route('user.register.create')->with('success', 'Registration successfully done.');
