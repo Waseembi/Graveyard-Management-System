@@ -39,14 +39,12 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/jazzcash/checkout', [JazzCashController::class, 'checkout'])->name('jazzcash.checkout');
 Route::post('/jazzcash/response', [JazzCashController::class, 'response'])->name('jazzcash.response');
 
-Route::get('/payfast/checkout', [PayFastController::class, 'checkout']);
-Route::post('/payfast/notify', [PayFastController::class, 'notify']);
-Route::get('/payfast/success', [PayFastController::class, 'success']);
-Route::get('/payfast/cancel', [PayFastController::class, 'cancel']);
 
-Route::get('/stripe/checkout', [StripeController::class, 'checkout']);
-Route::get('/stripe/success', [StripeController::class, 'success']);
-Route::get('/stripe/cancel', [StripeController::class, 'cancel']);
+
+// Stripe routes with names
+Route::get('/stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+Route::get('/stripe/success', [StripeController::class, 'success'])->name('stripe.success');
+Route::get('/stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 
 Route::get('/api/graves', [MapController::class, 'gravesApi']);
 

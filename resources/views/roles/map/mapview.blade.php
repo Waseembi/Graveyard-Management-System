@@ -34,10 +34,10 @@ const graveyardBoundary = [
     [24.936334668556064, 66.94210486775054]
 ];
 
-const map = L.map('map').setView([24.9368, 66.9415], 19.45);
+const map = L.map('map').setView([24.9368, 66.9415], 19.49);
 L.tileLayer(
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    { attribution: 'Tiles © Esri', maxZoom: 19.45 }
+    { attribution: 'Tiles © Esri', maxZoom: 19.49 }
 ).addTo(map);
 
 L.polygon(graveyardBoundary, { color:'blue', weight:2, fillOpacity:0.05 }).addTo(map);
