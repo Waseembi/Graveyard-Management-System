@@ -46,8 +46,20 @@ Route::get('/stripe/checkout', [StripeController::class, 'checkout'])->name('str
 Route::get('/stripe/success', [StripeController::class, 'success'])->name('stripe.success');
 Route::get('/stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 
-//this link is for user to pay for registration fee using stripe  (userrecordcontroller, userrecordview.blade.php)
+//this link is for user to pay for registration fee using stripe if he had choosen cash before  (userrecordcontroller, userrecordview.blade.php)
 Route::get('/stripe/pay/{registration}', [StripeController::class, 'pay'])->name('stripe.pay');
+
+// marble payment
+Route::get('/marble/pay/{booking}', [StripeController::class, 'paymarble'])->name('marble.pay');
+Route::get('/marble/success', [StripeController::class, 'successmarble'])->name('marble.success');
+Route::get('/marble/cancel', [StripeController::class, 'cancel'])->name('marble.cancel');
+
+
+// map payment
+Route::get('/map/pay/{booking}', [StripeController::class, 'checkoutmap'])->name('map.pay');
+Route::get('/map/success', [StripeController::class, 'successmap'])->name('map.success');
+Route::get('/map/cancel', [StripeController::class, 'cancel'])->name('map.cancel');
+
 
 
 Route::get('/api/graves', [MapController::class, 'gravesApi']);
@@ -167,10 +179,7 @@ Route::get('/marble-services/book/{grave}', [MarbleBookingController::class, 'cr
 Route::get('/admin/marble-services', [MarbleBookingController::class, 'adminindex'])->name('admin.marble.index'); 
 Route::patch('/admin/marble-services/{id}', [MarbleBookingController::class, 'update'])->name('admin.marble.update');
 
-// marble payment
-Route::get('/marble/pay/{booking}', [StripeController::class, 'paymarble'])->name('marble.pay');
-Route::get('/marble/success', [StripeController::class, 'successmarble'])->name('marble.success');
-Route::get('/marble/cancel', [StripeController::class, 'cancel'])->name('marble.cancel');
+
 
 
 

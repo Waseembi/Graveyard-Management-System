@@ -85,13 +85,6 @@ class MapController extends Controller
             'dob' => $request->dob,
         ]);
 
-        Payment::create([ 
-        'registration_id' => $user->id, 
-        'user_id' => $user->user_id, 
-        'purpose' => 'Annual Grave Fee', 
-        'payment_year' => $user->created_at->year, 
-        'status' => 'unpaid', ]);
-
         // Update the specific grave
         $grave = Grave::findOrFail($request->grave_id);
         $grave->update([
@@ -100,8 +93,25 @@ class MapController extends Controller
         'status' => 'available',
         ]);
 
-    return redirect()->route('grave.book',  ['id' => $request->grave_id])
-        ->with('success', 'Registration successfully done.');
+
+         // Handle payment
+    if ($request->payment_method === 'cash') {
+        Payment::create([
+            'registration_id' => $user->id,
+            'user_id' => $user->user_id,
+            'purpose' => 'Annual Grave Fee',
+            'payment_year' => $user->created_at->year,
+            'status' => 'unpaid',
+            'method' => 'cash',
+        ]);
+
+        return redirect()->route('grave.book', ['id' => $request->grave_id])
+            ->with('success', 'Registration successfully done (Cash).');
+    }
+
+    if ($request->payment_method === 'card') {
+        return redirect()->route('map.pay', $user->id);
+    }
 }
 
 public function gravesApi()

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\MarbleBooking;
 use App\Models\Burial;
 use App\Models\Grave;
+use App\Models\Registration;
+use App\Models\Payment;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MarbleBookingStatusMail;
 
 class MarbleBookingController extends Controller
 {
@@ -68,11 +72,31 @@ class MarbleBookingController extends Controller
         $booking = MarbleBooking::findOrFail($id);
         $booking->status = $request->status;
 
+        // Create payment only when booking is approved
+    if ($request->status === 'approved') {
+        Payment::create([
+            'registration_id' => $booking->registration_id,
+            'user_id'         => $booking->user_id,
+            'purpose'         => 'Marble Service Fee',
+            'payment_year'    => now()->year,
+            'payment_date'    => now(),
+            'status'          => 'paid',
+            'amount'          => 20000,
+            'method'          => 'cash',
+        ]);
+    }
+
         if($request->status === 'completed') {
             $booking->completed_at = now();
         }
 
         $booking->save();
+
+        // ✅ Send mail notification to user
+    $user = $booking->user; // assuming MarbleBooking has a relation ->user
+    if ($user && $user->email) {
+        Mail::to($user->email)->send(new MarbleBookingStatusMail($booking));
+    }
 
         return redirect()->back()->with('success', 'Booking status updated successfully!');
     }

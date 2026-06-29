@@ -191,7 +191,7 @@ public function update(Request $request, $id)
                     'status' => 'paid',
                     'payment_date' => now(),
                     'method' => 'cash',
-                    'amount' => 1000,
+                    'amount' => 1500,
                 ]);
 
                 $updateData['status'] = 'pending';

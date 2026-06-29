@@ -54,17 +54,13 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($burial->marbleBookings->last()->status == 'pending')
-                                            <form action="{{ route('marble.pay', $burial->marbleBookings->last()->id) }}" method="POST">
-                                                 @csrf
-
-                                            <a href="{{ route('marble.pay', $burial->marbleBookings->last()->id) }}"
-                                                   class="btn btn-sm btn-outline-primary ms-2">
-                                                    <i class="fa-solid fa-credit-card"></i> Pay Fee
-                                                </a>
-                                            </form>
-                                             @endif
-                                        </td>
+    @if($burial->marbleBookings->isNotEmpty() && $burial->marbleBookings->last()->status == 'pending')
+        <a href="{{ route('marble.pay', $burial->marbleBookings->last()->id) }}"
+           class="btn btn-sm btn-outline-primary ms-2">
+            <i class="fa-solid fa-credit-card"></i> Pay Fee
+        </a>
+    @endif
+</td>
 
                                     </tr>
                                 @endforeach
