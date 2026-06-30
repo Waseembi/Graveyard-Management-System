@@ -20,6 +20,21 @@ class AdminController extends Controller
     // AdminController
     public function index()
 {
+
+// 4️⃣ Payments total
+
+$totalPayments = Payment::sum('amount'); // assuming 'amount' column stores payment value
+$totals = intval($totalPayments);
+
+if ($totalPayments >= 10000) {
+    // Format to K without decimals
+    $displayPayments = intval(round($totalPayments / 1000)) . 'K';
+} else {
+    // Show as plain integer (no .0)
+    $displayPayments = intval($totalPayments);
+}
+
+
     // -------------------------------
     // 1️⃣ Registrations per year
     // -------------------------------
@@ -98,8 +113,9 @@ class AdminController extends Controller
         'years',
         'registrationsData',
         'burialsData',
-        'statusCounts'
-    ));
+        'statusCounts',
+        'displayPayments',
+        'totals'));
 }
 
 

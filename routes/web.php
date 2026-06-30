@@ -61,6 +61,12 @@ Route::get('/map/success', [StripeController::class, 'successmap'])->name('map.s
 Route::get('/map/cancel', [StripeController::class, 'cancelmap'])->name('map.cancel');
 
 
+// Stripe flow for family members
+Route::get('/stripe/family/checkout', [StripeController::class, 'checkoutFamily'])->name('stripe.family.checkout');
+Route::get('/stripe/family/success', [StripeController::class, 'successFamily'])->name('family.success');
+Route::get('/stripe/family/cancel', [StripeController::class, 'cancelFamily'])->name('family.cancel');
+
+
 
 Route::get('/api/graves', [MapController::class, 'gravesApi']);
 

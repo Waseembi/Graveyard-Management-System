@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ApprovalNotificationMail;
 use App\Mail\MarbleBookingStatusMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
+
 
 class StripeController extends Controller
 {
@@ -26,7 +28,7 @@ class StripeController extends Controller
                 'price_data' => [
                     'currency' => 'usd',
                     'product_data' => ['name' => 'Graveyard Registration Fee'],
-                    'unit_amount' => 5193, // $5
+                    'unit_amount' => 519, // $5
                 ],
                 'quantity' => 1,
             ]],
@@ -51,7 +53,7 @@ class StripeController extends Controller
             'price_data' => [
                 'currency' => 'usd',
                 'product_data' => ['name' => 'Annual Grave Fee'],
-                'unit_amount' => 5193, // $15.00 (amount in cents)
+                'unit_amount' => 519, // $15.00 (amount in cents)
             ],
             'quantity' => 1,
         ]],
@@ -80,6 +82,8 @@ class StripeController extends Controller
                 $registration->update([
                     'status' => 'approved',
                     'payment_method' => 'card',
+                    'approved_at' => now(),
+            'expiry_date' => Carbon::now()->endOfYear(),
                 ]);
 
                 Payment::updateOrCreate(
@@ -151,7 +155,7 @@ class StripeController extends Controller
             'price_data' => [
                 'currency' => 'usd',
                 'product_data' => ['name' => 'Marble Service Fee'],
-                'unit_amount' => 7018, // amount in cents ($200.00 if 20000)
+                'unit_amount' => 5191, // amount in cents ($200.00 if 20000)
             ],
             'quantity' => 1,
         ]],
@@ -213,7 +217,7 @@ public function checkoutmap(UserRegistration $registration)
             'price_data' => [
                 'currency' => 'usd',
                 'product_data' => ['name' => 'Annual Grave Fee'],
-                'unit_amount' => 5193, // $5.00 in cents
+                'unit_amount' => 519, // $5.00 in cents
             ],
             'quantity' => 1,
         ]],
@@ -238,6 +242,8 @@ public function successmap(Request $request)
         $registration->update([
             'status' => 'approved',
             'payment_method' => 'card',
+            'approved_at' => now(),
+            'expiry_date' => Carbon::now()->endOfYear(),
         ]);
 
         Payment::updateOrCreate(
@@ -280,6 +286,98 @@ public function successmap(Request $request)
         return redirect()->route('user.register.create')->with('error', 'Stripe payment cancelled.');
     }
 
+
+
+//family
+ // Family member checkout
+    public function checkoutFamily()
+    {
+        $data = session('family_registration_data');
+        if (!$data) {
+            return redirect()->route('family.create')->with('error', 'No registration data found.');
+        }
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => ['name' => 'Family Grave Registration Fee'],
+                    'unit_amount' => 519, // $51.93
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('family.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('family.cancel'),
+        ]);
+
+        return redirect($session->url);
+    }
+
+    // Family member success
+    public function successFamily(Request $request)
+    {
+        Stripe::setApiKey(config('services.stripe.secret'));
+        $session = Session::retrieve($request->session_id);
+
+        if ($session->payment_status === 'paid') {
+            $data = session('family_registration_data');
+            if (!$data) {
+                return redirect()->route('family.create')->with('error', 'No registration data found.');
+            }
+
+            // Create UserRegistration
+            $registration = UserRegistration::create([
+                'user_id' => Auth::id(),
+                'name' => $data['name'],
+                'father_name' => $data['father_name'],
+                'cnic' => $data['cnic'],
+                'age' => $data['age'],
+                'phone' => $data['phone'],
+                'address' => $data['address'],
+                'payment_method' => 'card',
+                'gender' => $data['gender'],
+                'dob' => $data['dob'],
+                'status' => 'approved',
+                'approved_at' => now(),
+                'expiry_date' => Carbon::now()->endOfYear(),
+            ]);
+
+            // Create Payment
+            Payment::create([
+                'registration_id' => $registration->id,
+                'user_id' => $registration->user_id,
+                'purpose' => 'Annual Grave Fee',
+                'payment_year' => now()->year,
+                'payment_date' => now(),
+                'method' => 'card',
+                'amount' => 1500,
+                'status' => 'paid',
+            ]);
+
+            session()->forget('family_registration_data');
+
+           // Send approval email
+        $registeredUser = \App\Models\User::find($registration->user_id);
+        if ($registeredUser && $registeredUser->email) {
+            Mail::to($registeredUser->email)
+                ->send(new ApprovalNotificationMail($registration));
+        }
+
+            return redirect()->route('family.create')->with('success', 'Family member registration approved via Stripe!');
+        }
+
+        return redirect()->route('family.create')->with('error', 'Payment not completed.');
+    }
+
+    // Family member cancel
+    public function cancelFamily()
+    {
+        return redirect()->route('family.create')->with('error', 'Family Stripe payment cancelled.');
+    }
 
 
 

@@ -57,45 +57,57 @@ class FamilyMemberController extends Controller
     }
 
     // ✅ Step 1: Create user registration
-    $user = UserRegistration::create([
-        'user_id' => Auth::id(),
-        'name' => $request->name,
-        'father_name' => $request->father_name,
-        'cnic' => $request->cnic,
-        'age' => $request->age,
-        'phone' => $request->phone,
-        'address' => $request->address,
-        'payment_method' => $request->payment_method,
-        'gender' => $request->gender,
-        'dob' => $request->dob,
-        'status' => 'pending',
-    ]);
+        if ($request->payment_method === 'cash') {
+            $user = UserRegistration::create([
+                'user_id' => Auth::id(),
+                'name' => $request->name,
+                'father_name' => $request->father_name,
+                'cnic' => $request->cnic,
+                'age' => $request->age,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'payment_method' => 'cash',
+                'gender' => $request->gender,
+                'status' => 'pending',
+                'dob' => $request->dob,
+            ]);
 
-    // ✅ Step 2: Create family member record linked to user registration
-    FamilyMember::create([
-        'registration_id' => $user->id,
-        'user_id' => Auth::id(),
-        'name' => $request->name,
-        'father_name' => $request->father_name,
-        'age' => $request->age,
-        'phone' => $request->phone,
-        'cnic' => $request->cnic,
-        'address' => $request->address,
-        'relationship' => $request->relationship,
-        'payment_method' => $request->payment_method,
-        'gender' => $request->gender,
-        'dob' => $request->dob,
-        'status' => 'pending',
-    ]);
+            FamilyMember::create([
+                'registration_id' => $user->id,
+                'user_id' => Auth::id(),
+                'name' => $request->name,
+                'father_name' => $request->father_name,
+                'age' => $request->age,
+                'phone' => $request->phone,
+                'cnic' => $request->cnic,
+                'address' => $request->address,
+                'relationship' => $request->relationship,
+                'payment_method' => 'cash',
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'status' => 'pending',
+            ]);
 
-    Payment::create([ 
-        'registration_id' => $user->id, 
-        'user_id' => $user->user_id, 
-        'purpose' => 'Annual Grave Fee', 
-        'payment_year' => $user->created_at->year, 
-        'status' => 'unpaid', ]);
+            Payment::create([
+                'registration_id' => $user->id,
+                'user_id' => $user->user_id,
+                'purpose' => 'Annual Grave Fee',
+                'payment_year' => now()->year,
+                'payment_date' => now(),
+                'method' => 'cash',
+                'amount' => 1500,
+                'status' => 'unpaid',
+            ]);
 
-    return redirect()->route('family.create')->with('success', 'Registration completed successfully!');
-}
+            return redirect()->route('family.create')
+                ->with('success', 'Family member registration successfully done (Cash).');
+        }
+
+        if ($request->payment_method === 'card') {
+            // Store form data temporarily in session
+            session(['family_registration_data' => $request->all()]);
+            return redirect()->route('stripe.family.checkout');
+        }
+    }
 
 }

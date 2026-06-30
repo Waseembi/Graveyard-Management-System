@@ -43,7 +43,7 @@
                 <i class="bi bi-wallet2 fs-3 me-2 ms-4 mt-1" style="background-color: rgba(109, 235, 214, 0.3); padding-top: 2%; padding-bottom: 2%; padding-left: 5%; padding-right: 5%; border-radius: 60%;"></i>
                 <div class="mt-3 mb-3">
                     <h6 class="mb-1 ">Payments</h6>
-                    <h3 class="fw-bold mb-0 text-center">0</h3>
+                    <h3 class="fw-bold mb-0 text-center">{{ $displayPayments }}</h3>
                 </div>
             </div>
         </div>
