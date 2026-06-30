@@ -105,7 +105,7 @@ class MapController extends Controller
             'method' => 'cash',
         ]);
 
-        return redirect()->route('grave.book', ['id' => $request->grave_id])
+        return redirect()->route('grave.map', ['id' => $request->grave_id])
             ->with('success', 'Registration successfully done (Cash).');
     }
 

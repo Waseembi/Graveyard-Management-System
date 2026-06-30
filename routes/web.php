@@ -56,9 +56,9 @@ Route::get('/marble/cancel', [StripeController::class, 'cancel'])->name('marble.
 
 
 // map payment
-Route::get('/map/pay/{booking}', [StripeController::class, 'checkoutmap'])->name('map.pay');
+Route::get('/map/pay/{registration}', [StripeController::class, 'checkoutmap'])->name('map.pay');
 Route::get('/map/success', [StripeController::class, 'successmap'])->name('map.success');
-Route::get('/map/cancel', [StripeController::class, 'cancel'])->name('map.cancel');
+Route::get('/map/cancel', [StripeController::class, 'cancelmap'])->name('map.cancel');
 
 
 
