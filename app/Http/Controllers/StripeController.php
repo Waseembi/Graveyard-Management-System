@@ -125,6 +125,13 @@ class StripeController extends Controller
                 session()->forget('registration_data');
             }
 
+            // Send approval email
+        $registeredUser = \App\Models\User::find($registration->user_id);
+        if ($registeredUser && $registeredUser->email) {
+            Mail::to($registeredUser->email)
+                ->send(new ApprovalNotificationMail($registration));
+        }
+
             return redirect()->route('user.register.create')->with('success', 'Registration approved via Stripe!');
         }
 

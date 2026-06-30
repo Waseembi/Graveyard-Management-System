@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Burial;
 use App\Models\UserRegistration;
 use App\Models\Grave;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -183,6 +184,24 @@ class BurialController extends Controller
         'burial_status' => 'buried',
     ]);
 
+    // STEP 5: SEND EMAIL TO USER
+$userEmail = $registration->user->email; // Assuming relation exists
+
+$details = [
+    'name'          => $registration->name,
+    'registrationId'=> $registration->id,
+    'fatherName'    => $registration->father_name,
+    'age'           => $registration->age,
+    'dateOfDeath'   => $request->date_of_death,
+    'graveId'       => $grave->id,
+    'cnic'          => $registration->cnic,
+    'burial_registeredname' => $registration->user->name,
+];
+
+Mail::send('mails.burialApproved', ['details' => $details], function($message) use ($userEmail) {
+    $message->to($userEmail)
+            ->subject('Burial Approval Notification');
+});
     // ======================================================
     // ✅ SUCCESS
     // ======================================================
