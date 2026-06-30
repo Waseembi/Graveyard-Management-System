@@ -92,6 +92,7 @@
                             <th>CNIC</th>
                             <th>Date of Death</th>
                             <th>Grave ID</th>
+                            <th>Location</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,6 +110,16 @@
                                 <td>
                                     <span class="badge bg-success-subtle text-success px-3 py-2">{{ $record->grave_id }}</span>
                                 </td>
+                                <td>
+    @if($record->grave && $record->grave->lat && $record->grave->lng)
+        <a href="{{ route('grave.location', $record->grave->id) }}" 
+           class="btn btn-sm btn-outline-primary rounded-pill">
+            <i class="fa-solid fa-map-location-dot"></i> View Map
+        </a>
+    @else
+        <span class="text-muted">N/A</span>
+    @endif
+</td>
                                 
                             </tr>
                         @empty
