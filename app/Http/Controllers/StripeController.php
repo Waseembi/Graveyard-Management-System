@@ -8,6 +8,9 @@ use App\Models\UserRegistration;
 use App\Models\Payment;
 use App\Models\MarbleBooking;
 use App\Models\Grave;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApprovalNotificationMail;
+use App\Mail\MarbleBookingStatusMail;
 use Illuminate\Support\Facades\Auth;
 
 class StripeController extends Controller
@@ -23,7 +26,7 @@ class StripeController extends Controller
                 'price_data' => [
                     'currency' => 'usd',
                     'product_data' => ['name' => 'Graveyard Registration Fee'],
-                    'unit_amount' => 500, // $5
+                    'unit_amount' => 5193, // $5
                 ],
                 'quantity' => 1,
             ]],
@@ -48,7 +51,7 @@ class StripeController extends Controller
             'price_data' => [
                 'currency' => 'usd',
                 'product_data' => ['name' => 'Annual Grave Fee'],
-                'unit_amount' => 500, // $15.00 (amount in cents)
+                'unit_amount' => 5193, // $15.00 (amount in cents)
             ],
             'quantity' => 1,
         ]],
@@ -178,7 +181,11 @@ public function successmarble(Request $request)
             'method'          => 'card',
         ]);
 
-    
+        //  Send email notification to user
+        $user = $booking->user; // assuming MarbleBooking has a relation ->user
+        if ($user && $user->email) {
+            Mail::to($user->email)->send(new MarbleBookingStatusMail($booking));
+        }
 
         return redirect()->route('marble.service.index')
                          ->with('success', 'Marble service payment completed successfully!');
@@ -199,7 +206,7 @@ public function checkoutmap(UserRegistration $registration)
             'price_data' => [
                 'currency' => 'usd',
                 'product_data' => ['name' => 'Annual Grave Fee'],
-                'unit_amount' => 500, // $5.00 in cents
+                'unit_amount' => 5193, // $5.00 in cents
             ],
             'quantity' => 1,
         ]],
@@ -244,6 +251,13 @@ public function successmap(Request $request)
         $grave->update([
             'status' => 'booked',
         ]);
+
+        // Send approval email
+        $registeredUser = \App\Models\User::find($registration->user_id);
+        if ($registeredUser && $registeredUser->email) {
+            Mail::to($registeredUser->email)
+                ->send(new ApprovalNotificationMail($registration));
+        }
 
         return redirect()->route('grave.map', ['id' => $grave->id])
             ->with('success', 'Registration approved via Stripe!');
