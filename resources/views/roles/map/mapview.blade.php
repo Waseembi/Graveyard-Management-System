@@ -79,7 +79,7 @@
 <style>
 #map{width:100%;height:850px;border-radius:10px;border:2px solid #ddd;}
 .leaflet-popup-content{text-align:center;}
-.block-label{font-size:16px;font-weight:bold;}
+.block-label{font-size:16px;font-weight:bold;color:#fff;text-shadow:1px 1px 2px #000;}
 </style>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -87,7 +87,7 @@
 <script>
 const graves = @json($graves);
 
-// Master layout boundary (kept just to focus the map init view)
+// Master layout boundary
 const graveyardBoundary = [
     [24.937069180177446, 66.94162743458993],
     [24.936704357071687, 66.94090860264023],
@@ -95,7 +95,7 @@ const graveyardBoundary = [
     [24.936334668556064, 66.94210486775054]
 ];
 
-// Specific boundaries derived from your provided text organized as [TopLeft, TopRight, BottomLeft, BottomRight]
+// Specific boundaries arranged as [TopLeft, TopRight, BottomLeft, BottomRight]
 const blockBoundaries = {
     'A': [[24.93667776199227, 66.94093807320208], [24.936846796868508, 66.94132833460642], [24.936520887690858, 66.94103999714241], [24.9366716815965, 66.94141282418855]],
     'B': [[24.936506294721397, 66.94105609039644], [24.936651008248518, 66.94144769290406], [24.9362861839029, 66.94119288305399], [24.936429681607247, 66.9415469346362]],
@@ -114,10 +114,8 @@ L.tileLayer(
 L.polygon(graveyardBoundary, { color:'blue', weight:2, fillOpacity:0.05 }).addTo(map);
 map.fitBounds(L.polygon(graveyardBoundary).getBounds());
 
-// Modified generator logic to divide an explicit block boundary into localized grids
 function generateSubGrid(boundary, subRows, subCols) {
     const subPlots = [];
-    // Destructuring arranged: [TL, TR, BL, BR]
     const [TL, TR, BL, BR] = boundary; 
 
     for (let r = 0; r < subRows; r++) {
@@ -147,42 +145,31 @@ function generateSubGrid(boundary, subRows, subCols) {
     return subPlots;
 }
 
-// Dynamically compile plots block-by-block sequentially to align with your index mapping
 const plots = [];
 const blocksOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-// Total rows = 20, Total cols = 60 distributed across blocks (A,B,C share rows; A,D share cols etc.)
-// A,B,C left side (30 cols total), D,E,F right side (30 cols total)
-// Rows: split by thirds (~7 rows per sub-block)
+// FIXED: Adjusting subRows and subCols so each block outputs exactly 200 plots (10 * 20 = 200)
+// This guarantees Block A contains exactly ID #1 to #200, Block B contains #201 to #400, etc.
 blocksOrder.forEach(blockKey => {
-    const subRows = (['A','D','B','E'].includes(blockKey)) ? 7 : 6; // Fits the 20 total row metric split 3 ways
-    const subCols = 30; // 60 cols split down the middle 
+    const subRows = 10; 
+    const subCols = 20; 
     const subGridPlots = generateSubGrid(blockBoundaries[blockKey], subRows, subCols);
-    plots.push(...subGridPlots);
+    
+    subGridPlots.forEach(coords => {
+        plots.push({
+            coords: coords,
+            blockName: blockKey
+        });
+    });
 });
 
-function getBlockName(row, col, rows, cols) {
-    const halfCols = cols / 2;
-    const thirdRows = rows / 3;
-    if(col < halfCols) {
-        if(row < thirdRows) return 'A';
-        else if(row < 2*thirdRows) return 'B';
-        else return 'C';
-    } else {
-        if(row < thirdRows) return 'D';
-        else if(row < 2*thirdRows) return 'E';
-        else return 'F';
-    }
-}
-
-plots.forEach((coords, index) => {
+plots.forEach((plotData, index) => {
+    const coords = plotData.coords;
+    const blockName = plotData.blockName; 
+    
     const grave = graves.find(g => g.id === (index+1));
     const status = grave ? grave.status.toLowerCase() : 'available';
     const fillColor = status === 'available' ? '#28a745' : '#dc3545';
-
-    const row = Math.floor(index / 60);
-    const col = index % 60;
-    const blockName = getBlockName(row, col, 20, 60);
 
     const plot = L.polygon(coords, {
         color: '#000',
@@ -206,20 +193,11 @@ plots.forEach((coords, index) => {
     plot.bindPopup(popupHtml);
 });
 
-// Add block labels
+// Generates block labels exactly centered inside each individual block's boundary
 ['A','B','C','D','E','F'].forEach(name => {
-    let index;
-    switch(name){
-        case 'A': index = 2*60 + 2; break;
-        case 'B': index = 8*60 + 2; break;
-        case 'C': index = 15*60 + 2; break;
-        case 'D': index = 2*60 + 50; break;
-        case 'E': index = 8*60 + 50; break;
-        case 'F': index = 15*60 + 50; break;
-    }
-    const coords = plots[index];
-    if(coords){
-        const center = L.polygon(coords).getBounds().getCenter();
+    const boundary = blockBoundaries[name];
+    if (boundary) {
+        const center = L.polygon(boundary).getBounds().getCenter();
         L.marker(center, {
             icon: L.divIcon({
                 className: 'block-label',
@@ -239,9 +217,6 @@ setTimeout(() => {
 }, 4000);
 </script>
 @endsection
-
-
-
 
 
 
