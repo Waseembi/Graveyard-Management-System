@@ -112,7 +112,8 @@
                                 </td>
                                 <td>
     @if($record->grave && $record->grave->lat && $record->grave->lng)
-        <a href="{{ route('grave.location', $record->grave->id) }}" 
+        <a href="https://www.google.com/maps?q={{ $record->grave->lat }},{{ $record->grave->lng }}" 
+           target="_blank" 
            class="btn btn-sm btn-outline-primary rounded-pill">
             <i class="fa-solid fa-map-location-dot"></i> View Map
         </a>
@@ -120,6 +121,7 @@
         <span class="text-muted">N/A</span>
     @endif
 </td>
+
                                 
                             </tr>
                         @empty

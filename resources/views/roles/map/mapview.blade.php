@@ -63,8 +63,7 @@
         </div>
         @endif
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <div class="container-fluid py-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -88,12 +87,23 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script>
 const graves = @json($graves);
 
+// Master layout boundary (kept just to focus the map init view)
 const graveyardBoundary = [
     [24.937069180177446, 66.94162743458993],
     [24.936704357071687, 66.94090860264023],
     [24.93598930065126, 66.94138067138331],
     [24.936334668556064, 66.94210486775054]
 ];
+
+// Specific boundaries derived from your provided text organized as [TopLeft, TopRight, BottomLeft, BottomRight]
+const blockBoundaries = {
+    'A': [[24.93667776199227, 66.94093807320208], [24.936846796868508, 66.94132833460642], [24.936520887690858, 66.94103999714241], [24.9366716815965, 66.94141282418855]],
+    'B': [[24.936506294721397, 66.94105609039644], [24.936651008248518, 66.94144769290406], [24.9362861839029, 66.94119288305399], [24.936429681607247, 66.9415469346362]],
+    'C': [[24.936264294405436, 66.94121434072669], [24.936394415235096, 66.94156839230892], [24.93600770059107, 66.94137661436855], [24.93615849512491, 66.94167970398061]],
+    'D': [[24.93686412582197, 66.94137393307061], [24.936989380905622, 66.94165958648023], [24.936685362490714, 66.94147317389287], [24.93681183464252, 66.94178565123627]],
+    'E': [[24.936664689141715, 66.94148390273371], [24.93678629700278, 66.94178699234577], [24.936434849956036, 66.94159387330092], [24.936567402766425, 66.94191573837567]],
+    'F': [[24.936408096156892, 66.94160191992911], [24.9365406489956, 66.94194256046657], [24.936164879568278, 66.9417199371232], [24.936342427725283, 66.94208471754126]]
+};
 
 const map = L.map('map').setView([24.9368, 66.9415], 19.49);
 L.tileLayer(
@@ -104,43 +114,52 @@ L.tileLayer(
 L.polygon(graveyardBoundary, { color:'blue', weight:2, fillOpacity:0.05 }).addTo(map);
 map.fitBounds(L.polygon(graveyardBoundary).getBounds());
 
-function generateGridWithSpacing(boundary, rows, cols, rowGapCount, colGapCount) {
-    const plots = [];
-    const [FR, FL, BL, BR] = boundary;
-    const totalRows = rows + rowGapCount; 
-    const totalCols = cols + colGapCount; 
+// Modified generator logic to divide an explicit block boundary into localized grids
+function generateSubGrid(boundary, subRows, subCols) {
+    const subPlots = [];
+    // Destructuring arranged: [TL, TR, BL, BR]
+    const [TL, TR, BL, BR] = boundary; 
 
-    for (let r = 0; r < totalRows; r++) {
-        if (r === Math.floor(totalRows/3) || r === Math.floor(2*totalRows/3)) continue;
-        for (let c = 0; c < totalCols; c++) {
-            if (c === Math.floor(totalCols/2)) continue;
+    for (let r = 0; r < subRows; r++) {
+        for (let c = 0; c < subCols; c++) {
+            const latTop = TL[0] + (TR[0] - TL[0]) * (c / subCols);
+            const lngTop = TL[1] + (TR[1] - TL[1]) * (c / subCols);
+            const latTopNext = TL[0] + (TR[0] - TL[0]) * ((c+1) / subCols);
+            const lngTopNext = TL[1] + (TR[1] - TL[1]) * ((c+1) / subCols);
 
-            const latTop = FL[0] + (FR[0] - FL[0]) * (c / totalCols);
-            const lngTop = FL[1] + (FR[1] - FL[1]) * (c / totalCols);
-            const latTopNext = FL[0] + (FR[0] - FL[0]) * ((c+1) / totalCols);
-            const lngTopNext = FL[1] + (FR[1] - FL[1]) * ((c+1) / totalCols);
+            const latBottom = BL[0] + (BR[0] - BL[0]) * (c / subCols);
+            const lngBottom = BL[1] + (BR[1] - BL[1]) * (c / subCols);
+            const latBottomNext = BL[0] + (BR[0] - BL[0]) * ((c+1) / subCols);
+            const lngBottomNext = BL[1] + (BR[1] - BL[1]) * ((c+1) / subCols);
 
-            const latBottom = BL[0] + (BR[0] - BL[0]) * (c / totalCols);
-            const lngBottom = BL[1] + (BR[1] - BL[1]) * (c / totalCols);
-            const latBottomNext = BL[0] + (BR[0] - BL[0]) * ((c+1) / totalCols);
-            const lngBottomNext = BL[1] + (BR[1] - BL[1]) * ((c+1) / totalCols);
+            const lat1 = latTop + (latBottom - latTop) * (r / subRows);
+            const lng1 = lngTop + (lngBottom - lngTop) * (r / subRows);
+            const lat2 = latTopNext + (latBottomNext - latTopNext) * (r / subRows);
+            const lng2 = lngTopNext + (lngBottomNext - lngTopNext) * (r / subRows);
+            const lat3 = latTopNext + (latBottomNext - latTopNext) * ((r+1) / subRows);
+            const lng3 = lngTopNext + (lngBottomNext - lngTopNext) * ((r+1) / subRows);
+            const lat4 = latTop + (latBottom - latTop) * ((r+1) / subRows);
+            const lng4 = lngTop + (lngBottom - lngTop) * ((r+1) / subRows);
 
-            const lat1 = latTop + (latBottom - latTop) * (r / totalRows);
-            const lng1 = lngTop + (lngBottom - lngTop) * (r / totalRows);
-            const lat2 = latTopNext + (latBottomNext - latTopNext) * (r / totalRows);
-            const lng2 = lngTopNext + (lngBottomNext - lngTopNext) * (r / totalRows);
-            const lat3 = latTopNext + (latBottomNext - latTopNext) * ((r+1) / totalRows);
-            const lng3 = lngTopNext + (lngBottomNext - lngTopNext) * ((r+1) / totalRows);
-            const lat4 = latTop + (latBottom - latTop) * ((r+1) / totalRows);
-            const lng4 = lngTop + (lngBottom - lngTop) * ((r+1) / totalRows);
-
-            plots.push([[lat1,lng1],[lat2,lng2],[lat3,lng3],[lat4,lng4]]);
+            subPlots.push([[lat1,lng1],[lat2,lng2],[lat3,lng3],[lat4,lng4]]);
         }
     }
-    return plots;
+    return subPlots;
 }
 
-const plots = generateGridWithSpacing(graveyardBoundary, 20, 60, 2, 1);
+// Dynamically compile plots block-by-block sequentially to align with your index mapping
+const plots = [];
+const blocksOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+// Total rows = 20, Total cols = 60 distributed across blocks (A,B,C share rows; A,D share cols etc.)
+// A,B,C left side (30 cols total), D,E,F right side (30 cols total)
+// Rows: split by thirds (~7 rows per sub-block)
+blocksOrder.forEach(blockKey => {
+    const subRows = (['A','D','B','E'].includes(blockKey)) ? 7 : 6; // Fits the 20 total row metric split 3 ways
+    const subCols = 30; // 60 cols split down the middle 
+    const subGridPlots = generateSubGrid(blockBoundaries[blockKey], subRows, subCols);
+    plots.push(...subGridPlots);
+});
 
 function getBlockName(row, col, rows, cols) {
     const halfCols = cols / 2;
@@ -187,7 +206,6 @@ plots.forEach((coords, index) => {
     plot.bindPopup(popupHtml);
 });
 
-
 // Add block labels
 ['A','B','C','D','E','F'].forEach(name => {
     let index;
@@ -211,17 +229,18 @@ plots.forEach((coords, index) => {
         }).addTo(map);
     }
 });
+
 setTimeout(() => {
-        const alert = document.querySelector(".alert");
-        if (alert) {
-            alert.classList.add("fade");
-            setTimeout(() => alert.remove(), 500);
-        }
-    }, 4000);
-
+    const alert = document.querySelector(".alert");
+    if (alert) {
+        alert.classList.add("fade");
+        setTimeout(() => alert.remove(), 500);
+    }
+}, 4000);
 </script>
-
 @endsection
+
+
 
 
 
