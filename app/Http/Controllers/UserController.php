@@ -22,6 +22,18 @@ class UserController extends Controller
     {
     $userId = Auth::id();
 
+    // 4️⃣ Payments total
+
+$totalPayments = Payment::where('user_id', $userId)->sum('amount'); // assuming 'amount' column stores payment value
+
+if ($totalPayments >= 10000) {
+    // Format to K without decimals
+    $displayPayments = intval(round($totalPayments / 1000)) . 'K';
+} else {
+    // Show as plain integer (no .0)
+    $displayPayments = intval($totalPayments);
+}
+
     // Total registrations by user
     $totalRegistration = UserRegistration::where('user_id', $userId)->count();
     // Total family members added by user
@@ -35,7 +47,7 @@ class UserController extends Controller
         ->get();
 
     // Services and Payments stay 0 as per your requirement
-    return view('roles.userdashboard', compact('totalRegistration', 'familyCount', 'marbleCount', 'recentRegistrations'));
+    return view('roles.userdashboard', compact('totalRegistration', 'familyCount', 'marbleCount', 'displayPayments' ,'recentRegistrations'));
 }
 
 

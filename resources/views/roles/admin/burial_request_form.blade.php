@@ -112,7 +112,7 @@
                         </div>
                     
                         <!-- File name -->
-                        <small class="text-muted">File: {{ $request->death_certificate }}</small>
+                        {{-- <small class="text-muted">File: {{ $request->death_certificate }}</small> --}}
                     
                         <!-- If it's an image, show preview -->
                         @if(Str::endsWith($request->death_certificate, ['jpg','jpeg','png']))
@@ -163,16 +163,19 @@
                                 <i class="fa-solid fa-check me-1"></i>Approve Burial
                             </button>
                         </form>
-
                         <!-- Reject Form -->
                         <form method="POST" action="{{ route('admin.burial.requests.reject', $request->id) }}">
                             @csrf
-                            <button type="submit" class="btn btn-danger px-4 rounded-pill shadow-sm">
+                            <button type="submit" class="btn btn-danger px-4 rounded-pill shadow-sm " style="margin-top: 95px;">
                                 <i class="fa-solid fa-times me-1"></i>Reject Burial
                             </button>
                         </form>
+
+                        
                     </div>
+                    
                 </div>
+                
             </div>
         </div>
 
